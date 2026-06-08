@@ -119,12 +119,17 @@ const SQUADS=[
     {name:"Careca",shirt:10,pos:"CA",rating:91},
   ]},
   {year:1992,ed:"Libertadores 1992",champion:false,players:[
-    {name:"Zetti",shirt:1,pos:"GOL",rating:84},{name:"Ronaldão",shirt:5,pos:"ZAG",rating:80},
-    {name:"Adílson",shirt:4,pos:"ZAG",rating:82},{name:"Cafu",shirt:2,pos:"LD",rating:88},
-    {name:"Leonardo",shirt:3,pos:"LE",rating:83},{name:"Mazinho",shirt:8,pos:"VOL",rating:82},
-    {name:"Pintado",shirt:6,pos:"VOL",rating:79},{name:"Raí",shirt:10,pos:"MC",rating:89},
-    {name:"Müller",shirt:9,pos:"CA",rating:84},{name:"Gilmar",shirt:11,pos:"CA",rating:78},
+    {name:"Zetti",shirt:1,pos:"GOL",rating:84},
+    {name:"Ronaldão",shirt:5,pos:"ZAG",rating:80},
+    {name:"Adílson",shirt:4,pos:"ZAG",rating:82},
+    {name:"Cafu",shirt:2,pos:"LD",rating:88},
+    {name:"Leonardo",shirt:3,pos:"LE",rating:83},
+    {name:"Mazinho",shirt:8,pos:"VOL",rating:82},
+    {name:"Pintado",shirt:6,pos:"VOL",rating:79},
+    {name:"Raí",shirt:10,pos:"MC",rating:89},
+    {name:"Müller",shirt:9,pos:"CA",rating:84},
     {name:"Palhinha",shirt:7,pos:"MD",rating:77},
+    {name:"Gilmar",shirt:11,pos:"CA",rating:78},
   ]},
   // 1993 — CAMPEÃO real
   {year:1993,ed:"Libertadores 1993",champion:true,players:[
@@ -152,14 +157,19 @@ const SQUADS=[
     {name:"Sandro Hiroshi",shirt:7,pos:"MD",rating:78},{name:"Dodô",shirt:9,pos:"CA",rating:82},
     {name:"Palhinha",shirt:11,pos:"CA",rating:80},
   ]},
-  // 1999 — Amoroso NÃO estava, substituído por Luizão
+  // 1999 — elenco correto do SPFC (sem Amoroso, que só veio em 2001/2005)
   {year:1999,ed:"Libertadores 1999",champion:false,players:[
-    {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:86},{name:"Cléber",shirt:4,pos:"ZAG",rating:79},
-    {name:"Toné",shirt:5,pos:"ZAG",rating:78},{name:"Fabão",shirt:2,pos:"LD",rating:80},
-    {name:"Júnior",shirt:3,pos:"LE",rating:78},{name:"Emerson",shirt:8,pos:"VOL",rating:83},
-    {name:"Marcos Assunção",shirt:6,pos:"MC",rating:82},{name:"Robson",shirt:10,pos:"MC",rating:79},
-    {name:"Danilo",shirt:7,pos:"MD",rating:79},{name:"Luizão",shirt:9,pos:"CA",rating:84},
-    {name:"Alex",shirt:11,pos:"CA",rating:80},
+    {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:86},
+    {name:"Cléber",shirt:4,pos:"ZAG",rating:79},
+    {name:"Toné",shirt:5,pos:"ZAG",rating:78},
+    {name:"Fabão",shirt:2,pos:"LD",rating:80},
+    {name:"Júnior",shirt:3,pos:"LE",rating:78},
+    {name:"Emerson",shirt:8,pos:"VOL",rating:83},
+    {name:"Marcos Assunção",shirt:6,pos:"MC",rating:82},
+    {name:"Robson",shirt:10,pos:"MC",rating:79},
+    {name:"Danilo",shirt:7,pos:"MD",rating:79},
+    {name:"Luizão",shirt:9,pos:"CA",rating:84},
+    {name:"Dodô",shirt:11,pos:"CA",rating:80},
   ]},
   // 2004 — Anderson Polga nunca jogou no SPFC; substituído por Lúcio (cedido) → usar Alex Silva + Gustavo Nery
   {year:2004,ed:"Libertadores 2004",champion:false,players:[
@@ -594,7 +604,13 @@ export default function App(){
   function newGame(){
     setTeam([]);setUsedYrs([]);setDrawIdx(0);setFormation("4-3-3");setRerolls(3);
     setTournament(null);setMatchIdx(0);setEliminated(false);setChamp(false);setPenalties(null);
-    setShowSlot(true);setPhase("draft");
+    setPhase("formation-pick");
+  }
+
+  function confirmFormation(f){
+    setFormation(f);
+    setShowSlot(true);
+    setPhase("draft");
   }
 
   function handleSlotDone(sq){setSquad(sq);setShowSlot(false);}
@@ -672,6 +688,7 @@ export default function App(){
   return(
     <div style={{minHeight:"100vh",background:C.cream,fontFamily:"'DM Sans',sans-serif",maxWidth:480,margin:"0 auto"}}>
       {phase==="intro"&&<IntroScreen onStart={newGame} history={history}/>}
+      {phase==="formation-pick"&&<FormationPickScreen onConfirm={confirmFormation}/>}
       {phase==="draft"&&<DraftScreen showSlot={showSlot} squad={squad} drawIdx={drawIdx} team={team} formation={formation} rerolls={rerolls} showReroll={showReroll} onSlotDone={handleSlotDone} onPick={pickPlayer} onReroll={doReroll} afterReroll={afterReroll} usedYrs={usedYrs}/>}
       {phase==="lineup"&&<LineupScreen team={team} formation={formation} setFormation={setFormation} onSim={startSim}/>}
       {phase==="sim"&&tournament&&<SimScreen allMatches={allMatches} matchIdx={matchIdx} livePhase={livePhase} minute={minute} spG={spG} oppG={oppG} events={events} flash={flash} tournament={tournament} penalties={penalties} onKickoff={kickoff} onAdvance={(ph)=>advance(ph)}/>}
@@ -738,6 +755,100 @@ function IntroScreen({onStart,history}){
             </div>
           ))}
         </div>)}
+      </div>
+    </div>
+  );
+}
+
+/* ─── FORMATION PICK SCREEN ──────────────────────────────────────────────────── */
+function FormationPickScreen({onConfirm}){
+  const [selected,setSelected]=useState("4-3-3");
+  const descriptions={
+    "4-3-3": "Três atacantes, domínio das laterais. Ofensivo e direto.",
+    "4-4-2": "Clássico e equilibrado. Dois pontas e solidez no meio.",
+    "3-5-2": "Três zagueiros, cinco meios. Posse e pressão.",
+    "4-2-3-1": "Dois volantes, meia atrás do centroavante. Moderno e sólido.",
+  };
+  // Show pitch preview of selected formation
+  const slots=FORMATIONS[selected]||FORMATIONS["4-3-3"];
+  return(
+    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",background:C.cream}}>
+      <Header/>
+      <div style={{background:C.red,padding:"16px 18px",flexShrink:0}}>
+        <div style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:28,color:C.cream,letterSpacing:3,lineHeight:1}}>ESCOLHA SUA FORMAÇÃO</div>
+        <div style={{fontSize:12,color:"rgba(255,255,255,.7)",marginTop:4}}>Essa é a estrutura do seu time. Escolha antes de montar o elenco.</div>
+      </div>
+
+      <div style={{flex:1,overflowY:"auto",padding:"16px 16px 120px"}}>
+        {/* Formation buttons */}
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:20}}>
+          {Object.keys(FORMATIONS).map(f=>(
+            <button key={f} onClick={()=>setSelected(f)} style={{
+              background:selected===f?C.charcoal:C.paper,
+              border:`2px solid ${selected===f?C.charcoal:C.border}`,
+              borderRadius:12,padding:"14px 10px",cursor:"pointer",
+              fontFamily:"'Bebas Neue',sans-serif",
+              transition:"all .15s",
+            }}>
+              <div style={{fontSize:26,letterSpacing:2,color:selected===f?C.cream:C.charcoal,lineHeight:1}}>{f}</div>
+              <div style={{fontSize:9,color:selected===f?"rgba(255,255,255,.5)":C.gray,marginTop:4,fontFamily:"'DM Sans',sans-serif",fontWeight:600,letterSpacing:.3,lineHeight:1.3}}>
+                {descriptions[f]}
+              </div>
+            </button>
+          ))}
+        </div>
+
+        {/* Live pitch preview */}
+        <div style={{marginBottom:8}}>
+          <div style={{fontSize:9,letterSpacing:2,color:C.gray,fontWeight:700,marginBottom:10}}>PRÉVIA DA FORMAÇÃO</div>
+          {/* Compact pitch showing only position spots */}
+          <div style={{position:"relative",width:"100%"}}>
+            <div style={{
+              width:"100%",paddingBottom:"130%",
+              background:`repeating-linear-gradient(180deg,${C.green} 0,${C.green} 36px,${C.stripe} 36px,${C.stripe} 72px)`,
+              borderRadius:10,border:`1.5px solid ${C.greenDark}`,position:"relative",overflow:"hidden",
+            }}>
+              <svg style={{position:"absolute",inset:0,width:"100%",height:"100%"}} viewBox="0 0 100 130" preserveAspectRatio="none">
+                <rect x="3" y="3" width="94" height="124" fill="none" stroke="rgba(255,255,255,.25)" strokeWidth=".7"/>
+                <line x1="3" y1="65" x2="97" y2="65" stroke="rgba(255,255,255,.25)" strokeWidth=".7"/>
+                <circle cx="50" cy="65" r="12" fill="none" stroke="rgba(255,255,255,.2)" strokeWidth=".7"/>
+                <rect x="22" y="3" width="56" height="20" fill="none" stroke="rgba(255,255,255,.2)" strokeWidth=".6"/>
+                <rect x="22" y="107" width="56" height="20" fill="none" stroke="rgba(255,255,255,.2)" strokeWidth=".6"/>
+              </svg>
+              {slots.map((slot,i)=>{
+                // Remap y from 155-space to 130-space
+                const y=slot.y*(130/155);
+                const col=groupColor(slot.group);
+                return(
+                  <div key={i} style={{
+                    position:"absolute",left:`${slot.x}%`,top:`${y}%`,
+                    transform:"translate(-50%,-50%)",
+                    display:"flex",flexDirection:"column",alignItems:"center",zIndex:5,
+                  }}>
+                    <div style={{
+                      width:28,height:28,borderRadius:"50%",
+                      background:col,border:"2px solid rgba(255,255,255,.9)",
+                      display:"flex",alignItems:"center",justifyContent:"center",
+                      fontSize:7,fontWeight:900,color:"#fff",
+                      fontFamily:"'Bebas Neue',sans-serif",
+                      boxShadow:"0 2px 6px rgba(0,0,0,.4)",
+                    }}>{slot.slot}</div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,padding:"12px 16px",background:C.cream,borderTop:`1px solid ${C.border}`,zIndex:50}}>
+        <button onClick={()=>onConfirm(selected)} style={{
+          background:C.red,color:C.cream,border:"none",borderRadius:10,padding:"15px",width:"100%",
+          fontFamily:"'Bebas Neue',sans-serif",fontSize:20,letterSpacing:4,cursor:"pointer",
+          boxShadow:"0 4px 16px rgba(204,0,0,.3)",
+        }}>
+          JOGAR COM {selected} →
+        </button>
       </div>
     </div>
   );
@@ -1034,108 +1145,131 @@ function generateCampaignCard(champ,allMatches,team,formation,tournament){
   canvas.width=W;canvas.height=H;
   const ctx=canvas.getContext("2d");
 
-  // BG
-  ctx.fillStyle="#0A0A0A";ctx.fillRect(0,0,W,H);
+  // White background
+  ctx.fillStyle="#FFFFFF";ctx.fillRect(0,0,W,H);
 
-  // diagonal texture
-  ctx.save();ctx.globalAlpha=0.04;ctx.strokeStyle="#CC0000";ctx.lineWidth=2;
-  for(let i=-H;i<W+H;i+=60){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i+H,H);ctx.stroke();}
-  ctx.restore();
+  // Top red header bar
+  ctx.fillStyle="#CC0000";ctx.fillRect(0,0,W,160);
 
-  // top stripe
-  ctx.fillStyle="#CC0000";ctx.fillRect(0,0,W,12);
-
-  // title area
+  // Title in header
   ctx.fillStyle="#CC0000";
-  ctx.font="bold 160px Arial Black, Arial";ctx.letterSpacing="20px";
-  ctx.fillText("7",60,200);
-  ctx.fillStyle="#F0EAE0";
-  ctx.font="bold 160px Arial Black, Arial";
-  ctx.fillText("RIKAS",200,200);
+  ctx.font="bold 110px Arial Black,Arial";
+  ctx.fillStyle="#FFFFFF";
+  ctx.fillText("7RIKAS",60,118);
+  ctx.font="24px Arial";
+  ctx.fillStyle="rgba(255,255,255,0.65)";
+  ctx.fillText("Uma adaptação by Órfãos de Edcarlos",60,148);
 
-  ctx.fillStyle="rgba(255,255,255,0.35)";
-  ctx.font="28px Arial";ctx.letterSpacing="6px";
-  ctx.fillText("UMA JORNADA DO SPFC",60,250);
+  // Result badge (right side of header)
+  const badgeText=champ?"🏆 CAMPEÃO":"❌ ELIMINADO";
+  ctx.font="bold 36px Arial";
+  ctx.fillStyle=champ?"#F2C000":"rgba(255,255,255,0.7)";
+  ctx.textAlign="right";
+  ctx.fillText(badgeText,W-60,100);
+  ctx.font="22px Arial";
+  ctx.fillStyle="rgba(255,255,255,0.5)";
+  const lastM=allMatches[allMatches.length-1];
+  ctx.fillText(champ?"Libertadores do SPFC":`Caiu nas ${lastM?.phase==="group"?"Grupos":lastM?.round||""}`,W-60,134);
+  ctx.textAlign="left";
 
-  // result hero
-  const heroY=320;
-  if(champ){
-    ctx.fillStyle="#E5A200";ctx.font="bold 80px Arial";ctx.fillText("🏆 CAMPEÃO DA LIBERTADORES",60,heroY);
-  }else{
-    ctx.fillStyle="#CC0000";ctx.font="bold 72px Arial";ctx.fillText("❌ ELIMINADO",60,heroY);
-    const lastM=allMatches[allMatches.length-1];
-    if(lastM){
-      ctx.fillStyle="rgba(255,255,255,0.4)";ctx.font="32px Arial";
-      ctx.fillText(`Caiu nas ${lastM.phase==="group"?"Fase de Grupos":lastM.round||""}`,60,heroY+70);
-    }
-  }
+  // ── SQUAD SECTION ──
+  let y=200;
+  ctx.fillStyle="#CC0000";ctx.font="bold 32px Arial";ctx.letterSpacing="6px";
+  ctx.fillText("ELENCO DOS SONHOS",60,y);
+  ctx.letterSpacing="0px";
+  y+=16;
+  // red underline
+  ctx.fillStyle="#CC0000";ctx.fillRect(60,y,400,3);
+  y+=28;
 
-  // formation & rating
-  ctx.fillStyle="rgba(255,255,255,0.3)";ctx.font="28px Arial";ctx.letterSpacing="3px";
-  ctx.fillText(`${formation}   ·   Rating médio: ${avgR(team).toFixed(1)}`,60,heroY+140);
-
-  // divider
-  ctx.fillStyle="#CC0000";ctx.fillRect(60,heroY+170,W-120,3);
-
-  // CAMPAIGN
-  let y=heroY+230;
-  ctx.fillStyle="rgba(255,255,255,0.4)";ctx.font="bold 28px Arial";ctx.letterSpacing="5px";
-  ctx.fillText("CAMPANHA",60,y);y+=50;ctx.letterSpacing="0px";
-  const groupMs=allMatches.filter(m=>m.phase==="group");
-  const koMs=allMatches.filter(m=>m.phase==="ko");
-  const drawMatch=(label,m,yy)=>{
-    const col=m.win?"#CC0000":m.draw?"#E5A200":"rgba(255,255,255,0.3)";
-    ctx.fillStyle=col;ctx.font="bold 36px Arial";
-    ctx.fillText(`${label}`,60,yy);
-    ctx.fillStyle="#F0EAE0";ctx.font="32px Arial";
-    ctx.fillText(`${oppLabel(m.opp)}`,260,yy);
-    ctx.fillStyle=col;ctx.font="bold 36px Arial";
-    ctx.fillText(`${m.myG}–${m.oppG}`,820,yy);
-    const res=m.win?"V":m.draw?"E":"D";
-    ctx.fillStyle=col;ctx.fillRect(920,yy-30,60,38);
-    ctx.fillStyle="#fff";ctx.font="bold 28px Arial";ctx.fillText(res,936,yy);
-    return yy+52;
-  };
-  if(groupMs.length>0){
-    ctx.fillStyle="rgba(255,255,255,0.25)";ctx.font="22px Arial";ctx.letterSpacing="3px";
-    ctx.fillText("FASE DE GRUPOS",60,y);y+=36;ctx.letterSpacing="0px";
-    if(tournament){ctx.fillStyle="rgba(255,255,255,0.45)";ctx.font="24px Arial";ctx.fillText(`${tournament.pts} pts · ${tournament.qualified?"Classificado":"Eliminado"}`,60,y);y+=36;}
-    groupMs.forEach((m,i)=>{y=drawMatch(`G${i+1}`,m,y);});
-    y+=10;
-  }
-  if(koMs.length>0){
-    ctx.fillStyle="rgba(255,255,255,0.25)";ctx.font="22px Arial";ctx.letterSpacing="3px";
-    ctx.fillText("MATA-MATA",60,y);y+=36;ctx.letterSpacing="0px";
-    koMs.forEach(m=>{y=drawMatch(m.round?.slice(0,4)||"?",m,y);});
-    y+=10;
-  }
-
-  // divider
-  ctx.fillStyle="#CC0000";ctx.fillRect(60,y,W-120,3);y+=30;
-
-  // SQUAD
-  ctx.fillStyle="rgba(255,255,255,0.4)";ctx.font="bold 28px Arial";ctx.letterSpacing="5px";
-  ctx.fillText("ELENCO DOS SONHOS",60,y);y+=50;ctx.letterSpacing="0px";
   const posColors={GOL:"#E5A200",ZAG:"#CC0000",LD:"#CC0000",LE:"#CC0000",VOL:"#1A5FAA",MC:"#1A5FAA",MD:"#1A5FAA",ME:"#1A5FAA",CA:"#158040"};
-  const half=Math.ceil(team.length/2);
+  const ROW_H=112;
+
   team.forEach((p,i)=>{
-    const col=i<half?0:1;const row=i<half?i:i-half;
-    const px=60+col*500;const py=y+row*72;
-    ctx.fillStyle=posColors[p.pos]||"#666";ctx.font="bold 22px Arial";
-    ctx.fillText(p.pos,px,py);
-    ctx.fillStyle="#F0EAE0";ctx.font="32px Arial";
-    ctx.fillText(`${p.name}`,px+70,py);
-    ctx.fillStyle="rgba(255,255,255,0.4)";ctx.font="22px Arial";
-    ctx.fillText(`${p._year}`,px+70,py+28);
-    ctx.fillStyle=p.rating>=88?"#F2C000":"rgba(255,255,255,0.5)";ctx.font="bold 28px Arial";
-    ctx.fillText(`${p.rating}`,px+450,py);
+    const rowY=y+i*ROW_H;
+    // alternating row bg
+    if(i%2===0){ctx.fillStyle="#F8F8F8";ctx.fillRect(0,rowY-8,W,ROW_H);}
+
+    // pos badge
+    const pCol=posColors[p.pos]||"#888";
+    ctx.fillStyle=pCol;ctx.fillRect(60,rowY+4,72,64);
+    ctx.fillStyle="#fff";ctx.font="bold 26px Arial";ctx.textAlign="center";
+    ctx.fillText(p.pos,96,rowY+46);ctx.textAlign="left";
+
+    // player name
+    ctx.fillStyle="#0A0A0A";ctx.font="bold 48px Arial";
+    ctx.fillText(p.name,156,rowY+48);
+
+    // year tag
+    ctx.fillStyle="#888";ctx.font="26px Arial";
+    ctx.fillText(p._year,156,rowY+80);
+
+    // rating on right
+    const rCol=p.rating>=88?"#E5A200":p.rating>=84?"#CC0000":"#555";
+    ctx.fillStyle=rCol;ctx.font="bold 58px Arial";ctx.textAlign="right";
+    ctx.fillText(p.rating,W-60,rowY+58);ctx.textAlign="left";
+
+    // champion star
+    if(p._champion){
+      ctx.fillStyle="#E5A200";ctx.font="32px Arial";ctx.textAlign="right";
+      ctx.fillText("🏆",W-130,rowY+58);ctx.textAlign="left";
+    }
+
+    // separator line
+    ctx.fillStyle="#E8E8E8";ctx.fillRect(60,rowY+ROW_H-6,W-120,1);
   });
 
-  // bottom stripe
-  ctx.fillStyle="#CC0000";ctx.fillRect(0,H-12,W,12);
-  // footer
-  ctx.fillStyle="rgba(255,255,255,0.2)";ctx.font="22px Arial";ctx.letterSpacing="2px";
-  ctx.fillText("7RIKAS · LIBERTADORES DO SPFC · "+new Date().getFullYear(),60,H-30);
+  y+=team.length*ROW_H+20;
+
+  // ── DIVIDER ──
+  ctx.fillStyle="#CC0000";ctx.fillRect(0,y,W,6);y+=30;
+
+  // ── CAMPAIGN SUMMARY ──
+  ctx.fillStyle="#CC0000";ctx.font="bold 28px Arial";ctx.letterSpacing="6px";
+  ctx.fillText("CAMPANHA",60,y);ctx.letterSpacing="0px";y+=14;
+  ctx.fillStyle="#CC0000";ctx.fillRect(60,y,280,3);y+=26;
+
+  // Formation + avg rating
+  ctx.fillStyle="#555";ctx.font="26px Arial";
+  ctx.fillText(`${formation}  ·  Rating médio: ${avgR(team).toFixed(1)}`,60,y);y+=46;
+
+  // Group stage summary
+  if(tournament&&tournament.groupMatches.length>0){
+    ctx.fillStyle="#888";ctx.font="bold 22px Arial";ctx.letterSpacing="3px";
+    ctx.fillText("FASE DE GRUPOS",60,y);ctx.letterSpacing="0px";y+=30;
+    tournament.groupMatches.forEach((m,i)=>{
+      const col=m.win?"#CC0000":m.draw?"#E5A200":"#999";
+      ctx.fillStyle="#222";ctx.font="28px Arial";
+      ctx.fillText(`${m.opp.flag} ${oppLabel(m.opp)}`,60,y);
+      ctx.fillStyle=col;ctx.font="bold 28px Arial";ctx.textAlign="right";
+      ctx.fillText(`${m.myG}–${m.oppG}  ${m.win?"V":m.draw?"E":"D"}`,W-60,y);
+      ctx.textAlign="left";y+=38;
+    });
+    ctx.fillStyle=tournament.qualified?"#CC0000":"#999";ctx.font="bold 24px Arial";
+    ctx.fillText(tournament.qualified?"✓ Classificado para o Mata-mata":"✗ Eliminado na Fase de Grupos",60,y);y+=42;
+  }
+
+  // KO matches
+  const koMs=allMatches.filter(m=>m.phase==="ko");
+  if(koMs.length>0){
+    ctx.fillStyle="#888";ctx.font="bold 22px Arial";ctx.letterSpacing="3px";
+    ctx.fillText("MATA-MATA",60,y);ctx.letterSpacing="0px";y+=30;
+    koMs.forEach(m=>{
+      const col=m.win?"#CC0000":m.draw?"#E5A200":"#999";
+      ctx.fillStyle="#222";ctx.font="28px Arial";
+      ctx.fillText(`${m.round}: ${m.opp.flag} ${oppLabel(m.opp)}`,60,y);
+      ctx.fillStyle=col;ctx.font="bold 28px Arial";ctx.textAlign="right";
+      ctx.fillText(`${m.myG}–${m.oppG}  ${m.win?"V":m.draw?"E":"D"}`,W-60,y);
+      ctx.textAlign="left";y+=38;
+    });
+  }
+
+  // ── FOOTER ──
+  ctx.fillStyle="#CC0000";ctx.fillRect(0,H-110,W,110);
+  ctx.fillStyle="#fff";ctx.font="bold 30px Arial";
+  ctx.fillText("Jogue também 👇",60,H-68);
+  ctx.fillStyle="rgba(255,255,255,0.85)";ctx.font="28px Arial";
+  ctx.fillText("markitomesquita.github.io/7rikas",60,H-30);
 
   return canvas;
 }
@@ -1155,7 +1289,7 @@ function ResultScreen({champ,allMatches,team,formation,tournament,onRestart,onHo
         canvas.toBlob(async(blob)=>{
           const file=new File([blob],"7rikas-campanha.png",{type:"image/png"});
           const resultText=champ?"🏆 Fui CAMPEÃO da Libertadores no 7RIKAS!":"❌ Fui eliminado no 7RIKAS... que raiva.";
-          const shareText=`${resultText}\n\nMontei um time histórico do SPFC e disputei a Libertadores.\n\n7RIKAS — Uma adaptação by Órfãos de Edcarlos`;
+          const shareText=`${resultText}\n\nMontei um time histórico do SPFC e disputei a Libertadores.\n\n🎮 Jogue também: https://markitomesquita.github.io/7rikas/\n\n7RIKAS — Uma adaptação by Órfãos de Edcarlos`;
           if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
             try{
               await navigator.share({files:[file],text:shareText});

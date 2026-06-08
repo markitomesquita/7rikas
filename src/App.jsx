@@ -620,6 +620,7 @@ export default function App(){
   const [flash,setFlash]=useState(false);
   const [eliminated,setEliminated]=useState(false);
   const [champ,setChamp]=useState(false);
+  const [elimPhaseState,setElimPhaseState]=useState("");
   const [penalties,setPenalties]=useState(null);
   const [history,setHistory]=useState(()=>{try{return JSON.parse(localStorage.getItem("7rikas5")||"[]");}catch{return[];}});
 
@@ -628,6 +629,7 @@ export default function App(){
   function newGame(){
     setTeam([]);setUsedYrs([]);setDrawIdx(0);setFormation("4-3-3");setRerolls(3);
     setTournament(null);setMatchIdx(0);setEliminated(false);setChamp(false);setPenalties(null);
+    setElimPhaseState("");
     setPhase("formation-pick");
   }
 
@@ -686,13 +688,13 @@ export default function App(){
   function advance(currentPhase){
     const m=currentMatch;if(!m)return;
     if(currentPhase==="groupResult"){
-      if(!tournament.qualified){setEliminated(true);saveHist({date:new Date().toLocaleDateString("pt-BR"),champ:false,phase:"Grupos",formation});setPhase("result");}
+      if(!tournament.qualified){setEliminated(true);setElimPhaseState("Fase de Grupos");saveHist({date:new Date().toLocaleDateString("pt-BR"),champ:false,phase:"Grupos",formation});setPhase("result");}
       else{setMatchIdx(3);setLivePhase("idle");}
       return;
     }
     if(currentPhase==="penalties"){
       const pen=penalties;
-      if(!pen?.spWin){setEliminated(true);saveHist({date:new Date().toLocaleDateString("pt-BR"),champ:false,phase:m.round,formation});setPhase("result");}
+      if(!pen?.spWin){setEliminated(true);setElimPhaseState(m.round||"");saveHist({date:new Date().toLocaleDateString("pt-BR"),champ:false,phase:m.round,formation});setPhase("result");}
       else if(matchIdx>=6){setChamp(true);saveHist({date:new Date().toLocaleDateString("pt-BR"),champ:true,phase:"Campeão",formation});setPhase("result");}
       else{setMatchIdx(i=>i+1);setLivePhase("idle");}
       return;
@@ -703,7 +705,7 @@ export default function App(){
     else if(isLastGrp){setLivePhase("groupResult");}
     else if(isKO){
       if(m.draw){const pen=buildPenalties(team,m.opp);setPenalties(pen);setLivePhase("penalties");return;}
-      if(!m.win){setEliminated(true);saveHist({date:new Date().toLocaleDateString("pt-BR"),champ:false,phase:m.round,formation});setPhase("result");}
+      if(!m.win){setEliminated(true);setElimPhaseState(m.round||"");saveHist({date:new Date().toLocaleDateString("pt-BR"),champ:false,phase:m.round,formation});setPhase("result");}
       else if(isLastKO){setChamp(true);saveHist({date:new Date().toLocaleDateString("pt-BR"),champ:true,phase:"Campeão",formation});setPhase("result");}
       else{setMatchIdx(i=>i+1);setLivePhase("idle");}
     }
@@ -716,7 +718,7 @@ export default function App(){
       {phase==="draft"&&<DraftScreen showSlot={showSlot} squad={squad} drawIdx={drawIdx} team={team} formation={formation} rerolls={rerolls} showReroll={showReroll} onSlotDone={handleSlotDone} onPick={pickPlayer} onReroll={doReroll} afterReroll={afterReroll} usedYrs={usedYrs}/>}
       {phase==="lineup"&&<LineupScreen team={team} formation={formation} setFormation={setFormation} onSim={startSim}/>}
       {phase==="sim"&&tournament&&<SimScreen allMatches={allMatches} matchIdx={matchIdx} livePhase={livePhase} minute={minute} spG={spG} oppG={oppG} events={events} flash={flash} tournament={tournament} penalties={penalties} onKickoff={kickoff} onAdvance={(ph)=>advance(ph)}/>}
-      {phase==="result"&&<ResultScreen champ={champ} allMatches={allMatches} team={team} formation={formation} tournament={tournament} onRestart={newGame} onHome={()=>setPhase("intro")}/>}
+      {phase==="result"&&<ResultScreen champ={champ} elimPhase={elimPhaseState} allMatches={allMatches} team={team} formation={formation} tournament={tournament} onRestart={newGame} onHome={()=>setPhase("intro")}/>}
     </div>
   );
 }
@@ -1410,7 +1412,7 @@ function PenaltyScreen({penalties,opp,onContinue}){
 }
 
 /* ─── RESULT SCREEN ──────────────────────────────────────────────────────────── */
-function ResultScreen({champ,allMatches,team,formation,tournament,onRestart,onHome}){
+function ResultScreen({champ,elimPhase,allMatches,team,formation,tournament,onRestart,onHome}){
   const[tab,setTab]=useState("matches");
   const[cardStatus,setCardStatus]=useState("idle");
 
@@ -1451,11 +1453,7 @@ function ResultScreen({champ,allMatches,team,formation,tournament,onRestart,onHo
     }catch(e){console.error(e);setCardStatus("idle");}
   }
 
-  const lastMatch=allMatches[matchIdx>0?matchIdx-1:0];
-  // Determine the actual phase where elimination happened
-  const elimPhase=!tournament?.qualified
-    ? "Fase de Grupos"
-    : lastMatch?.round||lastMatch?.label||"";
+  // elimPhase comes from parent state, set at the moment of elimination
 
   return(
     <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",background:C.white}}>
@@ -1477,7 +1475,8 @@ function ResultScreen({champ,allMatches,team,formation,tournament,onRestart,onHo
             <>
               <div style={{fontSize:44,marginBottom:12}}>😤</div>
               <div style={{fontFamily:F.display,fontSize:36,color:C.white,lineHeight:.95,letterSpacing:-.5}}>
-                Caiu nas<br/><span style={{color:"rgba(255,255,255,.5)"}}>{elimPhase}</span>
+                {elimPhase==="Fase de Grupos"?"Caiu na":"Caiu nas"}<br/>
+                <span style={{color:"rgba(255,255,255,.5)"}}>{elimPhase}</span>
               </div>
               <div style={{marginTop:14,fontSize:13,color:"rgba(255,255,255,.5)",fontFamily:F.body,fontWeight:600,letterSpacing:2}}>
                 TEM QUE COBRAR!
@@ -1729,3 +1728,4 @@ function generateCampaignCard(champ,allMatches,team,formation,tournament){
 
   return canvas;
 }
+

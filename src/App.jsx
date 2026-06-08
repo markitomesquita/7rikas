@@ -1,38 +1,62 @@
 import { useState, useEffect, useRef } from "react";
 
-/* ─── FONTS & CSS ───────────────────────────────────────────────────────────── */
+/* ─── FONTS & GLOBAL CSS ────────────────────────────────────────────────────── */
 (() => {
   const l = document.createElement("link");
-  l.href = "https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@400;500;600;700&display=swap";
+  l.href = "https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap";
   l.rel = "stylesheet"; document.head.appendChild(l);
   const s = document.createElement("style");
   s.textContent = `
     *{box-sizing:border-box;margin:0;padding:0;}
-    html,body{background:#F0EAE0;}
-    ::-webkit-scrollbar{width:3px;}
-    ::-webkit-scrollbar-thumb{background:#CC0000;border-radius:2px;}
-    @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-    @keyframes popIn{0%{transform:scale(0.6);opacity:0}65%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
-    @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-    @keyframes trophy{0%{transform:scale(0) rotate(-20deg);opacity:0}70%{transform:scale(1.12) rotate(4deg)}100%{transform:scale(1) rotate(0);opacity:1}}
+    html,body{background:#fff;font-family:'Inter',sans-serif;}
+    ::-webkit-scrollbar{width:2px;}
+    ::-webkit-scrollbar-thumb{background:#CC0000;}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes popIn{0%{transform:scale(0.7);opacity:0}65%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.35}}
+    @keyframes trophy{0%{transform:scale(0) rotate(-15deg);opacity:0}70%{transform:scale(1.1) rotate(3deg)}100%{transform:scale(1) rotate(0);opacity:1}}
     @keyframes confettiFall{0%{transform:translateY(-20px) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(600deg);opacity:0}}
-    @keyframes goalSlide{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
+    @keyframes goalSlide{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
     @keyframes rerollSpin{0%{opacity:1;transform:scale(1) rotate(0)}40%{opacity:0;transform:scale(0.7) rotate(180deg)}60%{opacity:0;transform:scale(0.7) rotate(180deg)}100%{opacity:1;transform:scale(1) rotate(360deg)}}
-    .fadeUp{animation:fadeUp .35s ease both}
-    .popIn{animation:popIn .38s cubic-bezier(.34,1.56,.64,1) both}
-    .trophy{animation:trophy .6s cubic-bezier(.34,1.56,.64,1) both}
-    .goalSlide{animation:goalSlide .28s ease both}
-    .rerollSpin{animation:rerollSpin .55s ease both}
+    @keyframes liveBar{from{width:0}to{width:100%}}
+
+    .fadeUp  { animation: fadeUp  .3s ease both; }
+    .popIn   { animation: popIn   .35s cubic-bezier(.34,1.56,.64,1) both; }
+    .trophy  { animation: trophy  .55s cubic-bezier(.34,1.56,.64,1) both; }
+    .goalSlide { animation: goalSlide .25s ease both; }
+    .rerollSpin { animation: rerollSpin .5s ease both; }
+
+    /* Typography helpers */
+    .t-display { font-family:'Archivo Black',sans-serif; }
+    .t-body    { font-family:'Inter',sans-serif; }
   `;
   document.head.appendChild(s);
 })();
 
+/* ─── DESIGN TOKENS ─────────────────────────────────────────────────────────── */
 const C = {
-  cream:"#F0EAE0", paper:"#E6E0D4", border:"#CEC8BC",
-  red:"#CC0000", redDark:"#8B0000",
-  black:"#080808", charcoal:"#1A1A1A", gray:"#78736E", light:"#B5AFA8",
-  yellow:"#E5A200", gold:"#F2C000",
-  white:"#FFFFFF", green:"#3A7040", greenDark:"#2C5830", stripe:"#426644",
+  white:   "#FFFFFF",
+  bg:      "#FFFFFF",
+  surface: "#F5F5F5",
+  border:  "#E8E8E8",
+  red:     "#CC0000",
+  redHov:  "#AA0000",
+  black:   "#0A0A0A",
+  ink:     "#111111",
+  muted:   "#888888",
+  faint:   "#CCCCCC",
+  yellow:  "#E5A200",
+  gold:    "#F2C000",
+  green:   "#2E6B38",
+  greenDk: "#1E4A26",
+  stripe:  "#356040",
+};
+
+/* typography shortcuts */
+const F = {
+  display: "'Archivo Black', sans-serif",
+  body:    "'Inter', sans-serif",
 };
 
 /* ─── FORMATIONS ─────────────────────────────────────────────────────────────── */
@@ -472,7 +496,7 @@ function Pitch({formation,players,compact=false}){
             <div key={i} style={{position:"absolute",left:`${slot.x}%`,top:`${slot.y}%`,transform:"translate(-50%,-50%)",display:"flex",flexDirection:"column",alignItems:"center",zIndex:5}}>
               {p?(
                 <div className="popIn" style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
-                  <div style={{width:sz,height:sz,borderRadius:"50%",background:col,border:"2px solid rgba(255,255,255,.92)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:compact?7:8,fontWeight:900,color:"#fff",fontFamily:"'Bebas Neue',sans-serif",boxShadow:"0 2px 8px rgba(0,0,0,.45)"}}>{p.shirt}</div>
+                  <div style={{width:sz,height:sz,borderRadius:"50%",background:col,border:"2px solid rgba(255,255,255,.92)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:compact?7:8,fontWeight:900,color:"#fff",fontFamily:F.display,boxShadow:"0 2px 8px rgba(0,0,0,.45)"}}>{p.shirt}</div>
                   <div style={{marginTop:2,background:"rgba(0,0,0,.78)",borderRadius:3,padding:"1px 4px",fontSize:compact?6:7.5,color:"#fff",fontWeight:700,whiteSpace:"nowrap",maxWidth:56,overflow:"hidden",textOverflow:"ellipsis",textAlign:"center"}}>
                     {p.name.split(" ").slice(-1)[0]}{p._year?` '${String(p._year).slice(-2)}`:""}
                   </div>
@@ -532,10 +556,10 @@ function SlotMachine({squads,onDone}){
 
   return(
     <div style={{display:"flex",flexDirection:"column",alignItems:"center",padding:"28px 20px",gap:14}}>
-      <div style={{fontSize:10,letterSpacing:3,color:C.gray,fontWeight:700}}>SORTEANDO ELENCO…</div>
+      <div style={{fontSize:10,letterSpacing:3,color:C.muted,fontWeight:700}}>SORTEANDO ELENCO…</div>
       <div style={{width:"100%",maxWidth:300,height:IH*5,overflow:"hidden",
-        border:`2px solid ${done?C.red:C.border}`,borderRadius:14,background:C.white,
-        position:"relative",boxShadow:done?`0 0 0 3px ${C.red}22`:"none",transition:"border-color .4s,box-shadow .4s"}}>
+        border:`2px solid ${done?C.red:C.border}`,background:C.white,
+        position:"relative",boxShadow:done?`0 0 0 3px ${C.red}18`:"none",transition:"border-color .4s,box-shadow .4s"}}>
         <div style={{position:"absolute",top:0,left:0,right:0,height:64,background:"linear-gradient(to bottom,rgba(255,255,255,.97),transparent)",zIndex:3,pointerEvents:"none"}}/>
         <div style={{position:"absolute",bottom:0,left:0,right:0,height:64,background:"linear-gradient(to top,rgba(255,255,255,.97),transparent)",zIndex:3,pointerEvents:"none"}}/>
         <div style={{position:"absolute",top:IH*CENTER,left:0,right:0,height:IH,
@@ -546,16 +570,16 @@ function SlotMachine({squads,onDone}){
         <div style={{transform:`translateY(-${offset}px)`,willChange:"transform"}}>
           {list.map((sq,i)=>(
             <div key={i} style={{height:IH,display:"flex",flexDirection:"column",justifyContent:"center",padding:"0 18px",borderBottom:`1px solid ${C.border}`}}>
-              <div style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:24,color:C.charcoal,letterSpacing:2,lineHeight:1}}>{sq.year}</div>
-              <div style={{fontSize:11,color:C.gray,marginTop:1,fontWeight:500}}>{sq.ed}</div>
+              <div style={{fontFamily:F.display,fontSize:24,color:C.ink,letterSpacing:2,lineHeight:1}}>{sq.year}</div>
+              <div style={{fontSize:11,color:C.muted,marginTop:1,fontWeight:500}}>{sq.ed}</div>
             </div>
           ))}
         </div>
       </div>
       {done&&(
         <div className="fadeUp" style={{textAlign:"center"}}>
-          {chosen.champion&&<div style={{fontSize:10,color:C.gold,fontWeight:800,letterSpacing:2,marginBottom:3}}>🏆 ANO CAMPEÃO</div>}
-          <div style={{fontFamily:"'Playfair Display',serif",fontSize:16,fontWeight:900,color:C.charcoal}}>{chosen.ed}</div>
+          {chosen.champion&&<div style={{fontSize:10,color:C.red,fontWeight:800,letterSpacing:2,marginBottom:3}}>🏆 ANO CAMPEÃO</div>}
+          <div style={{fontFamily:F.display,fontSize:16,fontWeight:900,color:C.ink}}>{chosen.ed}</div>
         </div>
       )}
     </div>
@@ -568,7 +592,7 @@ function RerollAnim({onDone}){
   return(
     <div style={{position:"absolute",inset:0,background:"rgba(240,234,224,0.94)",zIndex:20,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:10,borderRadius:8}}>
       <div className="rerollSpin" style={{fontSize:36}}>🎲</div>
-      <div style={{fontSize:10,letterSpacing:3,color:C.gray,fontWeight:700}}>SORTEANDO…</div>
+      <div style={{fontSize:10,letterSpacing:3,color:C.muted,fontWeight:700}}>SORTEANDO…</div>
     </div>
   );
 }
@@ -686,7 +710,7 @@ export default function App(){
   }
 
   return(
-    <div style={{minHeight:"100vh",background:C.cream,fontFamily:"'DM Sans',sans-serif",maxWidth:480,margin:"0 auto"}}>
+    <div style={{minHeight:"100vh",background:C.bg,fontFamily:F.body,maxWidth:480,margin:"0 auto"}}>
       {phase==="intro"&&<IntroScreen onStart={newGame} history={history}/>}
       {phase==="formation-pick"&&<FormationPickScreen onConfirm={confirmFormation}/>}
       {phase==="draft"&&<DraftScreen showSlot={showSlot} squad={squad} drawIdx={drawIdx} team={team} formation={formation} rerolls={rerolls} showReroll={showReroll} onSlotDone={handleSlotDone} onPick={pickPlayer} onReroll={doReroll} afterReroll={afterReroll} usedYrs={usedYrs}/>}
@@ -698,15 +722,18 @@ export default function App(){
 }
 
 /* ─── HEADER ─────────────────────────────────────────────────────────────────── */
-function Header({left=null,right=null}){
+function Header({left=null,right=null,dark=false}){
+  const bg=dark?C.black:C.white;
+  const border=dark?"none":`1px solid ${C.border}`;
   return(
-    <div style={{background:C.black,padding:"11px 18px",display:"flex",alignItems:"center",justifyContent:"space-between",flexShrink:0}}>
-      <div style={{minWidth:60}}>{left}</div>
+    <div style={{background:bg,borderBottom:border,padding:"14px 20px",display:"flex",alignItems:"center",justifyContent:"space-between",flexShrink:0}}>
+      <div style={{minWidth:56}}>{left}</div>
       <div style={{textAlign:"center"}}>
-        <div style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:19,color:C.cream,letterSpacing:3,lineHeight:1}}><span style={{color:C.red}}>7</span>RIKAS</div>
-        <div style={{fontSize:7,color:"rgba(255,255,255,.3)",letterSpacing:2,fontWeight:600,marginTop:1}}>UMA JORNADA DO SPFC</div>
+        <span style={{fontFamily:F.display,fontSize:18,color:dark?C.white:C.ink,letterSpacing:1,lineHeight:1}}>
+          <span style={{color:C.red}}>7</span>RIKAS
+        </span>
       </div>
-      <div style={{minWidth:60,textAlign:"right"}}>{right}</div>
+      <div style={{minWidth:56,textAlign:"right"}}>{right}</div>
     </div>
   );
 }
@@ -714,47 +741,67 @@ function Header({left=null,right=null}){
 /* ─── INTRO ──────────────────────────────────────────────────────────────────── */
 function IntroScreen({onStart,history}){
   return(
-    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column"}}>
-      <div style={{background:C.black,overflow:"hidden",position:"relative"}}>
-        <div style={{position:"absolute",inset:0,backgroundImage:"repeating-linear-gradient(45deg,transparent,transparent 48px,rgba(204,0,0,0.07) 48px,rgba(204,0,0,0.07) 96px)"}}/>
-        <div style={{padding:"36px 24px 28px",position:"relative",zIndex:1}}>
-          <div style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:76,color:C.cream,letterSpacing:4,lineHeight:.85,textShadow:`4px 4px 0 rgba(204,0,0,.4)`}}><span style={{color:C.red}}>7</span>RIKAS</div>
-          {/* Credit line */}
-          <div style={{fontSize:10,color:"rgba(255,255,255,.35)",fontFamily:"'DM Sans',sans-serif",marginTop:6,letterSpacing:.3}}>
-            Uma adaptação by <span style={{color:"rgba(255,255,255,.6)",fontWeight:600}}>Órfãos de Edcarlos</span>
-          </div>
-          <div style={{fontFamily:"'Playfair Display',serif",fontSize:13,color:"rgba(255,255,255,.55)",fontStyle:"italic",marginTop:10,lineHeight:1.6}}>
-            Uma jornada do SPFC rumo à glória eterna<br/><span style={{color:C.red}}>(ou ódio profundo)</span>
-          </div>
-          <div style={{display:"flex",alignItems:"center",gap:8,marginTop:16}}>
-            <span style={{fontSize:20}}>🇾🇪</span>
-            <div><div style={{fontSize:10,color:C.light,fontWeight:700,letterSpacing:2}}>SÃO PAULO FUTEBOL CLUBE</div><div style={{fontSize:9,color:"rgba(255,255,255,.3)",letterSpacing:1}}>LIBERTADORES 1980–2025 · 7 JOGOS</div></div>
-          </div>
+    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",background:C.white}}>
+      {/* Hero — full red block like the reference */}
+      <div style={{background:C.red,padding:"52px 28px 44px",position:"relative",overflow:"hidden"}}>
+        <div style={{fontFamily:F.display,fontSize:72,color:C.white,lineHeight:.9,letterSpacing:-1}}>
+          7RIKAS
         </div>
+        <div style={{marginTop:16,fontSize:13,color:"rgba(255,255,255,0.7)",fontFamily:F.body,lineHeight:1.5,maxWidth:280}}>
+          Uma jornada do SPFC rumo à glória eterna<br/>
+          <span style={{color:"rgba(255,255,255,0.45)"}}>ou ódio profundo.</span>
+        </div>
+        <div style={{marginTop:8,fontSize:11,color:"rgba(255,255,255,0.4)",fontFamily:F.body}}>
+          Uma adaptação by Órfãos de Edcarlos
+        </div>
+        {/* big flag watermark */}
+        <div style={{position:"absolute",right:-10,bottom:-20,fontSize:120,opacity:.12,pointerEvents:"none",userSelect:"none"}}>🇾🇪</div>
       </div>
-      <div style={{background:C.red,height:4}}/>
-      <div style={{flex:1,padding:"24px 20px",display:"flex",flexDirection:"column",gap:16}}>
-        {/* Three custom taglines */}
+
+      {/* Content */}
+      <div style={{flex:1,padding:"32px 24px",display:"flex",flexDirection:"column",gap:0}}>
+        {/* Three taglines — clean list style like reference */}
         {[
           ["⚽","Sorteie os elencos do SPFC e monte seu time."],
           ["🏆","Dispute contra times clássicos da Liberta."],
           ["😬","Existe risco de Rafael Tolói."],
-        ].map(([icon,text])=>(
-          <div key={text} style={{display:"flex",gap:14,alignItems:"center",padding:"14px 16px",background:C.paper,borderRadius:12,border:`1px solid ${C.border}`}}>
-            <span style={{fontSize:22,flexShrink:0}}>{icon}</span>
-            <span style={{fontSize:14,fontWeight:600,color:C.charcoal,lineHeight:1.4}}>{text}</span>
+        ].map(([icon,text],i,arr)=>(
+          <div key={text} style={{
+            display:"flex",gap:16,alignItems:"flex-start",
+            padding:"20px 0",
+            borderBottom:i<arr.length-1?`1px solid ${C.border}`:"none",
+          }}>
+            <span style={{fontSize:20,lineHeight:1,marginTop:1,flexShrink:0}}>{icon}</span>
+            <span style={{fontSize:15,color:C.ink,lineHeight:1.5,fontFamily:F.body,fontWeight:500}}>{text}</span>
           </div>
         ))}
-        <button onClick={onStart} style={{background:C.red,color:C.cream,border:"none",borderRadius:10,padding:"16px",fontFamily:"'Bebas Neue',sans-serif",fontSize:22,letterSpacing:5,cursor:"pointer",boxShadow:"0 4px 18px rgba(204,0,0,.3)",marginTop:4}}>ROLAR 🎲</button>
-        {history.length>0&&(<div>
-          <div style={{fontSize:9,letterSpacing:2,color:C.gray,fontWeight:700,marginBottom:8}}>HISTÓRICO</div>
-          {history.slice(0,4).map((h,i)=>(
-            <div key={i} style={{display:"flex",justifyContent:"space-between",padding:"7px 0",borderBottom:`1px solid ${C.border}`}}>
-              <span style={{fontSize:12,fontWeight:700,color:h.champ?C.gold:C.charcoal}}>{h.champ?"🏆 Campeão":h.phase?`❌ ${h.phase}`:"❌ Eliminado"}</span>
-              <span style={{fontSize:10,color:C.gray}}>{h.date} · {h.formation}</span>
-            </div>
-          ))}
-        </div>)}
+
+        <button onClick={onStart} style={{
+          marginTop:32,
+          background:C.black,color:C.white,border:"none",
+          padding:"18px 0",width:"100%",cursor:"pointer",
+          fontFamily:F.display,fontSize:16,letterSpacing:2,
+          transition:"background .15s",
+        }}
+          onMouseEnter={e=>e.currentTarget.style.background=C.red}
+          onMouseLeave={e=>e.currentTarget.style.background=C.black}
+        >
+          ROLAR 🎲
+        </button>
+
+        {history.length>0&&(
+          <div style={{marginTop:36}}>
+            <div style={{fontSize:10,letterSpacing:3,color:C.muted,fontWeight:600,marginBottom:12,fontFamily:F.body}}>HISTÓRICO</div>
+            {history.slice(0,4).map((h,i)=>(
+              <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 0",borderBottom:`1px solid ${C.border}`}}>
+                <span style={{fontSize:13,fontWeight:600,color:h.champ?C.red:C.ink,fontFamily:F.body}}>
+                  {h.champ?"🏆 Campeão":h.phase?`❌ ${h.phase}`:"❌ Eliminado"}
+                </span>
+                <span style={{fontSize:11,color:C.muted,fontFamily:F.body}}>{h.date} · {h.formation}</span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -764,90 +811,96 @@ function IntroScreen({onStart,history}){
 function FormationPickScreen({onConfirm}){
   const [selected,setSelected]=useState("4-3-3");
   const descriptions={
-    "4-3-3": "Três atacantes, domínio das laterais. Ofensivo e direto.",
-    "4-4-2": "Clássico e equilibrado. Dois pontas e solidez no meio.",
-    "3-5-2": "Três zagueiros, cinco meios. Posse e pressão.",
-    "4-2-3-1": "Dois volantes, meia atrás do centroavante. Moderno e sólido.",
+    "4-3-3":"Três atacantes, domínio das laterais.",
+    "4-4-2":"Clássico e equilibrado. Dois pontas.",
+    "3-5-2":"Três zagueiros, cinco meios. Posse.",
+    "4-2-3-1":"Dois volantes, meia atrás do centroavante.",
   };
-  // Show pitch preview of selected formation
   const slots=FORMATIONS[selected]||FORMATIONS["4-3-3"];
   return(
-    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",background:C.cream}}>
+    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",background:C.white}}>
       <Header/>
-      <div style={{background:C.red,padding:"16px 18px",flexShrink:0}}>
-        <div style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:28,color:C.cream,letterSpacing:3,lineHeight:1}}>ESCOLHA SUA FORMAÇÃO</div>
-        <div style={{fontSize:12,color:"rgba(255,255,255,.7)",marginTop:4}}>Essa é a estrutura do seu time. Escolha antes de montar o elenco.</div>
+      <div style={{padding:"28px 24px 0",flexShrink:0}}>
+        <div style={{fontFamily:F.display,fontSize:28,color:C.ink,lineHeight:1,letterSpacing:-0.5}}>
+          Escolha sua<br/><span style={{color:C.red}}>formação</span>
+        </div>
+        <div style={{fontSize:13,color:C.muted,marginTop:8,fontFamily:F.body}}>
+          Defina o esquema antes de montar o elenco.
+        </div>
       </div>
 
-      <div style={{flex:1,overflowY:"auto",padding:"16px 16px 120px"}}>
-        {/* Formation buttons */}
-        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:20}}>
-          {Object.keys(FORMATIONS).map(f=>(
-            <button key={f} onClick={()=>setSelected(f)} style={{
-              background:selected===f?C.charcoal:C.paper,
-              border:`2px solid ${selected===f?C.charcoal:C.border}`,
-              borderRadius:12,padding:"14px 10px",cursor:"pointer",
-              fontFamily:"'Bebas Neue',sans-serif",
-              transition:"all .15s",
+      <div style={{flex:1,overflowY:"auto",padding:"24px 24px 120px"}}>
+        {/* Formation list — clean rows */}
+        <div style={{display:"flex",flexDirection:"column",gap:0,marginBottom:28}}>
+          {Object.keys(FORMATIONS).map((f,i,arr)=>(
+            <div key={f} onClick={()=>setSelected(f)} style={{
+              display:"flex",alignItems:"center",justifyContent:"space-between",
+              padding:"18px 0",
+              borderBottom:`1px solid ${C.border}`,
+              cursor:"pointer",
             }}>
-              <div style={{fontSize:26,letterSpacing:2,color:selected===f?C.cream:C.charcoal,lineHeight:1}}>{f}</div>
-              <div style={{fontSize:9,color:selected===f?"rgba(255,255,255,.5)":C.gray,marginTop:4,fontFamily:"'DM Sans',sans-serif",fontWeight:600,letterSpacing:.3,lineHeight:1.3}}>
-                {descriptions[f]}
+              <div>
+                <div style={{fontFamily:F.display,fontSize:22,color:selected===f?C.red:C.ink,letterSpacing:-.5,lineHeight:1}}>{f}</div>
+                <div style={{fontSize:12,color:C.muted,marginTop:4,fontFamily:F.body}}>{descriptions[f]}</div>
               </div>
-            </button>
+              <div style={{
+                width:24,height:24,borderRadius:"50%",
+                border:`2px solid ${selected===f?C.red:C.faint}`,
+                background:selected===f?C.red:"transparent",
+                display:"flex",alignItems:"center",justifyContent:"center",
+                flexShrink:0,
+              }}>
+                {selected===f&&<div style={{width:8,height:8,borderRadius:"50%",background:C.white}}/>}
+              </div>
+            </div>
           ))}
         </div>
 
-        {/* Live pitch preview */}
-        <div style={{marginBottom:8}}>
-          <div style={{fontSize:9,letterSpacing:2,color:C.gray,fontWeight:700,marginBottom:10}}>PRÉVIA DA FORMAÇÃO</div>
-          {/* Compact pitch showing only position spots */}
-          <div style={{position:"relative",width:"100%"}}>
-            <div style={{
-              width:"100%",paddingBottom:"130%",
-              background:`repeating-linear-gradient(180deg,${C.green} 0,${C.green} 36px,${C.stripe} 36px,${C.stripe} 72px)`,
-              borderRadius:10,border:`1.5px solid ${C.greenDark}`,position:"relative",overflow:"hidden",
-            }}>
-              <svg style={{position:"absolute",inset:0,width:"100%",height:"100%"}} viewBox="0 0 100 130" preserveAspectRatio="none">
-                <rect x="3" y="3" width="94" height="124" fill="none" stroke="rgba(255,255,255,.25)" strokeWidth=".7"/>
-                <line x1="3" y1="65" x2="97" y2="65" stroke="rgba(255,255,255,.25)" strokeWidth=".7"/>
-                <circle cx="50" cy="65" r="12" fill="none" stroke="rgba(255,255,255,.2)" strokeWidth=".7"/>
-                <rect x="22" y="3" width="56" height="20" fill="none" stroke="rgba(255,255,255,.2)" strokeWidth=".6"/>
-                <rect x="22" y="107" width="56" height="20" fill="none" stroke="rgba(255,255,255,.2)" strokeWidth=".6"/>
-              </svg>
-              {slots.map((slot,i)=>{
-                // Remap y from 155-space to 130-space
-                const y=slot.y*(130/155);
-                const col=groupColor(slot.group);
-                return(
-                  <div key={i} style={{
-                    position:"absolute",left:`${slot.x}%`,top:`${y}%`,
-                    transform:"translate(-50%,-50%)",
-                    display:"flex",flexDirection:"column",alignItems:"center",zIndex:5,
-                  }}>
-                    <div style={{
-                      width:28,height:28,borderRadius:"50%",
-                      background:col,border:"2px solid rgba(255,255,255,.9)",
-                      display:"flex",alignItems:"center",justifyContent:"center",
-                      fontSize:7,fontWeight:900,color:"#fff",
-                      fontFamily:"'Bebas Neue',sans-serif",
-                      boxShadow:"0 2px 6px rgba(0,0,0,.4)",
-                    }}>{slot.slot}</div>
-                  </div>
-                );
-              })}
-            </div>
+        {/* Pitch preview */}
+        <div style={{fontSize:10,letterSpacing:3,color:C.muted,fontWeight:600,marginBottom:12,fontFamily:F.body}}>PRÉVIA</div>
+        <div style={{position:"relative",width:"100%"}}>
+          <div style={{
+            width:"100%",paddingBottom:"125%",
+            background:`repeating-linear-gradient(180deg,${C.green} 0,${C.green} 36px,${C.stripe} 36px,${C.stripe} 72px)`,
+            position:"relative",overflow:"hidden",
+          }}>
+            <svg style={{position:"absolute",inset:0,width:"100%",height:"100%"}} viewBox="0 0 100 125" preserveAspectRatio="none">
+              <rect x="2" y="2" width="96" height="121" fill="none" stroke="rgba(255,255,255,.22)" strokeWidth=".7"/>
+              <line x1="2" y1="62.5" x2="98" y2="62.5" stroke="rgba(255,255,255,.22)" strokeWidth=".7"/>
+              <circle cx="50" cy="62.5" r="12" fill="none" stroke="rgba(255,255,255,.18)" strokeWidth=".6"/>
+              <rect x="22" y="2" width="56" height="19" fill="none" stroke="rgba(255,255,255,.18)" strokeWidth=".5"/>
+              <rect x="22" y="104" width="56" height="19" fill="none" stroke="rgba(255,255,255,.18)" strokeWidth=".5"/>
+            </svg>
+            {slots.map((slot,i)=>{
+              const y=slot.y*(125/155);
+              return(
+                <div key={i} style={{position:"absolute",left:`${slot.x}%`,top:`${y}%`,transform:"translate(-50%,-50%)",zIndex:5}}>
+                  <div style={{
+                    width:30,height:30,borderRadius:"50%",
+                    background:selected===slot.slot?C.red:groupColor(slot.group),
+                    border:"2px solid rgba(255,255,255,.9)",
+                    display:"flex",alignItems:"center",justifyContent:"center",
+                    fontSize:7,fontWeight:700,color:"#fff",fontFamily:F.body,
+                    boxShadow:"0 1px 6px rgba(0,0,0,.35)",
+                  }}>{slot.slot}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
 
-      <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,padding:"12px 16px",background:C.cream,borderTop:`1px solid ${C.border}`,zIndex:50}}>
+      <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,padding:"16px 24px",background:C.white,borderTop:`1px solid ${C.border}`,zIndex:50}}>
         <button onClick={()=>onConfirm(selected)} style={{
-          background:C.red,color:C.cream,border:"none",borderRadius:10,padding:"15px",width:"100%",
-          fontFamily:"'Bebas Neue',sans-serif",fontSize:20,letterSpacing:4,cursor:"pointer",
-          boxShadow:"0 4px 16px rgba(204,0,0,.3)",
-        }}>
-          JOGAR COM {selected} →
+          background:C.black,color:C.white,border:"none",
+          padding:"18px 0",width:"100%",cursor:"pointer",
+          fontFamily:F.display,fontSize:15,letterSpacing:2,
+          transition:"background .15s",
+        }}
+          onMouseEnter={e=>e.currentTarget.style.background=C.red}
+          onMouseLeave={e=>e.currentTarget.style.background=C.black}
+        >
+          JOGAR COM {selected}
         </button>
       </div>
     </div>
@@ -858,49 +911,80 @@ function FormationPickScreen({onConfirm}){
 function DraftScreen({showSlot,squad,drawIdx,team,formation,rerolls,showReroll,onSlotDone,onPick,onReroll,afterReroll,usedYrs}){
   const avail=SQUADS.filter(s=>!usedYrs.includes(s.year)&&s.year!==squad?.year);
   const open=openGroups(formation,team);
+
+  const progressDots=(
+    <div style={{display:"flex",gap:4,alignItems:"center"}}>
+      {Array.from({length:11}).map((_,i)=>(
+        <div key={i} style={{
+          width:i<drawIdx?20:i===drawIdx?8:6,
+          height:6,
+          background:i<drawIdx?C.red:i===drawIdx?C.ink:C.faint,
+          transition:"all .3s",
+        }}/>
+      ))}
+    </div>
+  );
+
   return(
-    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",background:C.cream}}>
+    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",background:C.white}}>
       <Header
-        left={<div style={{display:"flex",gap:3,flexWrap:"wrap"}}>{Array.from({length:11}).map((_,i)=><div key={i} style={{width:16,height:16,borderRadius:"50%",background:i<drawIdx?C.red:i===drawIdx?"rgba(204,0,0,.35)":"rgba(0,0,0,.1)",border:i===drawIdx?`1.5px solid ${C.red}`:"1.5px solid transparent",display:"flex",alignItems:"center",justifyContent:"center",fontSize:7,color:"#fff",fontWeight:800}}>{i<drawIdx?"✓":""}</div>)}</div>}
-        right={<span style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:14,color:C.red,letterSpacing:1}}>{drawIdx+1}/11</span>}
+        left={progressDots}
+        right={<span style={{fontFamily:F.display,fontSize:13,color:C.red,letterSpacing:1}}>{drawIdx+1}/11</span>}
       />
       {showSlot?(
         <SlotMachine squads={avail.length>3?avail:SQUADS} onDone={onSlotDone}/>
       ):squad?(
         <>
-          <div style={{background:squad.champion?`linear-gradient(135deg,${C.redDark},#5A2C00)`:`linear-gradient(135deg,${C.charcoal},#2C2C2C)`,padding:"12px 18px",flexShrink:0}}>
-            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-              <div>
-                {squad.champion&&<div style={{fontSize:9,color:C.gold,fontWeight:800,letterSpacing:2,marginBottom:2}}>🏆 ANO CAMPEÃO</div>}
-                <div style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:32,color:C.cream,letterSpacing:3,lineHeight:1}}>{squad.year}</div>
-                <div style={{fontFamily:"'Playfair Display',serif",fontSize:13,color:"rgba(255,255,255,.65)",fontWeight:700}}>{squad.ed}</div>
-              </div>
-              <div style={{textAlign:"right"}}>
-                <div style={{fontSize:9,color:"rgba(255,255,255,.4)",marginBottom:5}}>RE-SORTEIOS</div>
-                <div style={{display:"flex",gap:4,justifyContent:"flex-end",marginBottom:8}}>{[0,1,2].map(i=><div key={i} style={{width:9,height:9,borderRadius:"50%",background:i<rerolls?C.yellow:"rgba(255,255,255,.18)"}}/>)}</div>
-                <button onClick={onReroll} disabled={rerolls<=0} style={{padding:"5px 10px",borderRadius:6,fontSize:10,fontWeight:700,cursor:rerolls>0?"pointer":"not-allowed",background:"rgba(255,255,255,.1)",border:"1px solid rgba(255,255,255,.2)",color:rerolls>0?C.cream:"rgba(255,255,255,.3)",fontFamily:"'DM Sans',sans-serif"}}>⟳ OUTRO</button>
-              </div>
+          {/* Squad banner */}
+          <div style={{
+            background:squad.champion?C.red:C.black,
+            padding:"20px 24px",flexShrink:0,position:"relative",overflow:"hidden",
+          }}>
+            {squad.champion&&<div style={{position:"absolute",right:20,top:"50%",transform:"translateY(-50%)",fontSize:48,opacity:.15,pointerEvents:"none"}}>🏆</div>}
+            <div style={{fontSize:11,letterSpacing:3,color:"rgba(255,255,255,.5)",fontFamily:F.body,fontWeight:600,marginBottom:4}}>
+              {squad.champion?"ANO CAMPEÃO ·":""} ELENCO {squad.year}
+            </div>
+            <div style={{fontFamily:F.display,fontSize:24,color:C.white,lineHeight:1,letterSpacing:-.5}}>{squad.ed}</div>
+            <div style={{marginTop:12,display:"flex",alignItems:"center",gap:10}}>
+              {[0,1,2].map(i=>(
+                <div key={i} style={{width:8,height:8,background:i<rerolls?"rgba(255,255,255,.8)":"rgba(255,255,255,.2)"}}/>
+              ))}
+              <button onClick={onReroll} disabled={rerolls<=0} style={{
+                marginLeft:4,padding:"4px 12px",fontSize:11,fontWeight:600,cursor:rerolls>0?"pointer":"not-allowed",
+                background:"rgba(255,255,255,.12)",border:"1px solid rgba(255,255,255,.2)",
+                color:rerolls>0?"rgba(255,255,255,.8)":"rgba(255,255,255,.25)",fontFamily:F.body,
+              }}>⟳ outro elenco</button>
             </div>
           </div>
-          <div style={{background:C.red,padding:"5px 18px",textAlign:"center",flexShrink:0}}>
-            <span style={{fontSize:9,letterSpacing:2,color:"rgba(255,255,255,.85)",fontWeight:700}}>ESCOLHA UM JOGADOR — {drawIdx+1}/11</span>
+
+          {/* Instruction strip */}
+          <div style={{borderBottom:`1px solid ${C.border}`,padding:"10px 24px"}}>
+            <span style={{fontSize:11,letterSpacing:2,color:C.muted,fontWeight:600,fontFamily:F.body}}>
+              ESCOLHA 1 JOGADOR — {drawIdx+1}/11
+            </span>
           </div>
-          {/* scrollable body */}
+
+          {/* Scrollable body: list above, pitch below */}
           <div style={{flex:1,overflowY:"auto",display:"flex",flexDirection:"column",position:"relative"}}>
             {showReroll&&<RerollAnim onDone={afterReroll}/>}
-            <div style={{padding:"10px 14px 0",flexShrink:0}}>
-              <div style={{fontSize:9,letterSpacing:2,color:C.gray,fontWeight:700,marginBottom:8}}>JOGADORES DISPONÍVEIS</div>
-              <div style={{display:"flex",flexDirection:"column",gap:5}}>
-                {squad.players.map((p,i)=>{
-                  const isOpen=open.has(posToGroup(p.pos));
-                  return <PlayerRow key={i} player={p} year={squad.year} onPick={()=>onPick(p)} disabled={!isOpen}/>;
-                })}
-              </div>
+
+            {/* Player list */}
+            <div style={{padding:"16px 24px 0",flexShrink:0}}>
+              {squad.players.map((p,i)=>{
+                const isOpen=open.has(posToGroup(p.pos));
+                return <PlayerRow key={i} player={p} year={squad.year} onPick={()=>onPick(p)} disabled={!isOpen}/>;
+              })}
             </div>
-            <div style={{margin:"14px 14px 8px",borderTop:`1px solid ${C.border}`,position:"relative"}}>
-              <span style={{position:"absolute",top:-8,left:"50%",transform:"translateX(-50%)",background:C.cream,padding:"0 10px",fontSize:8,letterSpacing:2,color:C.light,fontWeight:700}}>TIME EM CONSTRUÇÃO</span>
+
+            {/* Divider label */}
+            <div style={{padding:"20px 24px 8px",display:"flex",alignItems:"center",gap:12,flexShrink:0}}>
+              <div style={{flex:1,height:1,background:C.border}}/>
+              <span style={{fontSize:10,letterSpacing:2,color:C.muted,fontWeight:600,fontFamily:F.body,whiteSpace:"nowrap"}}>TIME EM CONSTRUÇÃO</span>
+              <div style={{flex:1,height:1,background:C.border}}/>
             </div>
-            <div style={{padding:"0 14px 20px",flexShrink:0}}>
+
+            {/* Pitch */}
+            <div style={{padding:"0 24px 24px",flexShrink:0}}>
               <Pitch formation={formation} players={team}/>
             </div>
           </div>
@@ -914,21 +998,38 @@ function PlayerRow({player,year,onPick,disabled}){
   const [hov,setHov]=useState(false);
   const col=groupColor(posToGroup(player.pos));
   return(
-    <div onMouseEnter={()=>!disabled&&setHov(true)} onMouseLeave={()=>setHov(false)} onClick={()=>!disabled&&onPick()}
-      style={{display:"flex",alignItems:"center",gap:10,background:disabled?"rgba(0,0,0,0.03)":hov?C.white:C.paper,
-        border:`1px solid ${disabled?C.border:hov?C.red:C.border}`,borderRadius:10,padding:"9px 14px",
-        cursor:disabled?"not-allowed":"pointer",opacity:disabled?0.35:1,transition:"all .12s",
-        boxShadow:hov&&!disabled?"0 2px 10px rgba(204,0,0,.1)":"none"}}>
-      <div style={{fontSize:10,color:C.light,fontWeight:600,minWidth:22}}>#{player.shirt}</div>
-      <div style={{flex:1}}>
-        <div style={{fontSize:14,fontWeight:700,color:disabled?C.light:C.charcoal,lineHeight:1.2}}>
-          {player.name} <span style={{fontSize:10,color:disabled?C.light:C.gray,fontWeight:500}}>{year}</span>
-        </div>
-        {disabled&&<div style={{fontSize:9,color:C.light,marginTop:1}}>posição já preenchida</div>}
+    <div
+      onMouseEnter={()=>!disabled&&setHov(true)}
+      onMouseLeave={()=>setHov(false)}
+      onClick={()=>!disabled&&onPick()}
+      style={{
+        display:"flex",alignItems:"center",gap:14,
+        padding:"14px 0",
+        borderBottom:`1px solid ${C.border}`,
+        cursor:disabled?"not-allowed":"pointer",
+        opacity:disabled?0.3:1,
+        background:hov&&!disabled?"rgba(204,0,0,.03)":"transparent",
+        transition:"background .1s, opacity .1s",
+      }}
+    >
+      {/* Pos badge */}
+      <div style={{
+        width:36,height:36,background:disabled?C.faint:col,
+        display:"flex",alignItems:"center",justifyContent:"center",
+        flexShrink:0,
+      }}>
+        <span style={{fontSize:9,fontWeight:700,color:"#fff",fontFamily:F.body,letterSpacing:.3}}>{player.pos}</span>
       </div>
-      <div style={{display:"flex",alignItems:"center",gap:8}}>
-        <span style={{fontSize:9,fontWeight:800,letterSpacing:.5,color:col,background:col+"18",borderRadius:4,padding:"2px 6px"}}>{player.pos}</span>
-        <span style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:22,color:disabled?C.light:player.rating>=88?C.gold:C.charcoal,letterSpacing:1}}>{player.rating}</span>
+      <div style={{flex:1,minWidth:0}}>
+        <div style={{fontSize:15,fontWeight:600,color:disabled?C.muted:C.ink,fontFamily:F.body,lineHeight:1.2}}>
+          {player.name}
+        </div>
+        <div style={{fontSize:11,color:C.muted,marginTop:2,fontFamily:F.body}}>
+          {year}{disabled?" · posição preenchida":""}
+        </div>
+      </div>
+      <div style={{fontFamily:F.display,fontSize:26,color:disabled?C.faint:player.rating>=88?C.red:C.ink,flexShrink:0}}>
+        {player.rating}
       </div>
     </div>
   );
@@ -939,41 +1040,65 @@ function LineupScreen({team,formation,setFormation,onSim}){
   const [tab,setTab]=useState("pitch");
   const rating=avgR(team).toFixed(1);
   return(
-    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column"}}>
-      <Header right={<span style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:15,color:C.yellow,letterSpacing:1}}>{rating}</span>}/>
-      <div style={{background:C.paper,padding:"12px 16px",flexShrink:0}}>
-        <div style={{fontSize:9,letterSpacing:2,color:C.gray,fontWeight:700,marginBottom:8}}>FORMAÇÃO</div>
-        <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
-          {Object.keys(FORMATIONS).map(f=><button key={f} onClick={()=>setFormation(f)} style={{padding:"5px 12px",borderRadius:6,fontSize:12,fontWeight:700,cursor:"pointer",background:formation===f?C.charcoal:C.cream,color:formation===f?C.cream:C.gray,border:`1px solid ${formation===f?C.charcoal:C.border}`,fontFamily:"'DM Sans',sans-serif"}}>{f}</button>)}
-        </div>
-      </div>
-      <div style={{background:C.cream,borderBottom:`1px solid ${C.border}`,display:"flex",flexShrink:0}}>
-        {[["pitch","Campo"],["list","Elenco"]].map(([t,l])=>(
-          <button key={t} onClick={()=>setTab(t)} style={{flex:1,padding:"10px",fontSize:12,fontWeight:700,background:"transparent",border:"none",cursor:"pointer",color:tab===t?C.red:C.gray,borderBottom:tab===t?`2.5px solid ${C.red}`:"2.5px solid transparent",fontFamily:"'DM Sans',sans-serif"}}>{l}</button>
+    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",background:C.white}}>
+      <Header
+        right={<span style={{fontFamily:F.display,fontSize:15,color:C.red}}>{rating}</span>}
+      />
+      {/* Formation picker */}
+      <div style={{padding:"0 24px",borderBottom:`1px solid ${C.border}`,display:"flex",gap:0,flexShrink:0}}>
+        {Object.keys(FORMATIONS).map(f=>(
+          <button key={f} onClick={()=>setFormation(f)} style={{
+            padding:"12px 14px",fontSize:12,fontWeight:600,
+            background:"transparent",border:"none",cursor:"pointer",fontFamily:F.body,
+            color:formation===f?C.ink:C.muted,
+            borderBottom:formation===f?`2px solid ${C.ink}`:"2px solid transparent",
+            transition:"color .15s",
+          }}>{f}</button>
         ))}
       </div>
-      {/* FIX: padding-bottom large enough so content clears the fixed button */}
-      <div style={{flex:1,overflowY:"auto",padding:"14px 14px 120px"}}>
+      {/* Tab bar */}
+      <div style={{borderBottom:`1px solid ${C.border}`,display:"flex",flexShrink:0}}>
+        {[["pitch","Campo"],["list","Elenco"]].map(([t,l])=>(
+          <button key={t} onClick={()=>setTab(t)} style={{
+            flex:1,padding:"12px",fontSize:12,fontWeight:600,fontFamily:F.body,
+            background:"transparent",border:"none",cursor:"pointer",
+            color:tab===t?C.red:C.muted,
+            borderBottom:tab===t?`2px solid ${C.red}`:"2px solid transparent",
+          }}>{l}</button>
+        ))}
+      </div>
+      <div style={{flex:1,overflowY:"auto",padding:"20px 24px 120px"}}>
         {tab==="pitch"?<Pitch formation={formation} players={team}/>:(
-          <div style={{display:"flex",flexDirection:"column",gap:6}}>
+          <div>
             {team.map((p,i)=>(
-              <div key={i} style={{display:"flex",alignItems:"center",gap:10,background:C.paper,border:`1px solid ${C.border}`,borderRadius:10,padding:"9px 14px"}}>
-                <span style={{fontSize:10,color:C.light,minWidth:22}}>#{p.shirt}</span>
-                <div style={{flex:1}}>
-                  <div style={{fontSize:13,fontWeight:700,color:C.charcoal}}>
-                    {p.name} <span style={{fontSize:10,color:C.gray,fontWeight:500}}>{p._year}</span>
-                  </div>
-                  <div style={{fontSize:9,color:C.red,fontWeight:700,marginTop:1}}>{p.pos}</div>
+              <div key={i} style={{display:"flex",alignItems:"center",gap:14,padding:"14px 0",borderBottom:`1px solid ${C.border}`}}>
+                <div style={{width:36,height:36,background:groupColor(posToGroup(p.pos)),display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
+                  <span style={{fontSize:9,fontWeight:700,color:"#fff",fontFamily:F.body}}>{p.pos}</span>
                 </div>
-                <span style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:20,color:p.rating>=88?C.gold:C.charcoal}}>{p.rating}</span>
+                <div style={{flex:1}}>
+                  <div style={{fontSize:15,fontWeight:600,color:C.ink,fontFamily:F.body}}>
+                    {p.name}
+                  </div>
+                  <div style={{fontSize:11,color:C.muted,marginTop:2,fontFamily:F.body}}>{p._year}{p._champion?" · 🏆":""}</div>
+                </div>
+                <div style={{fontFamily:F.display,fontSize:24,color:p.rating>=88?C.red:C.ink}}>{p.rating}</div>
               </div>
             ))}
           </div>
         )}
       </div>
-      {/* FIX: z-index so button always appears above pitch content */}
-      <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,padding:"12px 16px",background:C.cream,borderTop:`1px solid ${C.border}`,zIndex:50}}>
-        <button onClick={onSim} style={{background:C.red,color:C.cream,border:"none",borderRadius:10,padding:"15px",width:"100%",fontFamily:"'Bebas Neue',sans-serif",fontSize:20,letterSpacing:4,cursor:"pointer",boxShadow:"0 4px 16px rgba(204,0,0,.3)"}}>🏆 DISPUTAR LIBERTADORES</button>
+      <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,padding:"16px 24px",background:C.white,borderTop:`1px solid ${C.border}`,zIndex:50}}>
+        <button onClick={onSim} style={{
+          background:C.black,color:C.white,border:"none",
+          padding:"18px 0",width:"100%",cursor:"pointer",
+          fontFamily:F.display,fontSize:15,letterSpacing:2,
+          transition:"background .15s",
+        }}
+          onMouseEnter={e=>e.currentTarget.style.background=C.red}
+          onMouseLeave={e=>e.currentTarget.style.background=C.black}
+        >
+          DISPUTAR LIBERTADORES
+        </button>
       </div>
     </div>
   );
@@ -986,73 +1111,155 @@ function SimScreen({allMatches,matchIdx,livePhase,minute,spG,oppG,events,flash,t
   const isPenalties=livePhase==="penalties",isIdle=livePhase==="idle";
   const min2=String(minute).padStart(2,"0");
   const isGroup=m.phase==="group",isKO=m.phase==="ko";
-  const doneLabel=()=>{if(isGroup)return matchIdx<2?"PRÓXIMO JOGO →":"VER TABELA DO GRUPO →";if(m.draw)return"PÊNALTIS →";if(m.win)return matchIdx>=6?"🏆 VER RESULTADO":"PRÓXIMO JOGO →";return"VER RESULTADO →";};
-  const doneBg=m.draw?C.yellow:m.win?C.red:C.charcoal;const doneFg=m.draw?C.black:C.cream;
+
+  const doneLabel=()=>{
+    if(isGroup)return matchIdx<2?"PRÓXIMO JOGO":"VER TABELA DO GRUPO";
+    if(m.draw)return"PÊNALTIS";
+    if(m.win)return matchIdx>=6?"VER RESULTADO":"PRÓXIMO JOGO";
+    return"VER RESULTADO";
+  };
+  const scoreBg=isDone?(m.win?C.red:C.black):C.black;
+  const doneBg=m.draw?C.yellow:m.win?C.red:C.black;
+  const doneFg=m.draw?C.black:C.white;
+
+  /* progress dots — groups and KO */
+  const dots=(
+    <div style={{display:"flex",gap:3,alignItems:"center"}}>
+      {tournament.groupMatches.map((_,i)=>(
+        <div key={i} style={{width:i<matchIdx?16:6,height:6,background:i<matchIdx?C.red:i===matchIdx?C.ink:C.faint,transition:"all .3s"}}/>
+      ))}
+      <div style={{width:1,height:10,background:C.border,margin:"0 3px"}}/>
+      {tournament.koMatches.map((_,i)=>(
+        <div key={i} style={{width:(matchIdx-3)>i?16:6,height:6,background:(matchIdx-3)>i?C.red:(matchIdx-3)===i?C.ink:C.faint,transition:"all .3s"}}/>
+      ))}
+    </div>
+  );
+
   return(
-    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column"}}>
-      <Header right={<div style={{display:"flex",gap:4,alignItems:"center"}}>
-        <div style={{display:"flex",gap:2}}>{tournament.groupMatches.map((_,i)=><div key={i} style={{width:6,height:6,borderRadius:"50%",background:i<matchIdx?C.red:i===matchIdx?C.yellow:"rgba(255,255,255,.2)"}}/>)}</div>
-        <div style={{width:1,height:12,background:"rgba(255,255,255,.2)",margin:"0 2px"}}/>
-        <div style={{display:"flex",gap:2}}>{tournament.koMatches.map((_,i)=><div key={i} style={{width:6,height:6,borderRadius:"50%",background:(matchIdx-3)>i?C.red:(matchIdx-3)===i?C.yellow:"rgba(255,255,255,.2)"}}/>)}</div>
-      </div>}/>
-      {matchIdx>0&&(<div style={{background:C.paper,borderBottom:`1px solid ${C.border}`,padding:"5px 14px",display:"flex",gap:8,overflowX:"auto",flexShrink:0}}>
-        {allMatches.slice(0,matchIdx).map((prev,i)=>(
-          <div key={i} style={{display:"flex",gap:4,alignItems:"center",flexShrink:0}}>
-            <span style={{fontSize:8,color:C.gray,fontWeight:700}}>{prev.phase==="group"?`G${i+1}`:prev.round?.slice(0,3).toUpperCase()}</span>
-            <span style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:13,color:prev.win?C.red:C.charcoal,letterSpacing:1}}>{prev.myG}–{prev.oppG}</span>
-            <span style={{fontSize:10}}>{prev.opp.flag}</span>
-          </div>
-        ))}
-      </div>)}
-      <div style={{background:isDone?(m.win?C.red:C.charcoal):C.charcoal,padding:"18px",transition:"background .6s",flexShrink:0}}>
-        <div style={{textAlign:"center",marginBottom:8}}><span style={{fontSize:9,letterSpacing:3,color:"rgba(255,255,255,.4)",fontWeight:700}}>{m.label?.toUpperCase()}</span></div>
+    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",background:C.white}}>
+      <Header right={dots}/>
+
+      {/* Previous results strip */}
+      {matchIdx>0&&(
+        <div style={{borderBottom:`1px solid ${C.border}`,padding:"8px 24px",display:"flex",gap:12,overflowX:"auto",flexShrink:0}}>
+          {allMatches.slice(0,matchIdx).map((prev,i)=>(
+            <div key={i} style={{display:"flex",gap:6,alignItems:"center",flexShrink:0}}>
+              <span style={{fontSize:10,color:C.muted,fontWeight:600,fontFamily:F.body}}>{prev.phase==="group"?`G${i+1}`:prev.round?.slice(0,3).toUpperCase()}</span>
+              <span style={{fontFamily:F.display,fontSize:14,color:prev.win?C.red:C.ink}}>{prev.myG}–{prev.oppG}</span>
+              <span style={{fontSize:12}}>{prev.opp.flag}</span>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Scoreboard — always black bg */}
+      <div style={{background:scoreBg,padding:"24px",transition:"background .5s",flexShrink:0}}>
+        <div style={{textAlign:"center",marginBottom:12}}>
+          <span style={{fontSize:10,letterSpacing:3,color:"rgba(255,255,255,.35)",fontFamily:F.body,fontWeight:600}}>
+            {m.label?.toUpperCase()}
+          </span>
+        </div>
         <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
           <div style={{flex:1,textAlign:"center"}}>
-            <div style={{fontSize:22,marginBottom:4}}>🇾🇪</div>
-            <div style={{fontSize:9,color:"rgba(255,255,255,.6)",fontWeight:700,letterSpacing:1}}>SÃO PAULO</div>
+            <div style={{fontSize:28,marginBottom:6}}>🇾🇪</div>
+            <div style={{fontSize:10,color:"rgba(255,255,255,.5)",fontWeight:600,fontFamily:F.body,letterSpacing:1}}>SÃO PAULO</div>
           </div>
-          <div style={{textAlign:"center",minWidth:110}}>
-            {isIdle?<div style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:40,color:"rgba(255,255,255,.3)",letterSpacing:4}}>– : –</div>
-              :<div style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:52,color:C.cream,letterSpacing:6,lineHeight:1}}>{spG} : {oppG}</div>}
-            {isLive&&<div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:5,marginTop:4}}><div style={{width:6,height:6,borderRadius:"50%",background:C.red,animation:"pulse 1s infinite"}}/><span style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:13,color:"rgba(255,255,255,.6)",letterSpacing:2}}>{min2}'</span></div>}
-            {isDone&&<div style={{fontSize:9,color:"rgba(255,255,255,.5)",fontWeight:700,letterSpacing:2,marginTop:4}}>{m.win?"VITÓRIA":m.draw&&isKO?"EMPATE":m.draw?"EMPATE":"DERROTA"}</div>}
+          <div style={{textAlign:"center",minWidth:120}}>
+            {isIdle
+              ? <div style={{fontFamily:F.display,fontSize:44,color:"rgba(255,255,255,.2)",letterSpacing:4}}>–  –</div>
+              : <div style={{fontFamily:F.display,fontSize:56,color:C.white,letterSpacing:6,lineHeight:1}}>{spG}  {oppG}</div>
+            }
+            {isLive&&(
+              <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:6,marginTop:6}}>
+                <div style={{width:6,height:6,background:C.red,animation:"pulse 1s infinite"}}/>
+                <span style={{fontFamily:F.body,fontSize:12,color:"rgba(255,255,255,.5)",fontWeight:600,letterSpacing:2}}>{min2}'</span>
+              </div>
+            )}
+            {isDone&&(
+              <div style={{fontSize:10,color:"rgba(255,255,255,.4)",fontWeight:600,fontFamily:F.body,letterSpacing:2,marginTop:6}}>
+                {m.win?"VITÓRIA":m.draw&&isKO?"EMPATE":m.draw?"EMPATE":"DERROTA"}
+              </div>
+            )}
           </div>
           <div style={{flex:1,textAlign:"center"}}>
-            <div style={{fontSize:22,marginBottom:4}}>{m.opp.flag}</div>
-            <div style={{fontSize:9,color:"rgba(255,255,255,.6)",fontWeight:700,letterSpacing:.5}}>{oppLabel(m.opp)}</div>
-            <div style={{fontSize:8,color:"rgba(255,255,255,.3)",marginTop:1}}>{m.opp.country}</div>
+            <div style={{fontSize:28,marginBottom:6}}>{m.opp.flag}</div>
+            <div style={{fontSize:10,color:"rgba(255,255,255,.5)",fontWeight:600,fontFamily:F.body}}>{oppLabel(m.opp)}</div>
+            <div style={{fontSize:9,color:"rgba(255,255,255,.25)",marginTop:2,fontFamily:F.body}}>{m.opp.country}</div>
           </div>
         </div>
       </div>
+
+      {/* Body */}
       <div style={{flex:1,overflowY:"auto",padding:"0 0 110px"}}>
-        {isIdle&&(<div style={{padding:"28px 20px",textAlign:"center"}}>
-          <div style={{fontSize:34,marginBottom:10}}>{isGroup?"⬡":"🏟️"}</div>
-          <div style={{fontFamily:"'Playfair Display',serif",fontSize:16,fontWeight:700,color:C.charcoal,marginBottom:4}}>{isGroup?"Fase de Grupos":m.round}</div>
-          <div style={{fontSize:14,fontWeight:600,color:C.charcoal,marginBottom:20}}>🇾🇪 São Paulo × {m.opp.flag} {oppLabel(m.opp)}</div>
-          <button onClick={onKickoff} style={{background:C.red,color:C.cream,border:"none",borderRadius:10,padding:"13px 40px",fontFamily:"'Bebas Neue',sans-serif",fontSize:18,letterSpacing:3,cursor:"pointer"}}>APITAR ▶</button>
-        </div>)}
+        {isIdle&&(
+          <div style={{padding:"48px 24px",textAlign:"center"}}>
+            <div style={{fontSize:10,letterSpacing:3,color:C.muted,fontWeight:600,fontFamily:F.body,marginBottom:20}}>
+              {isGroup?"FASE DE GRUPOS":m.round?.toUpperCase()}
+            </div>
+            <div style={{fontFamily:F.display,fontSize:26,color:C.ink,lineHeight:1.1,marginBottom:8,letterSpacing:-.5}}>
+              🇾🇪 São Paulo<br/>×<br/>{m.opp.flag} {oppLabel(m.opp)}
+            </div>
+            <div style={{marginTop:32}}>
+              <button onClick={onKickoff} style={{
+                background:C.black,color:C.white,border:"none",
+                padding:"18px 56px",cursor:"pointer",
+                fontFamily:F.display,fontSize:15,letterSpacing:2,
+                transition:"background .15s",
+              }}
+                onMouseEnter={e=>e.currentTarget.style.background=C.red}
+                onMouseLeave={e=>e.currentTarget.style.background=C.black}
+              >APITAR ▶</button>
+            </div>
+          </div>
+        )}
+
         {isGroupResult&&<GroupResultCard tournament={tournament} onContinue={()=>onAdvance("groupResult")}/>}
         {isPenalties&&penalties&&<PenaltyScreen penalties={penalties} opp={m.opp} onContinue={()=>onAdvance("penalties")}/>}
-        {(isLive||isDone)&&(<div>
-          <div style={{padding:"8px 14px",borderBottom:`1px solid ${C.border}`}}><span style={{fontSize:9,letterSpacing:2,color:C.gray,fontWeight:700}}>LANCES</span></div>
-          {events.length===0&&isLive&&<div style={{padding:"20px",textAlign:"center",color:C.light,fontSize:12,animation:"pulse 2s infinite"}}>Aguardando lance…</div>}
-          {events.map((ev,i)=>(
-            <div key={i} className={i===0?"goalSlide":""} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 16px",borderBottom:`1px solid ${C.border}`,background:ev.team==="sp"?"rgba(204,0,0,.04)":C.cream}}>
-              <span style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:13,color:C.light,minWidth:30,letterSpacing:1}}>{ev.min}'</span>
-              <span style={{fontSize:15}}>⚽</span>
-              <div style={{flex:1}}>
-                <div style={{fontSize:13,fontWeight:700,color:ev.team==="sp"?C.red:C.charcoal}}>{ev.name}</div>
-                <div style={{fontSize:9,color:C.gray,marginTop:1}}>{ev.team==="sp"?ev.pos:ev.club}</div>
-              </div>
-              <span style={{fontSize:18}}>{ev.team==="sp"?"🇾🇪":m.opp.flag}</span>
+
+        {(isLive||isDone)&&(
+          <div>
+            <div style={{padding:"12px 24px",borderBottom:`1px solid ${C.border}`}}>
+              <span style={{fontSize:10,letterSpacing:3,color:C.muted,fontWeight:600,fontFamily:F.body}}>LANCES</span>
             </div>
-          ))}
-          {isLive&&<div style={{padding:"12px 16px",display:"flex",gap:8,alignItems:"center"}}><div style={{width:7,height:7,borderRadius:"50%",background:C.red,animation:"pulse 1s infinite",flexShrink:0}}/><span style={{fontSize:11,color:C.light,fontWeight:600}}>{min2}' em andamento</span></div>}
-        </div>)}
+            {events.length===0&&isLive&&(
+              <div style={{padding:"32px 24px",textAlign:"center",color:C.muted,fontSize:13,fontFamily:F.body,animation:"pulse 2s infinite"}}>
+                Aguardando lance…
+              </div>
+            )}
+            {events.map((ev,i)=>(
+              <div key={i} className={i===0?"goalSlide":""} style={{
+                display:"flex",alignItems:"center",gap:14,
+                padding:"14px 24px",borderBottom:`1px solid ${C.border}`,
+                background:ev.team==="sp"?"rgba(204,0,0,.03)":C.white,
+              }}>
+                <span style={{fontFamily:F.body,fontSize:12,color:C.muted,fontWeight:600,minWidth:32}}>{ev.min}'</span>
+                <span style={{fontSize:16}}>⚽</span>
+                <div style={{flex:1}}>
+                  <div style={{fontSize:14,fontWeight:600,color:ev.team==="sp"?C.red:C.ink,fontFamily:F.body}}>{ev.name}</div>
+                  <div style={{fontSize:11,color:C.muted,marginTop:2,fontFamily:F.body}}>{ev.team==="sp"?ev.pos:ev.club}</div>
+                </div>
+                <span style={{fontSize:18}}>{ev.team==="sp"?"🇾🇪":m.opp.flag}</span>
+              </div>
+            ))}
+            {isLive&&(
+              <div style={{padding:"14px 24px",display:"flex",gap:8,alignItems:"center"}}>
+                <div style={{width:6,height:6,background:C.red,animation:"pulse 1s infinite",flexShrink:0}}/>
+                <span style={{fontSize:12,color:C.muted,fontWeight:500,fontFamily:F.body}}>{min2}' em andamento</span>
+              </div>
+            )}
+          </div>
+        )}
       </div>
-      {isDone&&!isGroupResult&&!isPenalties&&(<div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,padding:"12px 16px",background:C.cream,borderTop:`1px solid ${C.border}`,zIndex:50}}>
-        <button onClick={()=>onAdvance("done")} style={{background:doneBg,color:doneFg,border:"none",borderRadius:10,padding:"14px",width:"100%",fontFamily:"'Bebas Neue',sans-serif",fontSize:18,letterSpacing:3,cursor:"pointer"}}>{doneLabel()}</button>
-      </div>)}
+
+      {isDone&&!isGroupResult&&!isPenalties&&(
+        <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,padding:"16px 24px",background:C.white,borderTop:`1px solid ${C.border}`,zIndex:50}}>
+          <button onClick={()=>onAdvance("done")} style={{
+            background:doneBg,color:doneFg,border:"none",
+            padding:"18px 0",width:"100%",cursor:"pointer",
+            fontFamily:F.display,fontSize:15,letterSpacing:2,
+          }}>{doneLabel()}</button>
+        </div>
+      )}
     </div>
   );
 }
@@ -1061,39 +1268,68 @@ function SimScreen({allMatches,matchIdx,livePhase,minute,spG,oppG,events,flash,t
 function GroupResultCard({tournament,onContinue}){
   const{groupMatches,pts,gd,qualified,groupTable}=tournament;
   return(
-    <div style={{padding:"20px 16px"}}>
-      <div style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:14,letterSpacing:3,color:C.gray,marginBottom:12}}>FASE DE GRUPOS — CLASSIFICAÇÃO</div>
-      <div style={{background:C.white,border:`1px solid ${C.border}`,borderRadius:12,overflow:"hidden",marginBottom:16}}>
-        <div style={{background:C.charcoal,padding:"8px 14px",display:"flex",alignItems:"center"}}>
-          <span style={{fontSize:9,color:"rgba(255,255,255,.5)",fontWeight:700,letterSpacing:1,flex:1}}>TIME</span>
-          {["J","V","E","D","GP","GC","PTS"].map(h=><span key={h} style={{fontSize:9,color:"rgba(255,255,255,.5)",fontWeight:700,minWidth:26,textAlign:"center"}}>{h}</span>)}
+    <div style={{padding:"24px 24px"}}>
+      <div style={{fontSize:10,letterSpacing:3,color:C.muted,fontWeight:600,fontFamily:F.body,marginBottom:20}}>FASE DE GRUPOS — CLASSIFICAÇÃO</div>
+
+      {/* Table */}
+      <div style={{border:`1px solid ${C.border}`,overflow:"hidden",marginBottom:24}}>
+        <div style={{background:C.black,padding:"10px 16px",display:"flex",alignItems:"center"}}>
+          <span style={{fontSize:10,color:"rgba(255,255,255,.4)",fontWeight:600,fontFamily:F.body,flex:1}}>TIME</span>
+          {["J","V","E","D","GP","GC","PTS"].map(h=>(
+            <span key={h} style={{fontSize:10,color:"rgba(255,255,255,.4)",fontWeight:600,fontFamily:F.body,minWidth:28,textAlign:"center"}}>{h}</span>
+          ))}
         </div>
         {groupTable.map((row,i)=>(
-          <div key={i} style={{padding:"9px 14px",display:"flex",alignItems:"center",background:i<2?(row.isSP?"rgba(204,0,0,0.07)":"rgba(0,0,0,0.02)"):"rgba(0,0,0,0)",borderTop:`1px solid ${C.border}`}}>
+          <div key={i} style={{
+            padding:"12px 16px",display:"flex",alignItems:"center",
+            background:row.isSP?"rgba(204,0,0,.04)":C.white,
+            borderTop:`1px solid ${C.border}`,
+          }}>
             <div style={{flex:1,display:"flex",gap:8,alignItems:"center"}}>
-              <span style={{fontSize:11,color:C.light,fontWeight:700,minWidth:14}}>{i+1}</span>
-              <span style={{fontSize:14}}>{row.flag}</span>
-              <span style={{fontSize:11,fontWeight:row.isSP?800:600,color:C.charcoal}}>{row.name}</span>
-              {i<2&&<span style={{fontSize:8,color:C.red,fontWeight:800}}>✓</span>}
+              <span style={{fontSize:12,color:C.muted,fontWeight:600,fontFamily:F.body,minWidth:16}}>{i+1}</span>
+              <span style={{fontSize:16}}>{row.flag}</span>
+              <span style={{fontSize:13,fontWeight:row.isSP?700:500,color:C.ink,fontFamily:F.body}}>{row.name}</span>
+              {i<2&&<span style={{fontSize:9,color:C.red,fontWeight:700,fontFamily:F.body}}>✓</span>}
             </div>
             {[row.w+row.d+row.l,row.w,row.d,row.l,row.gf,row.ga,row.pts].map((v,j)=>(
-              <span key={j} style={{fontSize:12,fontWeight:j===6?800:500,color:j===6?(row.isSP?C.red:C.charcoal):C.gray,minWidth:26,textAlign:"center"}}>{v}</span>
+              <span key={j} style={{fontSize:13,fontWeight:j===6?700:400,color:j===6?(row.isSP?C.red:C.ink):C.muted,minWidth:28,textAlign:"center",fontFamily:F.body}}>{v}</span>
             ))}
           </div>
         ))}
       </div>
-      <div style={{textAlign:"center",marginBottom:16}}>
-        {qualified?(<div><div style={{fontSize:28,marginBottom:6}}>✅</div><div style={{fontFamily:"'Playfair Display',serif",fontSize:16,fontWeight:700,color:C.charcoal}}>São Paulo avança para o Mata-mata!</div><div style={{fontSize:12,color:C.gray,marginTop:4}}>{pts} pontos · {groupTable.findIndex(r=>r.isSP)+1}º do grupo</div></div>)
-        :(<div><div style={{fontSize:28,marginBottom:6}}>💔</div><div style={{fontFamily:"'Playfair Display',serif",fontSize:16,fontWeight:700,color:C.charcoal}}>São Paulo não se classificou</div><div style={{fontSize:12,color:C.gray,marginTop:4}}>Apenas {pts} ponto{pts!==1?"s":""} · {groupTable.findIndex(r=>r.isSP)+1}º do grupo</div></div>)}
+
+      <div style={{textAlign:"center",padding:"16px 0 24px"}}>
+        {qualified?(
+          <>
+            <div style={{fontFamily:F.display,fontSize:22,color:C.ink,letterSpacing:-.5,marginBottom:6}}>São Paulo classificado!</div>
+            <div style={{fontSize:13,color:C.muted,fontFamily:F.body}}>{pts} pontos · {groupTable.findIndex(r=>r.isSP)+1}º do grupo</div>
+          </>
+        ):(
+          <>
+            <div style={{fontFamily:F.display,fontSize:22,color:C.ink,letterSpacing:-.5,marginBottom:6}}>São Paulo eliminado</div>
+            <div style={{fontSize:13,color:C.muted,fontFamily:F.body}}>{pts} ponto{pts!==1?"s":""} · {groupTable.findIndex(r=>r.isSP)+1}º do grupo</div>
+          </>
+        )}
       </div>
-      <button onClick={onContinue} style={{background:qualified?C.red:C.charcoal,color:C.cream,border:"none",borderRadius:10,padding:"14px",width:"100%",fontFamily:"'Bebas Neue',sans-serif",fontSize:18,letterSpacing:3,cursor:"pointer"}}>{qualified?"MATA-MATA →":"VER RESULTADO →"}</button>
+
+      <button onClick={onContinue} style={{
+        background:qualified?C.black:C.red,color:C.white,border:"none",
+        padding:"18px 0",width:"100%",cursor:"pointer",
+        fontFamily:F.display,fontSize:15,letterSpacing:2,
+      }}
+        onMouseEnter={e=>e.currentTarget.style.background=C.red}
+        onMouseLeave={e=>e.currentTarget.style.background=qualified?C.black:C.red}
+      >
+        {qualified?"MATA-MATA":"VER RESULTADO"}
+      </button>
     </div>
   );
 }
 
 /* ─── PENALTY SCREEN ─────────────────────────────────────────────────────────── */
 function PenaltyScreen({penalties,opp,onContinue}){
-  const[revealed,setRevealed]=useState(0);const[done,setDone]=useState(false);
+  const[revealed,setRevealed]=useState(0);
+  const[done,setDone]=useState(false);
   const{kicks,spWin}=penalties;
   useEffect(()=>{
     if(revealed>=kicks.length){setDone(true);return;}
@@ -1101,44 +1337,250 @@ function PenaltyScreen({penalties,opp,onContinue}){
   },[revealed,kicks.length]);
   const spScore=kicks.slice(0,revealed).filter(k=>k.spConvert).length;
   const oppScore=kicks.slice(0,revealed).filter(k=>k.oppConvert).length;
+
   return(
-    <div style={{padding:"20px 16px"}}>
-      <div style={{textAlign:"center",marginBottom:16}}>
-        <div style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:13,letterSpacing:3,color:C.gray,marginBottom:8}}>DISPUTA DE PÊNALTIS</div>
-        <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:16}}>
-          <div style={{textAlign:"center"}}><div style={{fontSize:22}}>🇾🇪</div><div style={{fontSize:9,color:C.gray,fontWeight:700,marginTop:2}}>SÃO PAULO</div></div>
-          <div style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:44,color:C.charcoal,letterSpacing:4,lineHeight:1}}>{spScore}<span style={{fontSize:22,color:C.light}}> × </span>{oppScore}</div>
-          <div style={{textAlign:"center"}}><div style={{fontSize:22}}>{opp.flag}</div><div style={{fontSize:9,color:C.gray,fontWeight:700,marginTop:2,maxWidth:56,lineHeight:1.2,textAlign:"center"}}>{opp.name}</div></div>
+    <div style={{padding:"24px"}}>
+      {/* Scoreboard */}
+      <div style={{textAlign:"center",marginBottom:24}}>
+        <div style={{fontSize:10,letterSpacing:3,color:C.muted,fontWeight:600,fontFamily:F.body,marginBottom:16}}>DISPUTA DE PÊNALTIS</div>
+        <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:24}}>
+          <div style={{textAlign:"center"}}>
+            <div style={{fontSize:28,marginBottom:4}}>🇾🇪</div>
+            <div style={{fontSize:10,color:C.muted,fontWeight:600,fontFamily:F.body}}>SÃO PAULO</div>
+          </div>
+          <div style={{fontFamily:F.display,fontSize:52,color:C.ink,letterSpacing:4,lineHeight:1}}>
+            {spScore}<span style={{fontSize:28,color:C.faint}}> × </span>{oppScore}
+          </div>
+          <div style={{textAlign:"center"}}>
+            <div style={{fontSize:28,marginBottom:4}}>{opp.flag}</div>
+            <div style={{fontSize:10,color:C.muted,fontWeight:600,fontFamily:F.body,maxWidth:60,lineHeight:1.3}}>{opp.name}</div>
+          </div>
         </div>
       </div>
-      <div style={{display:"flex",flexDirection:"column",gap:6,marginBottom:16}}>
+
+      {/* Kicks */}
+      <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:20}}>
         {kicks.slice(0,revealed).map((k,i)=>(
           <div key={i} className="goalSlide" style={{display:"flex",gap:8,alignItems:"stretch"}}>
-            <div style={{flex:1,background:k.spConvert?"rgba(204,0,0,.07)":"rgba(0,0,0,.04)",border:`1px solid ${k.spConvert?C.red+"33":C.border}`,borderRadius:10,padding:"8px 12px",display:"flex",alignItems:"center",gap:8}}>
-              <span style={{fontSize:16}}>{k.spConvert?"✅":"❌"}</span>
-              <div><div style={{fontSize:12,fontWeight:700,color:C.charcoal,lineHeight:1.2}}>{k.spName}</div><div style={{fontSize:9,color:k.spConvert?C.red:C.gray,fontWeight:700}}>{k.spConvert?"GOOOOL!":"Defendida"}</div></div>
+            {/* SP side */}
+            <div style={{flex:1,background:k.spConvert?"rgba(204,0,0,.05)":C.surface,borderLeft:`3px solid ${k.spConvert?C.red:C.faint}`,padding:"10px 12px"}}>
+              <div style={{fontSize:13,fontWeight:600,color:C.ink,fontFamily:F.body}}>{k.spName}</div>
+              <div style={{fontSize:11,color:k.spConvert?C.red:C.muted,marginTop:2,fontFamily:F.body,fontWeight:600}}>
+                {k.spConvert?"⚽ GOOOOL!":"❌ Defendida"}
+              </div>
             </div>
-            <div style={{width:20,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}><span style={{fontSize:9,color:C.light,fontWeight:700}}>{i+1}</span></div>
-            <div style={{flex:1,background:k.oppConvert?"rgba(0,0,0,.06)":"rgba(0,0,0,.03)",border:`1px solid ${k.oppConvert?C.charcoal+"44":C.border}`,borderRadius:10,padding:"8px 12px",display:"flex",alignItems:"center",gap:8,flexDirection:"row-reverse",textAlign:"right"}}>
-              <span style={{fontSize:16}}>{k.oppConvert?"✅":"❌"}</span>
-              <div><div style={{fontSize:12,fontWeight:700,color:C.charcoal,lineHeight:1.2}}>{k.oppName}</div><div style={{fontSize:9,color:k.oppConvert?C.charcoal:C.gray,fontWeight:700}}>{k.oppConvert?"GOOOOL!":"Defendida"}</div></div>
+            <div style={{width:24,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
+              <span style={{fontSize:10,color:C.muted,fontFamily:F.body,fontWeight:600}}>{i+1}</span>
+            </div>
+            {/* OPP side */}
+            <div style={{flex:1,background:k.oppConvert?C.surface:"rgba(0,0,0,.02)",borderRight:`3px solid ${k.oppConvert?C.ink:C.faint}`,padding:"10px 12px",textAlign:"right"}}>
+              <div style={{fontSize:13,fontWeight:600,color:C.ink,fontFamily:F.body}}>{k.oppName}</div>
+              <div style={{fontSize:11,color:k.oppConvert?C.ink:C.muted,marginTop:2,fontFamily:F.body,fontWeight:600}}>
+                {k.oppConvert?"⚽ GOOOOL!":"❌ Defendida"}
+              </div>
             </div>
           </div>
         ))}
-        {!done&&<div style={{textAlign:"center",padding:"12px",color:C.light,fontSize:12,animation:"pulse 1s infinite"}}>Próximo cobrador…</div>}
+        {!done&&(
+          <div style={{textAlign:"center",padding:"16px",color:C.muted,fontSize:13,fontFamily:F.body,animation:"pulse 1s infinite"}}>
+            Próximo cobrador…
+          </div>
+        )}
       </div>
-      {done&&(<>
-        <div style={{textAlign:"center",marginBottom:14}}>
-          <div style={{fontSize:32,marginBottom:6}}>{spWin?"🇾🇪":"💔"}</div>
-          <div style={{fontFamily:"'Playfair Display',serif",fontSize:15,fontWeight:700,color:C.charcoal}}>{spWin?"São Paulo vence nos pênaltis!":`${oppLabel(opp)} vence nos pênaltis`}</div>
-        </div>
-        <button onClick={onContinue} style={{background:spWin?C.red:C.charcoal,color:C.cream,border:"none",borderRadius:10,padding:"14px",width:"100%",fontFamily:"'Bebas Neue',sans-serif",fontSize:18,letterSpacing:3,cursor:"pointer"}}>{spWin?"PRÓXIMO JOGO →":"VER RESULTADO →"}</button>
-      </>)}
+
+      {done&&(
+        <>
+          <div style={{textAlign:"center",padding:"16px 0 24px"}}>
+            <div style={{fontFamily:F.display,fontSize:24,color:C.ink,letterSpacing:-.5,marginBottom:4}}>
+              {spWin?"São Paulo vence!":oppLabel(opp)+" vence"}
+            </div>
+            <div style={{fontSize:13,color:C.muted,fontFamily:F.body}}>Disputa de pênaltis</div>
+          </div>
+          <button onClick={onContinue} style={{
+            background:spWin?C.black:C.red,color:C.white,border:"none",
+            padding:"18px 0",width:"100%",cursor:"pointer",
+            fontFamily:F.display,fontSize:15,letterSpacing:2,
+          }}>
+            {spWin?"PRÓXIMO JOGO":"VER RESULTADO"}
+          </button>
+        </>
+      )}
     </div>
   );
 }
 
-/* ─── CAMPAIGN CARD 1080×1920 ────────────────────────────────────────────────── */
+/* ─── RESULT SCREEN ──────────────────────────────────────────────────────────── */
+function ResultScreen({champ,allMatches,team,formation,tournament,onRestart,onHome}){
+  const[tab,setTab]=useState("matches");
+  const[cardStatus,setCardStatus]=useState("idle");
+
+  async function handleCardAction(action){
+    setCardStatus("generating");
+    await new Promise(r=>setTimeout(r,100));
+    try{
+      const canvas=generateCampaignCard(champ,allMatches,team,formation,tournament);
+      if(action==="whatsapp"){
+        canvas.toBlob(async(blob)=>{
+          const file=new File([blob],"7rikas-campanha.png",{type:"image/png"});
+          const resultText=champ?"🏆 Fui CAMPEÃO da Libertadores no 7RIKAS!":"❌ Fui eliminado no 7RIKAS... que raiva.";
+          const shareText=`${resultText}\n\nMontei um time histórico do SPFC e disputei a Libertadores.\n\n🎮 Jogue também: https://markitomesquita.github.io/7rikas/\n\n7RIKAS — Uma adaptação by Órfãos de Edcarlos`;
+          if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+            try{
+              await navigator.share({files:[file],text:shareText});
+              setCardStatus("done");
+            }catch(e){
+              if(e.name!=="AbortError"){
+                window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`,"_blank");
+                setCardStatus("done");
+              }else{setCardStatus("idle");}
+            }
+          }else{
+            const link=document.createElement("a");
+            link.download="7rikas-campanha.png";link.href=canvas.toDataURL("image/png");link.click();
+            setTimeout(()=>window.open(`https://wa.me/?text=${encodeURIComponent(shareText+" (imagem baixada 👆)")}`,"_blank"),800);
+            setCardStatus("done");
+          }
+          setTimeout(()=>setCardStatus("idle"),4000);
+        },"image/png");
+      }else{
+        const link=document.createElement("a");
+        link.download="7rikas-campanha.png";link.href=canvas.toDataURL("image/png");link.click();
+        setCardStatus("done");
+        setTimeout(()=>setCardStatus("idle"),3000);
+      }
+    }catch(e){console.error(e);setCardStatus("idle");}
+  }
+
+  const lastMatch=allMatches[allMatches.length-1];
+  const elimPhase=lastMatch?.phase==="group"?"Fase de Grupos":lastMatch?.round||"";
+
+  return(
+    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",background:C.white}}>
+      {champ&&<Confetti/>}
+
+      {/* Hero */}
+      <div style={{background:champ?C.red:C.black,padding:"48px 24px 36px",position:"relative",overflow:"hidden",flexShrink:0}}>
+        {champ&&<div style={{position:"absolute",right:-20,top:"50%",transform:"translateY(-50%)",fontSize:160,opacity:.08,pointerEvents:"none"}}>🏆</div>}
+        <div style={{position:"relative",zIndex:1}}>
+          <div style={{fontSize:10,letterSpacing:3,color:"rgba(255,255,255,.4)",fontWeight:600,fontFamily:F.body,marginBottom:12}}>
+            {champ?"CAMPEÃO DA LIBERTADORES":"ELIMINADO"}
+          </div>
+          {champ?(
+            <>
+              <div className="trophy" style={{fontSize:52,marginBottom:12}}>🏆</div>
+              <div style={{fontFamily:F.display,fontSize:36,color:C.white,lineHeight:.95,letterSpacing:-.5}}>São Paulo<br/>conquista<br/>a América</div>
+            </>
+          ):(
+            <>
+              <div style={{fontSize:44,marginBottom:12}}>💔</div>
+              <div style={{fontFamily:F.display,fontSize:36,color:C.white,lineHeight:.95,letterSpacing:-.5}}>
+                Caiu nas<br/><span style={{color:"rgba(255,255,255,.5)"}}>{elimPhase}</span>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Share buttons */}
+      <div style={{padding:"16px 24px",borderBottom:`1px solid ${C.border}`,display:"flex",gap:10,flexShrink:0}}>
+        <button onClick={()=>handleCardAction("download")} disabled={cardStatus==="generating"} style={{
+          flex:1,background:cardStatus==="done"?"#158040":C.black,color:C.white,border:"none",
+          padding:"13px 0",cursor:cardStatus==="generating"?"wait":"pointer",
+          fontFamily:F.body,fontSize:12,fontWeight:600,letterSpacing:.5,
+          display:"flex",alignItems:"center",justifyContent:"center",gap:6,
+          transition:"background .15s",
+        }}>
+          {cardStatus==="generating"?"⏳":cardStatus==="done"?"✓ Baixado":"⬇ Baixar card"}
+        </button>
+        <button onClick={()=>handleCardAction("whatsapp")} disabled={cardStatus==="generating"} style={{
+          flex:1,background:"#25D366",color:"#fff",border:"none",
+          padding:"13px 0",cursor:cardStatus==="generating"?"wait":"pointer",
+          fontFamily:F.body,fontSize:12,fontWeight:600,letterSpacing:.5,
+          display:"flex",alignItems:"center",justifyContent:"center",gap:6,
+        }}>
+          💬 Compartilhar
+        </button>
+      </div>
+
+      {/* Tabs */}
+      <div style={{borderBottom:`1px solid ${C.border}`,display:"flex",flexShrink:0}}>
+        {[["matches","Jogos"],["squad","Elenco"],["pitch","Campo"]].map(([t,l])=>(
+          <button key={t} onClick={()=>setTab(t)} style={{
+            flex:1,padding:"12px",fontSize:12,fontWeight:600,fontFamily:F.body,
+            background:"transparent",border:"none",cursor:"pointer",
+            color:tab===t?C.red:C.muted,
+            borderBottom:tab===t?`2px solid ${C.red}`:"2px solid transparent",
+          }}>{l}</button>
+        ))}
+      </div>
+
+      <div style={{flex:1,overflowY:"auto",padding:"20px 24px 110px"}}>
+        {tab==="matches"&&tournament&&(
+          <div>
+            <div style={{fontSize:10,letterSpacing:3,color:C.muted,fontWeight:600,fontFamily:F.body,marginBottom:16}}>FASE DE GRUPOS</div>
+            {tournament.groupMatches.map((m,i)=><MatchRow key={i} m={m} label={`Jogo ${i+1}`}/>)}
+            <div style={{display:"flex",justifyContent:"space-between",padding:"12px 0",borderBottom:`1px solid ${C.border}`,marginBottom:20}}>
+              <span style={{fontSize:13,fontWeight:600,color:C.ink,fontFamily:F.body}}>{tournament.pts} pts · SG {tournament.gd>0?"+":""}{tournament.gd}</span>
+              <span style={{fontSize:12,fontWeight:700,color:tournament.qualified?C.red:C.muted,fontFamily:F.body}}>{tournament.qualified?"✓ Classificado":"✗ Eliminado"}</span>
+            </div>
+            {tournament.koMatches.some(m=>allMatches.includes(m))&&(
+              <div style={{fontSize:10,letterSpacing:3,color:C.muted,fontWeight:600,fontFamily:F.body,marginBottom:16}}>MATA-MATA</div>
+            )}
+            {tournament.koMatches.filter(m=>allMatches.includes(m)).map((m,i)=><MatchRow key={i} m={m} label={m.round}/>)}
+          </div>
+        )}
+        {tab==="squad"&&(
+          <div>
+            {team.map((p,i)=>(
+              <div key={i} style={{display:"flex",alignItems:"center",gap:14,padding:"14px 0",borderBottom:`1px solid ${C.border}`}}>
+                <div style={{width:36,height:36,background:groupColor(posToGroup(p.pos)),display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
+                  <span style={{fontSize:9,fontWeight:700,color:"#fff",fontFamily:F.body}}>{p.pos}</span>
+                </div>
+                <div style={{flex:1}}>
+                  <div style={{fontSize:14,fontWeight:600,color:C.ink,fontFamily:F.body}}>{p.name}</div>
+                  <div style={{fontSize:11,color:C.muted,marginTop:2,fontFamily:F.body}}>{p._year}{p._champion?" · 🏆":""}</div>
+                </div>
+                <div style={{fontFamily:F.display,fontSize:24,color:p.rating>=88?C.red:C.ink}}>{p.rating}</div>
+              </div>
+            ))}
+          </div>
+        )}
+        {tab==="pitch"&&<Pitch formation={formation} players={team}/>}
+      </div>
+
+      <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,padding:"16px 24px",background:C.white,borderTop:`1px solid ${C.border}`,display:"flex",gap:10,zIndex:50}}>
+        <button onClick={onRestart} style={{
+          flex:1,background:C.black,color:C.white,border:"none",
+          padding:"16px 0",cursor:"pointer",fontFamily:F.display,fontSize:14,letterSpacing:2,
+          transition:"background .15s",
+        }}
+          onMouseEnter={e=>e.currentTarget.style.background=C.red}
+          onMouseLeave={e=>e.currentTarget.style.background=C.black}
+        >ROLAR DE NOVO</button>
+        <button onClick={onHome} style={{
+          flex:.45,background:"transparent",color:C.muted,border:`1px solid ${C.border}`,
+          padding:"16px 0",cursor:"pointer",fontFamily:F.body,fontSize:12,fontWeight:600,
+        }}>Início</button>
+      </div>
+    </div>
+  );
+}
+
+function MatchRow({m,label}){
+  return(
+    <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"14px 0",borderBottom:`1px solid ${C.border}`}}>
+      <div>
+        <div style={{fontSize:10,color:C.muted,letterSpacing:2,fontWeight:600,fontFamily:F.body,marginBottom:4}}>{label?.toUpperCase()}</div>
+        <div style={{fontSize:14,fontWeight:600,color:C.ink,fontFamily:F.body}}>{m.opp.flag} {oppLabel(m.opp)}</div>
+        <div style={{fontSize:11,color:C.muted,marginTop:2,fontFamily:F.body}}>{m.opp.country}</div>
+      </div>
+      <div style={{textAlign:"right"}}>
+        <div style={{fontFamily:F.display,fontSize:28,color:m.win?C.red:C.ink,letterSpacing:1}}>{m.myG}–{m.oppG}</div>
+        <div style={{fontSize:10,fontWeight:700,color:m.win?C.red:C.muted,fontFamily:F.body,letterSpacing:1}}>{m.win?"VITÓRIA":m.draw?"EMPATE":"DERROTA"}</div>
+      </div>
+    </div>
+  );
+}
 function generateCampaignCard(champ,allMatches,team,formation,tournament){
   const W=1080,H=1920;
   const canvas=document.createElement("canvas");
@@ -1324,29 +1766,29 @@ function ResultScreen({champ,allMatches,team,formation,tournament,onRestart,onHo
   return(
     <div style={{minHeight:"100vh",display:"flex",flexDirection:"column"}}>
       {champ&&<Confetti/>}
-      <Header left={<button onClick={onHome} style={{background:"transparent",border:"none",color:C.gray,fontSize:12,cursor:"pointer",fontFamily:"'DM Sans',sans-serif"}}>← início</button>}/>
-      <div style={{background:champ?C.red:C.charcoal,padding:"26px 20px",textAlign:"center",position:"relative",overflow:"hidden",flexShrink:0}}>
+      <Header left={<button onClick={onHome} style={{background:"transparent",border:"none",color:C.muted,fontSize:12,cursor:"pointer",fontFamily:F.body}}>← início</button>}/>
+      <div style={{background:champ?C.red:C.ink,padding:"26px 20px",textAlign:"center",position:"relative",overflow:"hidden",flexShrink:0}}>
         <div style={{position:"absolute",inset:0,backgroundImage:"repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(0,0,0,0.06) 40px,rgba(0,0,0,0.06) 80px)"}}/>
         {champ?(
           <div style={{position:"relative",zIndex:1}}>
             <div className="trophy" style={{fontSize:58,marginBottom:8}}>🏆</div>
-            <h2 style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:38,color:C.cream,letterSpacing:5,lineHeight:1,marginBottom:4}}>CAMPEÃO!</h2>
+            <h2 style={{fontFamily:F.display,fontSize:38,color:C.white,letterSpacing:5,lineHeight:1,marginBottom:4}}>CAMPEÃO!</h2>
             <p style={{color:C.yellow,fontSize:11,fontWeight:700,letterSpacing:2}}>SÃO PAULO CONQUISTA A AMÉRICA</p>
           </div>
         ):(
           <div style={{position:"relative",zIndex:1}}>
             <div style={{fontSize:44,marginBottom:8}}>💔</div>
-            <h2 style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:32,color:C.cream,letterSpacing:4,lineHeight:1,marginBottom:4}}>ELIMINADO</h2>
+            <h2 style={{fontFamily:F.display,fontSize:32,color:C.white,letterSpacing:4,lineHeight:1,marginBottom:4}}>ELIMINADO</h2>
             <p style={{color:"rgba(255,255,255,.4)",fontSize:11}}>{allMatches.length>0?`Caiu nas ${allMatches[allMatches.length-1].phase==="group"?"Fase de Grupos":allMatches[allMatches.length-1].round||""}`:"" }</p>
           </div>
         )}
       </div>
 
       {/* CARD BUTTONS */}
-      <div style={{padding:"12px 16px",background:C.paper,borderBottom:`1px solid ${C.border}`,flexShrink:0,display:"flex",gap:10}}>
+      <div style={{padding:"12px 16px",background:C.surface,borderBottom:`1px solid ${C.border}`,flexShrink:0,display:"flex",gap:10}}>
         <button onClick={()=>handleCardAction("download")} disabled={cardStatus==="generating"} style={{
-          flex:1,background:cardStatus==="done"?"#158040":C.charcoal,color:C.cream,border:"none",
-          borderRadius:10,padding:"12px 8px",fontFamily:"'Bebas Neue',sans-serif",fontSize:13,letterSpacing:2,
+          flex:1,background:cardStatus==="done"?"#158040":C.ink,color:C.white,border:"none",
+          borderRadius:10,padding:"12px 8px",fontFamily:F.display,fontSize:13,letterSpacing:2,
           cursor:cardStatus==="generating"?"wait":"pointer",display:"flex",alignItems:"center",justifyContent:"center",gap:6,
         }}>
           {cardStatus==="generating"?<span style={{animation:"pulse .8s infinite"}}>⏳</span>:cardStatus==="done"?"✓":"⬇"}
@@ -1354,41 +1796,41 @@ function ResultScreen({champ,allMatches,team,formation,tournament,onRestart,onHo
         </button>
         <button onClick={()=>handleCardAction("whatsapp")} disabled={cardStatus==="generating"} style={{
           flex:1,background:"#25D366",color:"#fff",border:"none",
-          borderRadius:10,padding:"12px 8px",fontFamily:"'Bebas Neue',sans-serif",fontSize:13,letterSpacing:2,
+          borderRadius:10,padding:"12px 8px",fontFamily:F.display,fontSize:13,letterSpacing:2,
           cursor:cardStatus==="generating"?"wait":"pointer",display:"flex",alignItems:"center",justifyContent:"center",gap:6,
         }}>
           <span style={{fontSize:16}}>💬</span> COMPARTILHAR
         </button>
       </div>
 
-      <div style={{background:C.paper,borderBottom:`1px solid ${C.border}`,display:"flex",flexShrink:0}}>
+      <div style={{background:C.surface,borderBottom:`1px solid ${C.border}`,display:"flex",flexShrink:0}}>
         {[["matches","Jogos"],["squad","Elenco"],["pitch","Campo"]].map(([t,l])=>(
-          <button key={t} onClick={()=>setTab(t)} style={{flex:1,padding:"9px 0",fontSize:11,fontWeight:700,background:"transparent",border:"none",cursor:"pointer",color:tab===t?C.red:C.gray,borderBottom:tab===t?`2.5px solid ${C.red}`:"2.5px solid transparent",fontFamily:"'DM Sans',sans-serif"}}>{l}</button>
+          <button key={t} onClick={()=>setTab(t)} style={{flex:1,padding:"9px 0",fontSize:11,fontWeight:700,background:"transparent",border:"none",cursor:"pointer",color:tab===t?C.red:C.muted,borderBottom:tab===t?`2.5px solid ${C.red}`:"2.5px solid transparent",fontFamily:F.body}}>{l}</button>
         ))}
       </div>
 
       <div style={{flex:1,overflowY:"auto",padding:"14px 14px 110px"}}>
         {tab==="matches"&&tournament&&(<div>
-          <div style={{fontSize:9,letterSpacing:2,color:C.gray,fontWeight:700,marginBottom:8}}>FASE DE GRUPOS</div>
+          <div style={{fontSize:9,letterSpacing:2,color:C.muted,fontWeight:700,marginBottom:8}}>FASE DE GRUPOS</div>
           {tournament.groupMatches.map((m,i)=><MatchRow key={i} m={m} label={`Jogo ${i+1}`}/>)}
-          <div style={{background:C.paper,border:`1px solid ${C.border}`,borderRadius:8,padding:"8px 14px",marginBottom:14,display:"flex",justifyContent:"space-between"}}>
-            <span style={{fontSize:12,fontWeight:700,color:C.charcoal}}>{tournament.pts} pts · SG {tournament.gd>0?"+":""}{tournament.gd}</span>
-            <span style={{fontSize:11,fontWeight:800,color:tournament.qualified?C.red:C.gray}}>{tournament.qualified?"✓ Classificado":"✗ Eliminado"}</span>
+          <div style={{background:C.surface,border:`1px solid ${C.border}`,borderRadius:8,padding:"8px 14px",marginBottom:14,display:"flex",justifyContent:"space-between"}}>
+            <span style={{fontSize:12,fontWeight:700,color:C.ink}}>{tournament.pts} pts · SG {tournament.gd>0?"+":""}{tournament.gd}</span>
+            <span style={{fontSize:11,fontWeight:800,color:tournament.qualified?C.red:C.muted}}>{tournament.qualified?"✓ Classificado":"✗ Eliminado"}</span>
           </div>
-          {tournament.koMatches.some(m=>allMatches.includes(m))&&<div style={{fontSize:9,letterSpacing:2,color:C.gray,fontWeight:700,marginBottom:8}}>MATA-MATA</div>}
+          {tournament.koMatches.some(m=>allMatches.includes(m))&&<div style={{fontSize:9,letterSpacing:2,color:C.muted,fontWeight:700,marginBottom:8}}>MATA-MATA</div>}
           {tournament.koMatches.filter(m=>allMatches.includes(m)).map((m,i)=><MatchRow key={i} m={m} label={m.round}/>)}
         </div>)}
         {tab==="squad"&&(<div style={{display:"flex",flexDirection:"column",gap:6}}>
           {team.map((p,i)=>(
-            <div key={i} style={{display:"flex",alignItems:"center",gap:10,background:C.paper,border:`1px solid ${C.border}`,borderRadius:10,padding:"9px 14px"}}>
-              <span style={{fontSize:10,color:C.light,minWidth:22}}>#{p.shirt}</span>
+            <div key={i} style={{display:"flex",alignItems:"center",gap:10,background:C.surface,border:`1px solid ${C.border}`,borderRadius:10,padding:"9px 14px"}}>
+              <span style={{fontSize:10,color:C.muted,minWidth:22}}>#{p.shirt}</span>
               <div style={{flex:1}}>
-                <div style={{fontSize:13,fontWeight:700,color:C.charcoal}}>{p.name} <span style={{fontSize:10,color:C.gray,fontWeight:500}}>{p._year}</span></div>
+                <div style={{fontSize:13,fontWeight:700,color:C.ink}}>{p.name} <span style={{fontSize:10,color:C.muted,fontWeight:500}}>{p._year}</span></div>
                 <div style={{fontSize:9,color:C.red,fontWeight:700,marginTop:1}}>{p.pos}</div>
               </div>
               <div style={{textAlign:"right"}}>
-                <span style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:20,color:p.rating>=88?C.gold:C.charcoal}}>{p.rating}</span>
-                {p._champion&&<div style={{fontSize:8,color:C.gold}}>🏆 campeão</div>}
+                <span style={{fontFamily:F.display,fontSize:20,color:p.rating>=88?C.red:C.ink}}>{p.rating}</span>
+                {p._champion&&<div style={{fontSize:8,color:C.red}}>🏆 campeão</div>}
               </div>
             </div>
           ))}
@@ -1396,9 +1838,9 @@ function ResultScreen({champ,allMatches,team,formation,tournament,onRestart,onHo
         {tab==="pitch"&&<Pitch formation={formation} players={team}/>}
       </div>
 
-      <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,padding:"12px 16px",background:C.cream,borderTop:`1px solid ${C.border}`,display:"flex",gap:10,zIndex:50}}>
-        <button onClick={onRestart} style={{flex:1,background:C.red,color:C.cream,border:"none",borderRadius:10,padding:"14px",fontFamily:"'Bebas Neue',sans-serif",fontSize:18,letterSpacing:3,cursor:"pointer"}}>ROLAR DE NOVO</button>
-        <button onClick={onHome} style={{flex:.45,background:"transparent",color:C.gray,border:`1.5px solid ${C.border}`,borderRadius:10,padding:"14px",fontSize:12,fontWeight:700,cursor:"pointer",fontFamily:"'DM Sans',sans-serif"}}>INÍCIO</button>
+      <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,padding:"12px 16px",background:C.white,borderTop:`1px solid ${C.border}`,display:"flex",gap:10,zIndex:50}}>
+        <button onClick={onRestart} style={{flex:1,background:C.red,color:C.white,border:"none",borderRadius:10,padding:"14px",fontFamily:F.display,fontSize:18,letterSpacing:3,cursor:"pointer"}}>ROLAR DE NOVO</button>
+        <button onClick={onHome} style={{flex:.45,background:"transparent",color:C.muted,border:`1.5px solid ${C.border}`,borderRadius:10,padding:"14px",fontSize:12,fontWeight:700,cursor:"pointer",fontFamily:F.body}}>INÍCIO</button>
       </div>
     </div>
   );
@@ -1406,15 +1848,15 @@ function ResultScreen({champ,allMatches,team,formation,tournament,onRestart,onHo
 
 function MatchRow({m,label}){
   return(
-    <div style={{background:m.win?`${C.red}0D`:C.paper,border:`1px solid ${m.win?C.red+"44":C.border}`,borderRadius:10,padding:"12px 14px",marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+    <div style={{background:m.win?`${C.red}0D`:C.surface,border:`1px solid ${m.win?C.red+"44":C.border}`,borderRadius:10,padding:"12px 14px",marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
       <div>
-        <div style={{fontSize:9,color:C.gray,letterSpacing:1.5,fontWeight:700,marginBottom:3}}>{label?.toUpperCase()}</div>
-        <div style={{fontSize:14,fontWeight:700,color:C.charcoal}}>{m.opp.flag} {oppLabel(m.opp)}</div>
-        <div style={{fontSize:9,color:C.light,marginTop:1}}>{m.opp.country}</div>
+        <div style={{fontSize:9,color:C.muted,letterSpacing:1.5,fontWeight:700,marginBottom:3}}>{label?.toUpperCase()}</div>
+        <div style={{fontSize:14,fontWeight:700,color:C.ink}}>{m.opp.flag} {oppLabel(m.opp)}</div>
+        <div style={{fontSize:9,color:C.muted,marginTop:1}}>{m.opp.country}</div>
       </div>
       <div style={{textAlign:"right"}}>
-        <div style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:30,color:m.win?C.red:C.charcoal,letterSpacing:3}}>{m.myG}–{m.oppG}</div>
-        <div style={{fontSize:9,fontWeight:800,color:m.win?C.red:C.gray,letterSpacing:1}}>{m.win?"VITÓRIA":m.draw?"EMPATE":"DERROTA"}</div>
+        <div style={{fontFamily:F.display,fontSize:30,color:m.win?C.red:C.ink,letterSpacing:3}}>{m.myG}–{m.oppG}</div>
+        <div style={{fontSize:9,fontWeight:800,color:m.win?C.red:C.muted,letterSpacing:1}}>{m.win?"VITÓRIA":m.draw?"EMPATE":"DERROTA"}</div>
       </div>
     </div>
   );

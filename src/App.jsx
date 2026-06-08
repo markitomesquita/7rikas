@@ -1848,15 +1848,15 @@ function ResultScreen({champ,allMatches,team,formation,tournament,onRestart,onHo
 
 function MatchRow({m,label}){
   return(
-    <div style={{background:m.win?`${C.red}0D`:C.surface,border:`1px solid ${m.win?C.red+"44":C.border}`,borderRadius:10,padding:"12px 14px",marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+    <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"14px 0",borderBottom:`1px solid ${C.border}`}}>
       <div>
-        <div style={{fontSize:9,color:C.muted,letterSpacing:1.5,fontWeight:700,marginBottom:3}}>{label?.toUpperCase()}</div>
-        <div style={{fontSize:14,fontWeight:700,color:C.ink}}>{m.opp.flag} {oppLabel(m.opp)}</div>
-        <div style={{fontSize:9,color:C.muted,marginTop:1}}>{m.opp.country}</div>
+        <div style={{fontSize:10,color:C.muted,letterSpacing:2,fontWeight:600,fontFamily:F.body,marginBottom:4}}>{label?.toUpperCase()}</div>
+        <div style={{fontSize:14,fontWeight:600,color:C.ink,fontFamily:F.body}}>{m.opp.flag} {oppLabel(m.opp)}</div>
+        <div style={{fontSize:11,color:C.muted,marginTop:2,fontFamily:F.body}}>{m.opp.country}</div>
       </div>
       <div style={{textAlign:"right"}}>
-        <div style={{fontFamily:F.display,fontSize:30,color:m.win?C.red:C.ink,letterSpacing:3}}>{m.myG}–{m.oppG}</div>
-        <div style={{fontSize:9,fontWeight:800,color:m.win?C.red:C.muted,letterSpacing:1}}>{m.win?"VITÓRIA":m.draw?"EMPATE":"DERROTA"}</div>
+        <div style={{fontFamily:F.display,fontSize:28,color:m.win?C.red:C.ink,letterSpacing:1}}>{m.myG}–{m.oppG}</div>
+        <div style={{fontSize:10,fontWeight:700,color:m.win?C.red:C.muted,fontFamily:F.body,letterSpacing:1}}>{m.win?"VITÓRIA":m.draw?"EMPATE":"DERROTA"}</div>
       </div>
     </div>
   );

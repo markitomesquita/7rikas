@@ -1451,8 +1451,11 @@ function ResultScreen({champ,allMatches,team,formation,tournament,onRestart,onHo
     }catch(e){console.error(e);setCardStatus("idle");}
   }
 
-  const lastMatch=allMatches[allMatches.length-1];
-  const elimPhase=lastMatch?.phase==="group"?"Fase de Grupos":lastMatch?.round||"";
+  const lastMatch=allMatches[matchIdx>0?matchIdx-1:0];
+  // Determine the actual phase where elimination happened
+  const elimPhase=!tournament?.qualified
+    ? "Fase de Grupos"
+    : lastMatch?.round||lastMatch?.label||"";
 
   return(
     <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",background:C.white}}>
@@ -1472,9 +1475,12 @@ function ResultScreen({champ,allMatches,team,formation,tournament,onRestart,onHo
             </>
           ):(
             <>
-              <div style={{fontSize:44,marginBottom:12}}>💔</div>
+              <div style={{fontSize:44,marginBottom:12}}>😤</div>
               <div style={{fontFamily:F.display,fontSize:36,color:C.white,lineHeight:.95,letterSpacing:-.5}}>
                 Caiu nas<br/><span style={{color:"rgba(255,255,255,.5)"}}>{elimPhase}</span>
+              </div>
+              <div style={{marginTop:14,fontSize:13,color:"rgba(255,255,255,.5)",fontFamily:F.body,fontWeight:600,letterSpacing:2}}>
+                TEM QUE COBRAR!
               </div>
             </>
           )}
@@ -1587,152 +1593,139 @@ function generateCampaignCard(champ,allMatches,team,formation,tournament){
   canvas.width=W;canvas.height=H;
   const ctx=canvas.getContext("2d");
 
-  // ── helpers ──
-  const PAD=80; // page margin
-  function line(x1,y1,x2,y2,color="#E8E8E8",w=1){
-    ctx.save();ctx.strokeStyle=color;ctx.lineWidth=w;
-    ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.restore();
+  const RED="#CC0000",BLACK="#0A0A0A",INK="#111111";
+  const MUTED="#AAAAAA",BORDER="#E8E8E8",WHITE="#FFFFFF",SURFACE="#F7F7F7";
+  const PAD=80;
+
+  function fillR(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(x,y,w,h);}
+  function hline(y2,c){
+    ctx.save();ctx.strokeStyle=c||BORDER;ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(PAD,y2);ctx.lineTo(W-PAD,y2);ctx.stroke();ctx.restore();
   }
-  function rect(x,y,w,h,color){ctx.fillStyle=color;ctx.fillRect(x,y,w,h);}
-  function text(str,x,y,{font="400 28px Arial",color="#111",align="left"}={}){
-    ctx.save();ctx.font=font;ctx.fillStyle=color;ctx.textAlign=align;
-    ctx.fillText(str,x,y);ctx.restore();
+  function tx(str,x,y,font,color,align){
+    ctx.save();ctx.font=font;ctx.fillStyle=color||INK;ctx.textAlign=align||"left";
+    ctx.fillText(String(str),x,y);ctx.restore();
   }
 
-  // ── background ──
-  rect(0,0,W,H,"#FFFFFF");
+  // background
+  fillR(0,0,W,H,WHITE);
 
-  // ── SECTION 1: title block — lots of breathing room ──
-  const titleY=200;
-  // "7" in red, "RIKAS" in black — Archivo Black style via bold Arial Black
+  // ── TÍTULO ──
+  const TY=230;
   ctx.save();
-  ctx.font="bold 144px Arial Black,Arial";
-  ctx.fillStyle="#CC0000";
-  ctx.fillText("7",PAD,titleY);
-  const sevenW=ctx.measureText("7").width;
-  ctx.fillStyle="#0A0A0A";
-  ctx.fillText("RIKAS",PAD+sevenW,titleY);
+  ctx.font="bold 148px Arial Black, Arial";
+  ctx.fillStyle=RED;
+  const w7=ctx.measureText("7").width;
+  ctx.fillText("7",PAD,TY);
+  ctx.fillStyle=BLACK;
+  ctx.fillText("RIKAS",PAD+w7,TY);
   ctx.restore();
+  tx("Uma adaptação by Órfãos de Edcarlos",PAD,TY+58,"400 25px Arial",MUTED);
+  fillR(PAD,TY+94,W-PAD*2,2,RED);
 
-  // subtitle under title
-  text("Uma adaptação by Órfãos de Edcarlos",PAD,titleY+52,{
-    font:"400 26px Arial",color:"#AAAAAA"
-  });
+  // ── RESULTADO ──
+  const RY=TY+200;
+  // determine elimination phase correctly
+  const koPlayed=allMatches.filter(m=>m.phase==="ko");
+  const elimPhase=!tournament?.qualified
+    ? "Fase de Grupos"
+    : (koPlayed.slice(-1)[0]?.round||"");
+  const elimText=elimPhase==="Fase de Grupos"?"na Fase de Grupos":"nas "+elimPhase;
 
-  // thin red rule under title block
-  rect(PAD,titleY+80,W-PAD*2,2,"#CC0000");
+  if(champ){
+    tx("🏆 CAMPEÃO!",W/2,RY,"bold 82px Arial Black, Arial",RED,"center");
+    tx("BUSCO RIVAL!",W/2,RY+84,"bold 46px Arial Black, Arial",BLACK,"center");
+  } else {
+    tx("😤 ELIMINADO.",W/2,RY,"bold 74px Arial Black, Arial",BLACK,"center");
+    tx("TEM QUE COBRAR!",W/2,RY+80,"bold 46px Arial Black, Arial",RED,"center");
+    tx("Caiu "+elimText,W/2,RY+136,"400 28px Arial",MUTED,"center");
+  }
+  tx(formation+"  ·  Média "+avgR(team).toFixed(1),W-PAD,RY+(champ?160:196),"400 24px Arial",MUTED,"right");
 
-  // ── SECTION 2: result — centered, very airy ──
-  const resultY=titleY+160;
-  const resultLabel=champ?"CAMPEÃO":"ELIMINADO";
-  const lastM=allMatches[allMatches.length-1];
-  const subLabel=champ
-    ?"Libertadores do SPFC"
-    :`Eliminado nas ${lastM?.phase==="group"?"Fase de Grupos":lastM?.round||""}`;
+  // ── ELENCO ──
+  const SQ=RY+(champ?230:270);
+  const ROW=88;
+  const SQH=48+team.length*ROW;
 
-  text(resultLabel,W/2,resultY,{
-    font:"bold 96px Arial Black,Arial",
-    color:champ?"#CC0000":"#0A0A0A",
-    align:"center",
-  });
-  text(subLabel,W/2,resultY+68,{
-    font:"400 30px Arial",color:"#AAAAAA",align:"center"
-  });
+  ctx.save();ctx.strokeStyle=BORDER;ctx.lineWidth=1;
+  ctx.strokeRect(PAD,SQ,W-PAD*2,SQH);ctx.restore();
 
-  // formation + rating pill — small, right-aligned
-  text(`${formation}  ·  média ${avgR(team).toFixed(1)}`,W-PAD,resultY+120,{
-    font:"400 24px Arial",color:"#AAAAAA",align:"right"
-  });
+  fillR(PAD,SQ,W-PAD*2,48,BLACK);
+  tx("ELENCO DOS SONHOS",PAD+24,SQ+31,"bold 18px Arial","rgba(255,255,255,0.45)");
+  tx("RTG",W-PAD-24,SQ+31,"bold 18px Arial","rgba(255,255,255,0.3)","right");
 
-  // ── SECTION 3: squad — bordered box ──
-  const squadTop=resultY+180;
-  const ROW=100; // row height
-  const squadH=team.length*ROW+48; // header + rows
-
-  // outer border
-  ctx.save();
-  ctx.strokeStyle="#E8E8E8";ctx.lineWidth=1;
-  ctx.strokeRect(PAD,squadTop,W-PAD*2,squadH);
-  ctx.restore();
-
-  // header row inside box
-  rect(PAD,squadTop,W-PAD*2,48,"#0A0A0A");
-  text("ELENCO DOS SONHOS",PAD+28,squadTop+31,{
-    font:"bold 20px Arial",color:"rgba(255,255,255,0.5)",
-  });
-  text("RTG",W-PAD-28,squadTop+31,{
-    font:"bold 20px Arial",color:"rgba(255,255,255,0.35)",align:"right"
-  });
-
-  // player rows
-  const posColors={GOL:"#CC8800",ZAG:"#CC0000",LD:"#CC0000",LE:"#CC0000",
-    VOL:"#1A5FAA",MC:"#1A5FAA",MD:"#1A5FAA",ME:"#1A5FAA",CA:"#1A7A38"};
-
+  const PC={GOL:"#B87A00",ZAG:RED,LD:RED,LE:RED,VOL:"#1A5FAA",MC:"#1A5FAA",MD:"#1A5FAA",ME:"#1A5FAA",CA:"#1A7A38"};
   team.forEach((p,i)=>{
-    const ry=squadTop+48+i*ROW;
-    // subtle alternating bg
-    if(i%2===0) rect(PAD,ry,W-PAD*2,ROW,"#FAFAFA");
-    // separator
-    line(PAD,ry,W-PAD,ry,"#F0F0F0");
+    const ry=SQ+48+i*ROW;
+    if(i%2===0) fillR(PAD,ry,W-PAD*2,ROW,SURFACE);
+    ctx.save();ctx.strokeStyle=BORDER;ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(PAD,ry);ctx.lineTo(W-PAD,ry);ctx.stroke();ctx.restore();
+    const pc=PC[p.pos]||"#666";
+    fillR(PAD+18,ry+ROW/2-15,56,30,pc);
+    tx(p.pos,PAD+46,ry+ROW/2+9,"bold 17px Arial",WHITE,"center");
+    tx(p.name,PAD+94,ry+ROW/2-4,"bold 36px Arial",INK);
+    tx(String(p._year),PAD+94,ry+ROW/2+28,"400 21px Arial",MUTED);
+    const rc=p.rating>=88?RED:p.rating>=84?"#444":MUTED;
+    tx(String(p.rating),W-PAD-24,ry+ROW/2+15,"bold 48px Arial",rc,"right");
+  });
+  ctx.save();ctx.strokeStyle=BORDER;ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(PAD,SQ+SQH);ctx.lineTo(W-PAD,SQ+SQH);ctx.stroke();ctx.restore();
 
-    // pos tag — small colored square
-    const pCol=posColors[p.pos]||"#888";
-    rect(PAD+20,ry+ROW/2-16,52,32,pCol);
-    text(p.pos,PAD+46,ry+ROW/2+10,{
-      font:"bold 18px Arial",color:"#fff",align:"center"
-    });
+  // ── CAMPANHA ──
+  let cy=SQ+SQH+56;
+  tx("CAMPANHA",PAD,cy,"bold 17px Arial",MUTED);
+  cy+=12;fillR(PAD,cy,W-PAD*2,1,"#F0F0F0");cy+=36;
 
-    // name
-    text(p.name,PAD+96,ry+ROW/2-6,{
-      font:"bold 38px Arial",color:"#0A0A0A"
-    });
-    // year
-    text(String(p._year),PAD+96,ry+ROW/2+30,{
-      font:"400 22px Arial",color:"#AAAAAA"
-    });
-
-    // rating — right side
-    const rCol=p.rating>=88?"#CC0000":p.rating>=84?"#555":"#AAAAAA";
-    text(String(p.rating),W-PAD-28,ry+ROW/2+16,{
-      font:"bold 52px Arial",color:rCol,align:"right"
-    });
+  const gMs=tournament?.groupMatches||[];
+  const kMs=allMatches.filter(m=>m.phase==="ko");
+  [...gMs,...kMs].forEach((m,i)=>{
+    const lbl=m.phase==="group"?"Grupo "+(i+1):m.round;
+    const col=m.win?RED:m.draw?"#888":"#CCCCCC";
+    tx(lbl,PAD,cy,"400 21px Arial",MUTED);
+    tx(m.opp.flag+" "+oppLabel(m.opp),PAD+148,cy,"400 26px Arial",INK);
+    tx(m.myG+"–"+m.oppG,W-PAD-76,cy,"bold 26px Arial",col,"right");
+    tx(m.win?"V":m.draw?"E":"D",W-PAD-16,cy,"bold 22px Arial",col,"right");
+    cy+=40;
   });
 
-  // close squad box bottom line
-  line(PAD,squadTop+squadH,W-PAD,squadTop+squadH,"#E8E8E8");
+  // ── ANÁLISE ──
+  cy+=24;fillR(PAD,cy,W-PAD*2,1,BORDER);cy+=30;
+  tx("ANÁLISE COM ZÉ BIRA E MARKO LOCO",PAD,cy,"bold 17px Arial",MUTED);
+  cy+=32;
 
-  // ── SECTION 4: campaign summary — compact, light ──
-  const campTop=squadTop+squadH+64;
-  text("CAMPANHA",PAD,campTop,{
-    font:"bold 20px Arial",color:"#AAAAAA"
-  });
-  line(PAD,campTop+12,W-PAD,campTop+12,"#F0F0F0");
+  const wins=allMatches.filter(m=>m.win).length;
+  const draws=allMatches.filter(m=>m.draw).length;
+  const losses=allMatches.filter(m=>!m.win&&!m.draw).length;
+  const goals=allMatches.reduce((s,m)=>s+m.myG,0);
+  const avg=avgR(team).toFixed(1);
+  let summary;
+  if(champ){
+    summary=wins===allMatches.length
+      ? "Campeão invicto! "+wins+" vitórias, "+goals+" gols. Elenco de "+avg+" de média. Absurdo."
+      : wins+"V "+draws+"E "+losses+"D. "+goals+" gols marcados. Média "+avg+". Mereceu.";
+  } else if(!tournament?.qualified){
+    summary="Nem saiu da fase de grupos. "+wins+"V "+draws+"E "+losses+"D. Média "+avg+". Precisa estudar mais táticas.";
+  } else {
+    summary=wins+"V "+draws+"E "+losses+"D ao longo da campanha. "+goals+" gols no total, média "+avg+". Quase chegou lá.";
+  }
 
-  let cy=campTop+56;
-  const groupMs=allMatches.filter(m=>m.phase==="group");
-  const koMs=allMatches.filter(m=>m.phase==="ko");
+  // word-wrap
+  ctx.save();ctx.font="400 24px Arial";ctx.fillStyle=INK;
+  const words=summary.split(" ");let lineStr="",lineY2=cy;
+  for(const word of words){
+    const test=lineStr?lineStr+" "+word:word;
+    if(ctx.measureText(test).width>W-PAD*2&&lineStr){
+      ctx.fillText(lineStr,PAD,lineY2);lineStr=word;lineY2+=34;
+    }else{lineStr=test;}
+  }
+  if(lineStr){ctx.fillText(lineStr,PAD,lineY2);}
+  ctx.restore();
 
-  [...groupMs,...koMs].forEach((m,i)=>{
-    const label=m.phase==="group"?`Grupo ${i+1}`:m.round;
-    const col=m.win?"#CC0000":m.draw?"#888":"#CCCCCC";
-    const result=m.win?"V":m.draw?"E":"D";
-
-    text(label,PAD,cy,{font:"400 22px Arial",color:"#AAAAAA"});
-    text(`${m.opp.flag} ${oppLabel(m.opp)}`,PAD+160,cy,{font:"400 28px Arial",color:"#0A0A0A"});
-    text(`${m.myG}–${m.oppG}`,W-PAD-100,cy,{font:"bold 28px Arial",color:col,align:"right"});
-    text(result,W-PAD-20,cy,{font:"bold 24px Arial",color:col,align:"right"});
-    cy+=44;
-  });
-
-  // ── FOOTER ──
-  const footY=H-120;
-  line(PAD,footY,W-PAD,footY,"#E8E8E8");
-  text("markitomesquita.github.io/7rikas",W/2,footY+52,{
-    font:"400 26px Arial",color:"#AAAAAA",align:"center"
-  });
-  text("Jogue você também →",W/2,footY+88,{
-    font:"bold 24px Arial",color:"#CC0000",align:"center"
-  });
+  // ── RODAPÉ ──
+  const FY=H-100;
+  fillR(PAD,FY,W-PAD*2,1,BORDER);
+  tx("markitomesquita.github.io/7rikas",W/2,FY+50,"400 24px Arial",MUTED,"center");
+  tx("Jogue você também →",W/2,FY+86,"bold 22px Arial",RED,"center");
 
   return canvas;
 }

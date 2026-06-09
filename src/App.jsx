@@ -119,244 +119,351 @@ function openGroups(fm,team){
 /* ─── SPFC SQUADS ────────────────────────────────────────────────────────────── */
 const SQUADS=[
   {year:1980,ed:"Libertadores 1980",champion:false,players:[
-    {name:"Waldir Peres",shirt:1,pos:"GOL",rating:80},{name:"Oscar",shirt:5,pos:"ZAG",rating:82},
-    {name:"Aílton",shirt:4,pos:"ZAG",rating:75},{name:"Décio",shirt:3,pos:"LD",rating:74},
-    {name:"Zé Maria",shirt:6,pos:"LE",rating:73},{name:"Mauro",shirt:8,pos:"VOL",rating:76},
-    {name:"Gilberto",shirt:2,pos:"MC",rating:74},{name:"Mário Tilico",shirt:7,pos:"ME",rating:75},
-    {name:"Paulinho",shirt:11,pos:"MD",rating:77},{name:"Serginho Chulapa",shirt:9,pos:"CA",rating:83},
-    {name:"Dirceu Lopes",shirt:10,pos:"CA",rating:79},
+    {name:"Waldir Peres",shirt:1,pos:"GOL",rating:80},
+    {name:"Getúlio",shirt:2,pos:"LD",rating:75},
+    {name:"Oscar",shirt:5,pos:"ZAG",rating:84},
+    {name:"Dario Pereyra",shirt:4,pos:"ZAG",rating:78},
+    {name:"Marinho Chagas",shirt:3,pos:"LE",rating:75},
+    {name:"Almir",shirt:8,pos:"VOL",rating:76},
+    {name:"Renato",shirt:6,pos:"MC",rating:77},
+    {name:"Heriberto",shirt:10,pos:"MC",rating:74},
+    {name:"Paulo César",shirt:11,pos:"ME",rating:77},
+    {name:"Serginho Chulapa",shirt:9,pos:"CA",rating:83},
+    {name:"Zé Sérgio",shirt:7,pos:"MD",rating:76},
   ]},
   {year:1986,ed:"Libertadores 1986",champion:false,players:[
-    {name:"Waldir Peres",shirt:1,pos:"GOL",rating:81},{name:"Oscar",shirt:5,pos:"ZAG",rating:84},
-    {name:"Mauro Galvão",shirt:4,pos:"ZAG",rating:80},{name:"Rodrigo",shirt:2,pos:"LD",rating:76},
-    {name:"Zé Carlos",shirt:3,pos:"LE",rating:75},{name:"Andrade",shirt:8,pos:"VOL",rating:79},
-    {name:"Renato",shirt:10,pos:"MC",rating:77},{name:"Biro-Biro",shirt:7,pos:"ME",rating:78},
-    {name:"Müller",shirt:9,pos:"CA",rating:85},{name:"Casagrande",shirt:11,pos:"CA",rating:81},
-    {name:"Careca",shirt:10,pos:"CA",rating:90},
+    {name:"Gilmar",shirt:1,pos:"GOL",rating:80},
+    {name:"Zé Teodoro",shirt:2,pos:"LD",rating:76},
+    {name:"Wagner Basílio",shirt:4,pos:"ZAG",rating:78},
+    {name:"Dario Pereyra",shirt:5,pos:"ZAG",rating:77},
+    {name:"Nelsinho",shirt:3,pos:"LE",rating:76},
+    {name:"Bernardo",shirt:8,pos:"VOL",rating:78},
+    {name:"Silas",shirt:6,pos:"MC",rating:80},
+    {name:"Pita",shirt:7,pos:"MD",rating:77},
+    {name:"Müller",shirt:9,pos:"CA",rating:86},
+    {name:"Careca",shirt:10,pos:"CA",rating:91},
+    {name:"Sidney",shirt:11,pos:"ME",rating:78},
   ]},
   {year:1987,ed:"Libertadores 1987",champion:false,players:[
-    {name:"Waldir Peres",shirt:1,pos:"GOL",rating:80},{name:"Oscar",shirt:5,pos:"ZAG",rating:83},
-    {name:"Mauro Galvão",shirt:4,pos:"ZAG",rating:81},{name:"Rodrigo",shirt:2,pos:"LD",rating:76},
-    {name:"Zé Carlos",shirt:3,pos:"LE",rating:75},{name:"Andrade",shirt:8,pos:"VOL",rating:78},
-    {name:"Renato",shirt:10,pos:"MC",rating:78},{name:"Biro-Biro",shirt:7,pos:"ME",rating:79},
-    {name:"Müller",shirt:9,pos:"CA",rating:86},{name:"Casagrande",shirt:11,pos:"CA",rating:80},
-    {name:"Careca",shirt:10,pos:"CA",rating:91},
+    {name:"Gilmar",shirt:1,pos:"GOL",rating:79},
+    {name:"Zé Teodoro",shirt:2,pos:"LD",rating:76},
+    {name:"Oscar",shirt:5,pos:"ZAG",rating:83},
+    {name:"Dario Pereyra",shirt:4,pos:"ZAG",rating:77},
+    {name:"Nelsinho",shirt:3,pos:"LE",rating:75},
+    {name:"Bernardo",shirt:8,pos:"VOL",rating:77},
+    {name:"Silas",shirt:6,pos:"MC",rating:80},
+    {name:"Pita",shirt:7,pos:"MD",rating:76},
+    {name:"Müller",shirt:9,pos:"CA",rating:86},
+    {name:"Lê",shirt:10,pos:"CA",rating:79},
+    {name:"Sidney",shirt:11,pos:"ME",rating:77},
   ]},
-  {year:1992,ed:"Libertadores 1992",champion:false,players:[
+  // 1992 — CAMPEÃO real
+  {year:1992,ed:"Libertadores 1992",champion:true,players:[
     {name:"Zetti",shirt:1,pos:"GOL",rating:84},
+    {name:"Vítor",shirt:2,pos:"LD",rating:78},
+    {name:"Adilson",shirt:4,pos:"ZAG",rating:82},
     {name:"Ronaldão",shirt:5,pos:"ZAG",rating:80},
-    {name:"Adílson",shirt:4,pos:"ZAG",rating:82},
-    {name:"Cafu",shirt:2,pos:"LD",rating:88},
-    {name:"Leonardo",shirt:3,pos:"LE",rating:83},
-    {name:"Mazinho",shirt:8,pos:"VOL",rating:82},
-    {name:"Pintado",shirt:6,pos:"VOL",rating:79},
-    {name:"Raí",shirt:10,pos:"MC",rating:89},
+    {name:"Ronaldo Luiz",shirt:3,pos:"LE",rating:76},
+    {name:"Pintado",shirt:8,pos:"VOL",rating:79},
+    {name:"Toninho Cerezo",shirt:6,pos:"VOL",rating:82},
+    {name:"Raí",shirt:10,pos:"MC",rating:91},
+    {name:"Cafu",shirt:7,pos:"MD",rating:88},
     {name:"Müller",shirt:9,pos:"CA",rating:84},
-    {name:"Palhinha",shirt:7,pos:"MD",rating:77},
-    {name:"Gilmar",shirt:11,pos:"CA",rating:78},
+    {name:"Elivélton",shirt:11,pos:"ME",rating:77},
   ]},
   // 1993 — CAMPEÃO real
   {year:1993,ed:"Libertadores 1993",champion:true,players:[
-    {name:"Zetti",shirt:1,pos:"GOL",rating:85},{name:"Adílson",shirt:4,pos:"ZAG",rating:83},
-    {name:"Ronaldão",shirt:5,pos:"ZAG",rating:82},{name:"Cafu",shirt:2,pos:"LD",rating:90},
-    {name:"Leonardo",shirt:3,pos:"LE",rating:84},{name:"Mazinho",shirt:8,pos:"VOL",rating:83},
-    {name:"Pintado",shirt:6,pos:"VOL",rating:80},{name:"Raí",shirt:10,pos:"MC",rating:92},
-    {name:"Gilmar",shirt:7,pos:"MD",rating:79},{name:"Müller",shirt:9,pos:"CA",rating:85},
-    {name:"Palhinha",shirt:11,pos:"CA",rating:80},
+    {name:"Zetti",shirt:1,pos:"GOL",rating:85},
+    {name:"Cafu",shirt:2,pos:"LD",rating:91},
+    {name:"Válber",shirt:4,pos:"ZAG",rating:81},
+    {name:"Ronaldão",shirt:5,pos:"ZAG",rating:82},
+    {name:"André Luiz",shirt:3,pos:"LE",rating:79},
+    {name:"Pintado",shirt:8,pos:"VOL",rating:80},
+    {name:"Dinho",shirt:6,pos:"VOL",rating:78},
+    {name:"Toninho Cerezo",shirt:10,pos:"MC",rating:82},
+    {name:"Palhinha",shirt:7,pos:"MC",rating:80},
+    {name:"Müller",shirt:9,pos:"CA",rating:85},
+    {name:"Leonardo",shirt:11,pos:"ME",rating:83},
   ]},
-  // 1994 — perdeu a final para Vélez Sársfield; Raí já estava no PSG
+  // 1994 — perdeu a final para Vélez Sársfield; Raí estava no PSG
   {year:1994,ed:"Libertadores 1994",champion:false,players:[
-    {name:"Zetti",shirt:1,pos:"GOL",rating:85},{name:"Adílson",shirt:4,pos:"ZAG",rating:83},
-    {name:"Ronaldão",shirt:5,pos:"ZAG",rating:83},{name:"Cafu",shirt:2,pos:"LD",rating:91},
-    {name:"Leonardo",shirt:3,pos:"LE",rating:85},{name:"Mazinho",shirt:8,pos:"VOL",rating:83},
-    {name:"Pintado",shirt:6,pos:"VOL",rating:80},{name:"Toninho Cerezo",shirt:10,pos:"MC",rating:80},
-    {name:"Gilmar",shirt:7,pos:"MD",rating:79},{name:"Müller",shirt:9,pos:"CA",rating:85},
-    {name:"Palhinha",shirt:11,pos:"CA",rating:81},
+    {name:"Zetti",shirt:1,pos:"GOL",rating:85},
+    {name:"Vítor",shirt:2,pos:"LD",rating:78},
+    {name:"Júnior Baiano",shirt:4,pos:"ZAG",rating:82},
+    {name:"Válber",shirt:5,pos:"ZAG",rating:81},
+    {name:"André Luiz",shirt:3,pos:"LE",rating:79},
+    {name:"Axel",shirt:8,pos:"VOL",rating:79},
+    {name:"Doriva",shirt:6,pos:"VOL",rating:78},
+    {name:"Palhinha",shirt:10,pos:"MC",rating:80},
+    {name:"Sierra",shirt:7,pos:"MD",rating:77},
+    {name:"Müller",shirt:11,pos:"ME",rating:83},
+    {name:"Caio",shirt:9,pos:"CA",rating:80},
   ]},
-  // 1995 — Raí retornou do PSG em 1996; elenco sem ele
+  // 1995 — Raí retornou do PSG em 1996
   {year:1995,ed:"Libertadores 1995",champion:false,players:[
-    {name:"Zetti",shirt:1,pos:"GOL",rating:84},{name:"Adílson",shirt:4,pos:"ZAG",rating:82},
-    {name:"Ronaldão",shirt:5,pos:"ZAG",rating:82},{name:"Cafu",shirt:2,pos:"LD",rating:91},
-    {name:"Cláudio",shirt:3,pos:"LE",rating:77},{name:"Dinho",shirt:8,pos:"VOL",rating:80},
-    {name:"Carlos Miguel",shirt:6,pos:"MC",rating:78},{name:"Sandro Hiroshi",shirt:7,pos:"MD",rating:78},
-    {name:"Marquinhos",shirt:10,pos:"MC",rating:77},{name:"Dodô",shirt:9,pos:"CA",rating:82},
-    {name:"Palhinha",shirt:11,pos:"CA",rating:80},
+    {name:"Zetti",shirt:1,pos:"GOL",rating:84},
+    {name:"Pavão",shirt:2,pos:"LD",rating:76},
+    {name:"Bordon",shirt:4,pos:"ZAG",rating:80},
+    {name:"Rogério Pinheiro",shirt:5,pos:"ZAG",rating:77},
+    {name:"André Luiz",shirt:3,pos:"LE",rating:78},
+    {name:"Axel",shirt:8,pos:"VOL",rating:78},
+    {name:"Donizete",shirt:6,pos:"MC",rating:79},
+    {name:"Denílson",shirt:7,pos:"MD",rating:80},
+    {name:"Palhinha",shirt:10,pos:"MC",rating:79},
+    {name:"Müller",shirt:11,pos:"ME",rating:82},
+    {name:"Almir",shirt:9,pos:"CA",rating:79},
   ]},
   // 1997
   {year:1997,ed:"Libertadores 1997",champion:false,players:[
     {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:85},
-    {name:"Ronaldo Alves",shirt:4,pos:"ZAG",rating:78},
-    {name:"Adílson",shirt:5,pos:"ZAG",rating:79},
-    {name:"Flávio",shirt:2,pos:"LD",rating:78},
-    {name:"Júnior",shirt:3,pos:"LE",rating:77},
-    {name:"Zé Elias",shirt:8,pos:"VOL",rating:81},
-    {name:"Fábio Augusto",shirt:6,pos:"VOL",rating:76},
-    {name:"Sandro Hiroshi",shirt:7,pos:"MD",rating:78},
-    {name:"Marquinhos",shirt:10,pos:"MC",rating:77},
-    {name:"Luizão",shirt:9,pos:"CA",rating:83},
-    {name:"Dodô",shirt:11,pos:"CA",rating:80},
+    {name:"Cláudio",shirt:2,pos:"LD",rating:76},
+    {name:"Bordon",shirt:4,pos:"ZAG",rating:81},
+    {name:"Rogério Pinheiro",shirt:5,pos:"ZAG",rating:77},
+    {name:"Serginho",shirt:3,pos:"LE",rating:79},
+    {name:"Alexandre",shirt:8,pos:"VOL",rating:80},
+    {name:"Belletti",shirt:6,pos:"MC",rating:80},
+    {name:"Fabiano",shirt:10,pos:"MC",rating:78},
+    {name:"Marcelinho Paraíba",shirt:7,pos:"MD",rating:83},
+    {name:"Dodô",shirt:11,pos:"ME",rating:82},
+    {name:"Aristizábal",shirt:9,pos:"CA",rating:83},
   ]},
   // 1998
   {year:1998,ed:"Libertadores 1998",champion:false,players:[
-    {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:85},
-    {name:"Ronaldo Alves",shirt:4,pos:"ZAG",rating:78},
-    {name:"Cléber",shirt:5,pos:"ZAG",rating:78},
-    {name:"Flávio",shirt:2,pos:"LD",rating:79},
-    {name:"Júnior",shirt:3,pos:"LE",rating:77},
-    {name:"Zé Elias",shirt:8,pos:"VOL",rating:82},
-    {name:"Fábio Augusto",shirt:6,pos:"VOL",rating:77},
-    {name:"Sandro Hiroshi",shirt:7,pos:"MD",rating:78},
-    {name:"Marquinhos",shirt:10,pos:"MC",rating:77},
-    {name:"Luizão",shirt:9,pos:"CA",rating:83},
-    {name:"Dodô",shirt:11,pos:"CA",rating:80},
+    {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:86},
+    {name:"Zé Carlos",shirt:2,pos:"LD",rating:77},
+    {name:"Bordon",shirt:4,pos:"ZAG",rating:82},
+    {name:"Márcio Santos",shirt:5,pos:"ZAG",rating:80},
+    {name:"Serginho",shirt:3,pos:"LE",rating:79},
+    {name:"Alexandre",shirt:8,pos:"VOL",rating:80},
+    {name:"Fabiano",shirt:6,pos:"VOL",rating:78},
+    {name:"Carlos Miguel",shirt:10,pos:"MC",rating:77},
+    {name:"França",shirt:9,pos:"CA",rating:82},
+    {name:"Dodô",shirt:7,pos:"MD",rating:81},
+    {name:"Denílson",shirt:11,pos:"ME",rating:81},
   ]},
-  // 1999 — elenco correto; Emerson (Grêmio/Roma), Marcos Assunção e Luizão eram do Palmeiras
+  // 1999 — elenco 100% São Paulo FC
   {year:1999,ed:"Libertadores 1999",champion:false,players:[
     {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:86},
-    {name:"Cléber",shirt:4,pos:"ZAG",rating:79},
-    {name:"Toné",shirt:5,pos:"ZAG",rating:78},
-    {name:"Fabão",shirt:2,pos:"LD",rating:80},
-    {name:"Júnior",shirt:3,pos:"LE",rating:78},
-    {name:"Zé Elias",shirt:8,pos:"VOL",rating:81},
-    {name:"Fábio Augusto",shirt:6,pos:"VOL",rating:77},
-    {name:"Sandro Hiroshi",shirt:7,pos:"MD",rating:78},
-    {name:"Robson",shirt:10,pos:"MC",rating:79},
-    {name:"Pintado",shirt:9,pos:"CA",rating:78},
-    {name:"Dodô",shirt:11,pos:"CA",rating:80},
+    {name:"Édson Podão",shirt:2,pos:"LD",rating:77},
+    {name:"Wilson",shirt:4,pos:"ZAG",rating:79},
+    {name:"Nem",shirt:5,pos:"ZAG",rating:78},
+    {name:"Serginho",shirt:3,pos:"LE",rating:79},
+    {name:"Alexandre",shirt:8,pos:"VOL",rating:80},
+    {name:"Vágner",shirt:6,pos:"VOL",rating:78},
+    {name:"Jorginho",shirt:10,pos:"MC",rating:77},
+    {name:"Marcelinho Paraíba",shirt:7,pos:"MD",rating:83},
+    {name:"França",shirt:9,pos:"CA",rating:82},
+    {name:"Dodô",shirt:11,pos:"ME",rating:81},
   ]},
   // 2000
   {year:2000,ed:"Libertadores 2000",champion:false,players:[
     {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:86},
-    {name:"Ronaldo Alves",shirt:4,pos:"ZAG",rating:78},
-    {name:"Cléber",shirt:5,pos:"ZAG",rating:78},
-    {name:"Fabão",shirt:2,pos:"LD",rating:80},
-    {name:"Júnior",shirt:3,pos:"LE",rating:78},
-    {name:"Zé Elias",shirt:8,pos:"VOL",rating:82},
-    {name:"Fábio Augusto",shirt:6,pos:"VOL",rating:77},
-    {name:"Ricardinho",shirt:10,pos:"MC",rating:80},
-    {name:"Sandro Hiroshi",shirt:7,pos:"MD",rating:78},
-    {name:"Reinaldo",shirt:9,pos:"CA",rating:80},
-    {name:"Dodô",shirt:11,pos:"CA",rating:80},
+    {name:"Belletti",shirt:2,pos:"LD",rating:82},
+    {name:"Rogério Pinheiro",shirt:4,pos:"ZAG",rating:78},
+    {name:"Wilson",shirt:5,pos:"ZAG",rating:78},
+    {name:"Fábio Aurélio",shirt:3,pos:"LE",rating:80},
+    {name:"Maldonado",shirt:8,pos:"VOL",rating:79},
+    {name:"Vágner",shirt:6,pos:"VOL",rating:78},
+    {name:"Marcelinho Paraíba",shirt:7,pos:"MD",rating:83},
+    {name:"Edu",shirt:10,pos:"MC",rating:79},
+    {name:"Sandro Hiroshi",shirt:11,pos:"ME",rating:78},
+    {name:"França",shirt:9,pos:"CA",rating:82},
   ]},
-  // 2001 — Kaká fez a estreia profissional este ano
+  // 2001 — Kaká estreia profissional
   {year:2001,ed:"Libertadores 2001",champion:false,players:[
     {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:86},
-    {name:"Alex Silva",shirt:4,pos:"ZAG",rating:80},
-    {name:"Cléber",shirt:5,pos:"ZAG",rating:78},
-    {name:"Fabão",shirt:2,pos:"LD",rating:79},
+    {name:"Belletti",shirt:2,pos:"LD",rating:83},
+    {name:"Rogério Pinheiro",shirt:4,pos:"ZAG",rating:78},
+    {name:"Jean",shirt:5,pos:"ZAG",rating:79},
     {name:"Gustavo Nery",shirt:3,pos:"LE",rating:80},
-    {name:"Josué",shirt:6,pos:"VOL",rating:80},
-    {name:"Zé Elias",shirt:8,pos:"VOL",rating:81},
-    {name:"Kaká",shirt:7,pos:"MC",rating:82},
-    {name:"Ricardinho",shirt:10,pos:"MD",rating:79},
-    {name:"Alex Mineiro",shirt:9,pos:"CA",rating:80},
-    {name:"Dodô",shirt:11,pos:"CA",rating:79},
+    {name:"Alexandre",shirt:8,pos:"VOL",rating:80},
+    {name:"Maldonado",shirt:6,pos:"VOL",rating:79},
+    {name:"Kaká",shirt:10,pos:"MC",rating:85},
+    {name:"Leonardo",shirt:7,pos:"MD",rating:78},
+    {name:"Luís Fabiano",shirt:9,pos:"CA",rating:85},
+    {name:"França",shirt:11,pos:"ME",rating:80},
   ]},
-  // 2004 — Anderson Polga nunca jogou no SPFC; substituído por Lúcio (cedido) → usar Alex Silva + Gustavo Nery
+  // 2004
   {year:2004,ed:"Libertadores 2004",champion:false,players:[
-    {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:88},{name:"Alex Silva",shirt:4,pos:"ZAG",rating:81},
-    {name:"Rodrigo Fabri",shirt:5,pos:"ZAG",rating:79},{name:"Cicinho",shirt:2,pos:"LD",rating:84},
-    {name:"Gustavo Nery",shirt:3,pos:"LE",rating:81},{name:"Mineiro",shirt:8,pos:"VOL",rating:84},
-    {name:"Josué",shirt:6,pos:"VOL",rating:83},{name:"Danilo",shirt:10,pos:"MC",rating:82},
-    {name:"Diego Tardelli",shirt:7,pos:"MD",rating:81},{name:"Luís Fabiano",shirt:9,pos:"CA",rating:86},
+    {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:88},
+    {name:"Cicinho",shirt:2,pos:"LD",rating:84},
+    {name:"Fabão",shirt:4,pos:"ZAG",rating:81},
+    {name:"Rodrigo",shirt:5,pos:"ZAG",rating:79},
+    {name:"Gustavo Nery",shirt:3,pos:"LE",rating:81},
+    {name:"Alexandre",shirt:8,pos:"VOL",rating:81},
+    {name:"Josué",shirt:6,pos:"VOL",rating:82},
+    {name:"Danilo",shirt:10,pos:"MC",rating:82},
+    {name:"Marquinhos",shirt:7,pos:"MD",rating:80},
     {name:"Grafite",shirt:11,pos:"CA",rating:84},
+    {name:"Luís Fabiano",shirt:9,pos:"CA",rating:87},
   ]},
-  // 2005 — CAMPEÃO real; Amoroso sim estava aqui
+  // 2005 — CAMPEÃO real
   {year:2005,ed:"Libertadores 2005",champion:true,players:[
-    {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:89},{name:"Alex Silva",shirt:4,pos:"ZAG",rating:82},
-    {name:"Rodrigo Fabri",shirt:5,pos:"ZAG",rating:80},{name:"Cicinho",shirt:2,pos:"LD",rating:85},
-    {name:"Gustavo Nery",shirt:3,pos:"LE",rating:82},{name:"Mineiro",shirt:8,pos:"VOL",rating:85},
-    {name:"Josué",shirt:6,pos:"VOL",rating:84},{name:"Danilo",shirt:10,pos:"MC",rating:83},
-    {name:"Amoroso",shirt:7,pos:"CA",rating:84},{name:"Luís Fabiano",shirt:9,pos:"CA",rating:88},
-    {name:"Grafite",shirt:11,pos:"CA",rating:85},
+    {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:89},
+    {name:"Cicinho",shirt:2,pos:"LD",rating:85},
+    {name:"Fabão",shirt:4,pos:"ZAG",rating:81},
+    {name:"Diego Lugano",shirt:5,pos:"ZAG",rating:87},
+    {name:"Júnior",shirt:3,pos:"LE",rating:81},
+    {name:"Mineiro",shirt:8,pos:"VOL",rating:85},
+    {name:"Josué",shirt:6,pos:"VOL",rating:83},
+    {name:"Danilo",shirt:10,pos:"MC",rating:83},
+    {name:"Edcarlos",shirt:7,pos:"MD",rating:79},
+    {name:"Amoroso",shirt:11,pos:"ME",rating:84},
+    {name:"Aloísio Chulapa",shirt:9,pos:"CA",rating:83},
   ]},
+  // 2008
   {year:2008,ed:"Libertadores 2008",champion:false,players:[
-    {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:87},{name:"Alex Silva",shirt:4,pos:"ZAG",rating:82},
-    {name:"Junior",shirt:5,pos:"ZAG",rating:80},{name:"Edcarlos",shirt:2,pos:"LD",rating:81},
-    {name:"Richarlyson",shirt:3,pos:"LE",rating:81},{name:"Mineiro",shirt:8,pos:"VOL",rating:83},
-    {name:"Danilo",shirt:6,pos:"MC",rating:82},{name:"Hernanes",shirt:10,pos:"MC",rating:85},
-    {name:"Diego Tardelli",shirt:7,pos:"MD",rating:83},{name:"Luís Fabiano",shirt:9,pos:"CA",rating:89},
-    {name:"Borges",shirt:11,pos:"CA",rating:82},
+    {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:87},
+    {name:"Zé Luis",shirt:2,pos:"LD",rating:79},
+    {name:"Rodrigo",shirt:4,pos:"ZAG",rating:80},
+    {name:"Miranda",shirt:5,pos:"ZAG",rating:84},
+    {name:"Jorge Wagner",shirt:3,pos:"LE",rating:80},
+    {name:"Jean",shirt:8,pos:"VOL",rating:80},
+    {name:"Hernanes",shirt:10,pos:"MC",rating:86},
+    {name:"Hugo",shirt:6,pos:"MC",rating:78},
+    {name:"André Dias",shirt:7,pos:"MD",rating:79},
+    {name:"Dagoberto",shirt:11,pos:"ME",rating:80},
+    {name:"Borges",shirt:9,pos:"CA",rating:82},
   ]},
+  // 2009
   {year:2009,ed:"Libertadores 2009",champion:false,players:[
-    {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:87},{name:"Alex Silva",shirt:4,pos:"ZAG",rating:82},
-    {name:"Miranda",shirt:5,pos:"ZAG",rating:83},{name:"Edcarlos",shirt:2,pos:"LD",rating:81},
-    {name:"Junior",shirt:3,pos:"LE",rating:80},{name:"Mineiro",shirt:8,pos:"VOL",rating:82},
-    {name:"Hernanes",shirt:10,pos:"VOL",rating:86},{name:"Richarlyson",shirt:6,pos:"MC",rating:81},
-    {name:"Dagoberto",shirt:7,pos:"CA",rating:80},{name:"Luís Fabiano",shirt:9,pos:"CA",rating:90},
-    {name:"Borges",shirt:11,pos:"CA",rating:83},
+    {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:87},
+    {name:"Adrián González",shirt:2,pos:"LD",rating:78},
+    {name:"Renato Silva",shirt:4,pos:"ZAG",rating:79},
+    {name:"André Dias",shirt:5,pos:"ZAG",rating:79},
+    {name:"Junior Cesar",shirt:3,pos:"LE",rating:78},
+    {name:"Miranda",shirt:8,pos:"VOL",rating:84},
+    {name:"Jean",shirt:6,pos:"VOL",rating:80},
+    {name:"Hernanes",shirt:10,pos:"MC",rating:86},
+    {name:"Jorge Wagner",shirt:7,pos:"MD",rating:81},
+    {name:"Dagoberto",shirt:11,pos:"ME",rating:80},
+    {name:"Washington",shirt:9,pos:"CA",rating:82},
   ]},
+  // 2012
   {year:2012,ed:"Libertadores 2012",champion:false,players:[
-    {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:86},{name:"Rhodolfo",shirt:4,pos:"ZAG",rating:81},
-    {name:"Miranda",shirt:5,pos:"ZAG",rating:85},{name:"Douglas",shirt:2,pos:"LD",rating:80},
-    {name:"Wellington",shirt:3,pos:"LE",rating:79},{name:"Hernanes",shirt:8,pos:"VOL",rating:87},
-    {name:"Casemiro",shirt:6,pos:"VOL",rating:81},{name:"Paulo Henrique Ganso",shirt:10,pos:"MC",rating:86},
-    {name:"Jadson",shirt:7,pos:"MD",rating:83},{name:"Lucas Moura",shirt:11,pos:"ME",rating:88},
-    {name:"Osvaldo",shirt:9,pos:"CA",rating:82},
+    {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:86},
+    {name:"Paulo Miranda",shirt:2,pos:"LD",rating:80},
+    {name:"Rafael Toloi",shirt:4,pos:"ZAG",rating:82},
+    {name:"Rhodolfo",shirt:5,pos:"ZAG",rating:81},
+    {name:"Cortez",shirt:3,pos:"LE",rating:80},
+    {name:"Denilson",shirt:8,pos:"VOL",rating:80},
+    {name:"Wellington",shirt:6,pos:"MC",rating:79},
+    {name:"Jadson",shirt:10,pos:"MC",rating:83},
+    {name:"Osvaldo",shirt:7,pos:"MD",rating:81},
+    {name:"Lucas Moura",shirt:11,pos:"ME",rating:88},
+    {name:"Luis Fabiano",shirt:9,pos:"CA",rating:87},
   ]},
+  // 2013
   {year:2013,ed:"Libertadores 2013",champion:false,players:[
-    {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:85},{name:"Rhodolfo",shirt:4,pos:"ZAG",rating:80},
-    {name:"Miranda",shirt:5,pos:"ZAG",rating:86},{name:"Douglas",shirt:2,pos:"LD",rating:80},
-    {name:"Wellington",shirt:3,pos:"LE",rating:79},{name:"Casemiro",shirt:6,pos:"VOL",rating:83},
-    {name:"Jadson",shirt:8,pos:"MC",rating:83},{name:"Paulo Henrique Ganso",shirt:10,pos:"MC",rating:85},
-    {name:"Willian José",shirt:7,pos:"MD",rating:79},{name:"Osvaldo",shirt:9,pos:"CA",rating:82},
-    {name:"Aloísio",shirt:11,pos:"CA",rating:80},
+    {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:85},
+    {name:"Douglas",shirt:2,pos:"LD",rating:80},
+    {name:"Rodrigo Caio",shirt:4,pos:"ZAG",rating:82},
+    {name:"Paulo Miranda",shirt:5,pos:"ZAG",rating:80},
+    {name:"Reinaldo",shirt:3,pos:"LE",rating:80},
+    {name:"Denilson",shirt:8,pos:"VOL",rating:79},
+    {name:"Maicon",shirt:6,pos:"VOL",rating:82},
+    {name:"Ganso",shirt:10,pos:"MC",rating:85},
+    {name:"Aloísio",shirt:11,pos:"ME",rating:79},
+    {name:"Osvaldo",shirt:7,pos:"MD",rating:81},
+    {name:"Luis Fabiano",shirt:9,pos:"CA",rating:86},
   ]},
+  // 2016
   {year:2016,ed:"Libertadores 2016",champion:false,players:[
-    {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:84},{name:"Rodrigo Caio",shirt:4,pos:"ZAG",rating:83},
-    {name:"Lugano",shirt:5,pos:"ZAG",rating:83},{name:"Maicon",shirt:2,pos:"LD",rating:82},
-    {name:"Reinaldo",shirt:3,pos:"LE",rating:82},{name:"Wesley",shirt:6,pos:"VOL",rating:80},
-    {name:"Ganso",shirt:8,pos:"MC",rating:83},{name:"Cueva",shirt:10,pos:"MC",rating:85},
-    {name:"Centurión",shirt:7,pos:"MD",rating:84},{name:"Calleri",shirt:9,pos:"CA",rating:83},
-    {name:"Chavez",shirt:11,pos:"ME",rating:79},
+    {name:"Denis",shirt:1,pos:"GOL",rating:80},
+    {name:"Bruno",shirt:2,pos:"LD",rating:78},
+    {name:"Maicon",shirt:4,pos:"ZAG",rating:81},
+    {name:"Rodrigo Caio",shirt:5,pos:"ZAG",rating:83},
+    {name:"Mena",shirt:3,pos:"LE",rating:78},
+    {name:"Hudson",shirt:8,pos:"VOL",rating:80},
+    {name:"Thiago Mendes",shirt:6,pos:"VOL",rating:81},
+    {name:"João Schmidt",shirt:10,pos:"MC",rating:79},
+    {name:"Ganso",shirt:7,pos:"MC",rating:83},
+    {name:"Kelvin",shirt:11,pos:"ME",rating:79},
+    {name:"Calleri",shirt:9,pos:"CA",rating:83},
   ]},
+  // 2019
   {year:2019,ed:"Libertadores 2019",champion:false,players:[
-    {name:"Tiago Volpi",shirt:1,pos:"GOL",rating:82},{name:"Bruno Alves",shirt:4,pos:"ZAG",rating:82},
-    {name:"Arboleda",shirt:5,pos:"ZAG",rating:83},{name:"Juanfran",shirt:2,pos:"LD",rating:81},
-    {name:"Reinaldo",shirt:3,pos:"LE",rating:82},{name:"Tchê Tchê",shirt:8,pos:"VOL",rating:81},
-    {name:"Liziero",shirt:6,pos:"VOL",rating:79},{name:"Luan",shirt:10,pos:"MC",rating:82},
-    {name:"Toró",shirt:7,pos:"ME",rating:79},{name:"Pablo",shirt:9,pos:"CA",rating:82},
-    {name:"Pato",shirt:11,pos:"CA",rating:83},
+    {name:"Tiago Volpi",shirt:1,pos:"GOL",rating:82},
+    {name:"Igor Vinícius",shirt:2,pos:"LD",rating:80},
+    {name:"Arboleda",shirt:4,pos:"ZAG",rating:83},
+    {name:"Bruno Alves",shirt:5,pos:"ZAG",rating:82},
+    {name:"Reinaldo",shirt:3,pos:"LE",rating:82},
+    {name:"Tchê Tchê",shirt:8,pos:"VOL",rating:81},
+    {name:"Luan",shirt:6,pos:"MC",rating:82},
+    {name:"Daniel Alves",shirt:10,pos:"MD",rating:85},
+    {name:"Antony",shirt:11,pos:"ME",rating:83},
+    {name:"Vitor Bueno",shirt:7,pos:"ME",rating:79},
+    {name:"Pablo",shirt:9,pos:"CA",rating:83},
   ]},
+  // 2021
   {year:2021,ed:"Libertadores 2021",champion:false,players:[
-    {name:"Tiago Volpi",shirt:1,pos:"GOL",rating:83},{name:"Arboleda",shirt:4,pos:"ZAG",rating:84},
-    {name:"Miranda",shirt:5,pos:"ZAG",rating:83},{name:"Reinaldo",shirt:6,pos:"LE",rating:82},
-    {name:"Léo",shirt:3,pos:"LE",rating:80},{name:"Liziero",shirt:8,pos:"VOL",rating:80},
-    {name:"Luan",shirt:10,pos:"MC",rating:82},{name:"Gabriel Sara",shirt:7,pos:"MC",rating:81},
-    {name:"Eder",shirt:9,pos:"CA",rating:81},{name:"Luciano",shirt:11,pos:"CA",rating:84},
-    {name:"Pablo",shirt:23,pos:"CA",rating:82},
+    {name:"Tiago Volpi",shirt:1,pos:"GOL",rating:83},
+    {name:"Igor Vinícius",shirt:2,pos:"LD",rating:81},
+    {name:"Arboleda",shirt:4,pos:"ZAG",rating:84},
+    {name:"Miranda",shirt:5,pos:"ZAG",rating:82},
+    {name:"Reinaldo",shirt:3,pos:"LE",rating:82},
+    {name:"Luan",shirt:8,pos:"VOL",rating:81},
+    {name:"Léo",shirt:6,pos:"VOL",rating:80},
+    {name:"Rodrigo Nestor",shirt:10,pos:"MC",rating:81},
+    {name:"Gabriel Sara",shirt:7,pos:"MD",rating:81},
+    {name:"Luciano",shirt:9,pos:"CA",rating:84},
+    {name:"Rigoni",shirt:11,pos:"ME",rating:80},
   ]},
+  // 2022
   {year:2022,ed:"Libertadores 2022",champion:false,players:[
-    {name:"Felipe Alves",shirt:1,pos:"GOL",rating:81},{name:"Arboleda",shirt:4,pos:"ZAG",rating:84},
-    {name:"Miranda",shirt:5,pos:"ZAG",rating:82},{name:"Rafinha",shirt:2,pos:"LD",rating:83},
-    {name:"Welington",shirt:3,pos:"LE",rating:81},{name:"Pablo Maia",shirt:8,pos:"VOL",rating:82},
-    {name:"Igor Gomes",shirt:6,pos:"MC",rating:81},{name:"Nestor",shirt:10,pos:"MC",rating:81},
-    {name:"Rigoni",shirt:7,pos:"MD",rating:80},{name:"Calleri",shirt:9,pos:"CA",rating:85},
-    {name:"Luciano",shirt:11,pos:"CA",rating:84},
+    {name:"Jandrei",shirt:1,pos:"GOL",rating:81},
+    {name:"Igor Vinícius",shirt:2,pos:"LD",rating:81},
+    {name:"Diego Costa",shirt:4,pos:"ZAG",rating:80},
+    {name:"Léo",shirt:5,pos:"ZAG",rating:81},
+    {name:"Reinaldo",shirt:3,pos:"LE",rating:82},
+    {name:"Pablo Maia",shirt:8,pos:"VOL",rating:82},
+    {name:"Rodrigo Nestor",shirt:6,pos:"MC",rating:81},
+    {name:"Alisson",shirt:10,pos:"MC",rating:82},
+    {name:"Patrick",shirt:7,pos:"MD",rating:80},
+    {name:"Luciano",shirt:11,pos:"ME",rating:83},
+    {name:"Calleri",shirt:9,pos:"CA",rating:85},
   ]},
+  // 2023
   {year:2023,ed:"Libertadores 2023",champion:false,players:[
-    {name:"Rafael",shirt:1,pos:"GOL",rating:84},{name:"Arboleda",shirt:4,pos:"ZAG",rating:84},
-    {name:"Beraldo",shirt:5,pos:"ZAG",rating:81},{name:"Rafinha",shirt:2,pos:"LD",rating:83},
-    {name:"Welington",shirt:3,pos:"LE",rating:82},{name:"Pablo Maia",shirt:8,pos:"VOL",rating:83},
-    {name:"Alisson",shirt:6,pos:"MC",rating:82},{name:"Michel Araújo",shirt:10,pos:"MC",rating:81},
-    {name:"Rodriguinho",shirt:7,pos:"MD",rating:80},{name:"Calleri",shirt:9,pos:"CA",rating:86},
-    {name:"Luciano",shirt:11,pos:"CA",rating:85},
+    {name:"Rafael",shirt:1,pos:"GOL",rating:84},
+    {name:"Rafinha",shirt:2,pos:"LD",rating:83},
+    {name:"Arboleda",shirt:4,pos:"ZAG",rating:84},
+    {name:"Beraldo",shirt:5,pos:"ZAG",rating:81},
+    {name:"Caio Paulista",shirt:3,pos:"LE",rating:80},
+    {name:"Pablo Maia",shirt:8,pos:"VOL",rating:83},
+    {name:"Alisson",shirt:6,pos:"VOL",rating:82},
+    {name:"Rodrigo Nestor",shirt:10,pos:"MC",rating:82},
+    {name:"Wellington Rato",shirt:11,pos:"ME",rating:81},
+    {name:"Luciano",shirt:7,pos:"MD",rating:83},
+    {name:"Calleri",shirt:9,pos:"CA",rating:86},
   ]},
+  // 2024
   {year:2024,ed:"Libertadores 2024",champion:false,players:[
-    {name:"Rafael",shirt:1,pos:"GOL",rating:84},{name:"Arboleda",shirt:4,pos:"ZAG",rating:84},
-    {name:"Alan Franco",shirt:5,pos:"ZAG",rating:82},{name:"Rafinha",shirt:2,pos:"LD",rating:82},
-    {name:"Welington",shirt:3,pos:"LE",rating:82},{name:"Pablo Maia",shirt:8,pos:"VOL",rating:84},
-    {name:"Alisson",shirt:6,pos:"MC",rating:83},{name:"Ferreirinha",shirt:7,pos:"MD",rating:82},
-    {name:"André Silva",shirt:99,pos:"CA",rating:81},{name:"Calleri",shirt:9,pos:"CA",rating:86},
-    {name:"Luciano",shirt:11,pos:"CA",rating:85},
+    {name:"Rafael",shirt:1,pos:"GOL",rating:84},
+    {name:"Rafinha",shirt:2,pos:"LD",rating:82},
+    {name:"Arboleda",shirt:4,pos:"ZAG",rating:84},
+    {name:"Alan Franco",shirt:5,pos:"ZAG",rating:82},
+    {name:"Welington",shirt:3,pos:"LE",rating:82},
+    {name:"Pablo Maia",shirt:8,pos:"VOL",rating:84},
+    {name:"Alisson",shirt:6,pos:"VOL",rating:83},
+    {name:"Lucas Moura",shirt:10,pos:"MC",rating:83},
+    {name:"Wellington Rato",shirt:11,pos:"ME",rating:81},
+    {name:"Luciano",shirt:7,pos:"MD",rating:83},
+    {name:"Calleri",shirt:9,pos:"CA",rating:86},
   ]},
+  // 2025
   {year:2025,ed:"Libertadores 2025",champion:false,players:[
-    {name:"Rafael",shirt:1,pos:"GOL",rating:84},{name:"Arboleda",shirt:4,pos:"ZAG",rating:83},
-    {name:"Alan Franco",shirt:5,pos:"ZAG",rating:82},{name:"Ferraresi",shirt:2,pos:"LD",rating:82},
-    {name:"Welington",shirt:3,pos:"LE",rating:83},{name:"Pablo Maia",shirt:8,pos:"VOL",rating:85},
-    {name:"Bobadilla",shirt:6,pos:"VOL",rating:82},{name:"Oscar",shirt:10,pos:"MC",rating:84},
-    {name:"Ferreirinha",shirt:7,pos:"MD",rating:83},{name:"Calleri",shirt:9,pos:"CA",rating:85},
-    {name:"Luciano",shirt:11,pos:"CA",rating:84},
+    {name:"Rafael",shirt:1,pos:"GOL",rating:84},
+    {name:"Cédric Soares",shirt:2,pos:"LD",rating:80},
+    {name:"Arboleda",shirt:4,pos:"ZAG",rating:83},
+    {name:"Alan Franco",shirt:5,pos:"ZAG",rating:82},
+    {name:"Wendell",shirt:3,pos:"LE",rating:81},
+    {name:"Pablo Maia",shirt:8,pos:"VOL",rating:85},
+    {name:"Alisson",shirt:6,pos:"VOL",rating:83},
+    {name:"Marcos Antônio",shirt:10,pos:"MC",rating:81},
+    {name:"Lucas Moura",shirt:11,pos:"ME",rating:83},
+    {name:"Luciano",shirt:7,pos:"MD",rating:83},
+    {name:"Calleri",shirt:9,pos:"CA",rating:85},
   ]},
 ];
 
@@ -608,38 +715,44 @@ function Confetti(){
   return(<div style={{position:"fixed",inset:0,pointerEvents:"none",overflow:"hidden",zIndex:999}}>{ps.map(p=><div key={p.id} style={{position:"absolute",left:`${p.left}%`,top:-20,width:p.size,height:p.size,background:p.color,borderRadius:Math.random()>.5?"50%":"2px",animation:`confettiFall ${p.dur}s ease-in ${p.delay}s both`}}/>)}</div>);
 }
 
-/* ─── SLOT MACHINE — items pre-built so list never flashes empty ─────────────── */
+/* ─── SLOT MACHINE ───────────────────────────────────────────────────────────── */
 function SlotMachine({squads,onDone}){
-  const IH=56,DUR=2200,CENTER=2;
+  const IH=56,DUR=1400,CENTER=2;
 
-  // Pre-compute everything synchronously so first render already has items
   const initRef=useRef(null);
   if(!initRef.current){
     const chosen=squads[0|Math.random()*squads.length];
-    const prefix=[...shuffle(squads),...shuffle(squads),...shuffle(squads)];
+    const prefix=[...shuffle(squads),...shuffle(squads)];
     const landingIdx=prefix.length;
     const list=[...prefix,chosen,...shuffle(squads),...shuffle(squads)];
     const targetOffset=(landingIdx-CENTER)*IH;
-    const extraSpin=Math.round(squads.length*3+Math.random()*squads.length)*IH;
+    const extraSpin=Math.round(squads.length*2+Math.random()*squads.length)*IH;
     initRef.current={chosen,list,landingIdx,targetOffset,totalTravel:extraSpin+targetOffset};
   }
   const{chosen,list,targetOffset,totalTravel}=initRef.current;
 
-  const [offset,setOffset]=useState(0);
   const [done,setDone]=useState(false);
-  const raf=useRef();
+  const listRef=useRef(null);
+  const rafRef=useRef();
 
   useEffect(()=>{
     const t0=performance.now();
-    const ease=t=>1-Math.pow(1-t,4);
+    // easeInOutCubic — acelera no início, desacelera no final
+    const ease=t=>t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
     const tick=now=>{
       const p=Math.min((now-t0)/DUR,1);
-      setOffset(ease(p)*totalTravel);
-      if(p<1){raf.current=requestAnimationFrame(tick);}
-      else{setOffset(targetOffset);setDone(true);setTimeout(()=>onDone(chosen),700);}
+      if(listRef.current){
+        listRef.current.style.transform=`translateY(-${ease(p)*totalTravel}px)`;
+      }
+      if(p<1){rafRef.current=requestAnimationFrame(tick);}
+      else{
+        if(listRef.current) listRef.current.style.transform=`translateY(-${targetOffset}px)`;
+        setDone(true);
+        setTimeout(()=>onDone(chosen),600);
+      }
     };
-    raf.current=requestAnimationFrame(tick);
-    return()=>cancelAnimationFrame(raf.current);
+    rafRef.current=requestAnimationFrame(tick);
+    return()=>cancelAnimationFrame(rafRef.current);
   },[]);
 
   return(
@@ -654,8 +767,7 @@ function SlotMachine({squads,onDone}){
           background:done?"rgba(204,0,0,0.06)":"rgba(0,0,0,0.025)",
           borderTop:`1.5px solid ${done?C.red:C.border}`,borderBottom:`1.5px solid ${done?C.red:C.border}`,
           zIndex:2,pointerEvents:"none",transition:"all .4s"}}/>
-        {/* list is always populated from ref — no flash */}
-        <div style={{transform:`translateY(-${offset}px)`,willChange:"transform"}}>
+        <div ref={listRef} style={{willChange:"transform"}}>
           {list.map((sq,i)=>(
             <div key={i} style={{height:IH,display:"flex",flexDirection:"column",justifyContent:"center",padding:"0 18px",borderBottom:`1px solid ${C.border}`}}>
               <div style={{fontFamily:F.display,fontSize:24,color:C.ink,letterSpacing:2,lineHeight:1}}>{sq.year}</div>
@@ -1421,25 +1533,29 @@ function SimScreen({allMatches,matchIdx,livePhase,minute,spG,oppG,events,flash,t
             )}
             {events.map((ev,i)=>{
               const isGoal=ev.type==="goal";
-              const isYellow=ev.type==="yellow";
-              const isRed=ev.type==="red";
-              const icon=isGoal?"⚽":isYellow?"🟨":isRed?"🟥":"⚽";
-              const nameColor=isYellow?C.yellow:isRed?C.red:(ev.team==="sp"?C.red:C.ink);
+              const isCard=ev.type==="yellow"||ev.type==="red";
+              const icon=isGoal?"⚽":ev.type==="yellow"?"🟨":"🟥";
+              const nameColor=ev.type==="yellow"?C.yellow:ev.type==="red"?C.red:(ev.team==="sp"?C.red:C.ink);
               return(
                 <div key={i} className={i===0?"goalSlide":""} style={{
-                  display:"flex",alignItems:"center",gap:14,
-                  padding:"14px 24px",borderBottom:`1px solid ${C.border}`,
-                  background:ev.team==="sp"?"rgba(204,0,0,.03)":C.white,
+                  display:"flex",alignItems:"center",gap:isCard?10:14,
+                  padding:isCard?"7px 24px":"13px 24px",
+                  borderBottom:`1px solid ${C.border}`,
+                  background:ev.team==="sp"?(isCard?"rgba(204,0,0,.015)":"rgba(204,0,0,.03)"):C.white,
+                  opacity:isCard?0.85:1,
                 }}>
-                  <span style={{fontFamily:F.body,fontSize:12,color:C.muted,fontWeight:600,minWidth:32}}>{ev.min}'</span>
-                  <span style={{fontSize:16}}>{icon}</span>
+                  <span style={{fontFamily:F.body,fontSize:isCard?10:12,color:C.muted,fontWeight:600,minWidth:28}}>{ev.min}'</span>
+                  <span style={{fontSize:isCard?12:16}}>{icon}</span>
                   <div style={{flex:1}}>
-                    <div style={{fontSize:14,fontWeight:600,color:nameColor,fontFamily:F.body}}>{ev.name}</div>
-                    <div style={{fontSize:11,color:C.muted,marginTop:2,fontFamily:F.body}}>
-                      {ev.team==="sp"?(isGoal?ev.pos:isYellow?"Cartão Amarelo":"Cartão Vermelho"):ev.club}
-                    </div>
+                    <div style={{fontSize:isCard?11:14,fontWeight:600,color:nameColor,fontFamily:F.body}}>{ev.name}</div>
+                    {!isCard&&<div style={{fontSize:11,color:C.muted,marginTop:2,fontFamily:F.body}}>
+                      {ev.team==="sp"?ev.pos:ev.club}
+                    </div>}
+                    {isCard&&<div style={{fontSize:10,color:C.muted,fontFamily:F.body}}>
+                      {ev.type==="yellow"?"Cartão Amarelo":"Cartão Vermelho"}
+                    </div>}
                   </div>
-                  <span style={{fontSize:18}}>{ev.team==="sp"?"🇾🇪":m.opp.flag}</span>
+                  <span style={{fontSize:isCard?13:18}}>{ev.team==="sp"?"🇾🇪":m.opp.flag}</span>
                 </div>
               );
             })}
@@ -1449,28 +1565,28 @@ function SimScreen({allMatches,matchIdx,livePhase,minute,spG,oppG,events,flash,t
                 <span style={{fontSize:12,color:C.muted,fontWeight:500,fontFamily:F.body}}>{min2}' em andamento</span>
               </div>
             )}
+            {isDone&&!isGroupResult&&!isPenalties&&(
+              <div className="fadeUp" style={{padding:"16px 24px",borderTop:`2px solid ${C.border}`,background:"#FAFAFA"}}>
+                <div style={{fontSize:9,letterSpacing:2,color:C.muted,fontWeight:700,marginBottom:6,fontFamily:F.body}}>
+                  COMENTÁRIO DE MARKO LOCO E ZÉ BIRA
+                </div>
+                <div style={{fontSize:13,color:C.ink,fontFamily:F.body,lineHeight:1.55,fontStyle:"italic"}}>
+                  "{generateMatchCommentary(m,m.myG,m.oppG,m.evs)}"
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
 
       {isDone&&!isGroupResult&&!isPenalties&&(
-        <>
-          <div className="fadeUp" style={{padding:"16px 24px 12px",borderTop:`1px solid ${C.border}`,background:"#FAFAFA"}}>
-            <div style={{fontSize:10,letterSpacing:2,color:C.muted,fontWeight:700,marginBottom:6,fontFamily:F.body}}>
-              COMENTÁRIO DE MARKO LOCO E ZÉ BIRA
-            </div>
-            <div style={{fontSize:13,color:C.ink,fontFamily:F.body,lineHeight:1.55,fontStyle:"italic"}}>
-              "{generateMatchCommentary(m,m.myG,m.oppG,m.evs)}"
-            </div>
-          </div>
-          <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,padding:"16px 24px",background:C.white,borderTop:`1px solid ${C.border}`,zIndex:50}}>
-            <button onClick={()=>onAdvance("done")} style={{
-              background:doneBg,color:doneFg,border:"none",
-              padding:"18px 0",width:"100%",cursor:"pointer",
-              fontFamily:F.display,fontSize:15,letterSpacing:2,
-            }}>{doneLabel()}</button>
-          </div>
-        </>
+        <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,padding:"16px 24px",background:C.white,borderTop:`1px solid ${C.border}`,zIndex:50}}>
+          <button onClick={()=>onAdvance("done")} style={{
+            background:doneBg,color:doneFg,border:"none",
+            padding:"18px 0",width:"100%",cursor:"pointer",
+            fontFamily:F.display,fontSize:15,letterSpacing:2,
+          }}>{doneLabel()}</button>
+        </div>
       )}
     </div>
   );

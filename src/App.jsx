@@ -909,7 +909,7 @@ export default function App(){
       {phase==="draft"&&<DraftScreen showSlot={showSlot} squad={squad} drawIdx={drawIdx} team={team} formation={formation} rerolls={rerolls} showReroll={showReroll} onSlotDone={handleSlotDone} onPick={pickPlayer} onReroll={doReroll} afterReroll={afterReroll} usedYrs={usedYrs}/>}
       {phase==="lineup"&&<LineupScreen team={team} formation={formation} setFormation={setFormation} onSim={startSim}/>}
       {phase==="sim"&&tournament&&<SimScreen allMatches={allMatches} matchIdx={matchIdx} livePhase={livePhase} minute={minute} spG={spG} oppG={oppG} events={events} flash={flash} tournament={tournament} penalties={penalties} onKickoff={kickoff} onAdvance={(ph)=>advance(ph)}/>}
-      {phase==="result"&&<ResultScreen champ={champ} elimPhase={elimPhaseState} allMatches={allMatches} team={team} formation={formation} tournament={tournament} onRestart={newGame} onHome={()=>setPhase("intro")}/>}
+      {phase==="result"&&<ResultScreen champ={champ} elimPhase={elimPhaseState} allMatches={allMatches.slice(0,matchIdx+1)} team={team} formation={formation} tournament={tournament} onRestart={newGame} onHome={()=>setPhase("intro")}/>}
     </div>
   );
 }
@@ -1637,7 +1637,7 @@ function ResultScreen({champ,elimPhase,allMatches,team,formation,tournament,onRe
 
   async function handleCardAction(action){
     setCardStatus("generating");
-    await new Promise(r=>setTimeout(r,100));
+    await document.fonts.ready;
     try{
       const canvas=generateCampaignCard(champ,allMatches,team,formation,tournament);
       if(action==="whatsapp"){
@@ -1742,7 +1742,7 @@ function ResultScreen({champ,elimPhase,allMatches,team,formation,tournament,onRe
         {tab==="matches"&&tournament&&(
           <div>
             <div style={{fontSize:10,letterSpacing:3,color:C.muted,fontWeight:600,fontFamily:F.body,marginBottom:16}}>FASE DE GRUPOS</div>
-            {tournament.groupMatches.map((m,i)=><MatchRow key={i} m={m} label={`Jogo ${i+1}`}/>)}
+            {tournament.groupMatches.filter(m=>allMatches.includes(m)).map((m,i)=><MatchRow key={i} m={m} label={`Jogo ${i+1}`} showComment/>)}
             <div style={{display:"flex",justifyContent:"space-between",padding:"12px 0",borderBottom:`1px solid ${C.border}`,marginBottom:20}}>
               <span style={{fontSize:13,fontWeight:600,color:C.ink,fontFamily:F.body}}>{tournament.pts} pts · SG {tournament.gd>0?"+":""}{tournament.gd}</span>
               <span style={{fontSize:12,fontWeight:700,color:tournament.qualified?C.red:C.muted,fontFamily:F.body}}>{tournament.qualified?"✓ Classificado":"✗ Eliminado"}</span>
@@ -1750,7 +1750,7 @@ function ResultScreen({champ,elimPhase,allMatches,team,formation,tournament,onRe
             {tournament.koMatches.some(m=>allMatches.includes(m))&&(
               <div style={{fontSize:10,letterSpacing:3,color:C.muted,fontWeight:600,fontFamily:F.body,marginBottom:16}}>MATA-MATA</div>
             )}
-            {tournament.koMatches.filter(m=>allMatches.includes(m)).map((m,i)=><MatchRow key={i} m={m} label={m.round}/>)}
+            {tournament.koMatches.filter(m=>allMatches.includes(m)).map((m,i)=><MatchRow key={i} m={m} label={m.round} showComment/>)}
           </div>
         )}
         {tab==="squad"&&(
@@ -1790,18 +1790,28 @@ function ResultScreen({champ,elimPhase,allMatches,team,formation,tournament,onRe
   );
 }
 
-function MatchRow({m,label}){
+function MatchRow({m,label,showComment=false}){
   return(
-    <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"14px 0",borderBottom:`1px solid ${C.border}`}}>
-      <div>
-        <div style={{fontSize:10,color:C.muted,letterSpacing:2,fontWeight:600,fontFamily:F.body,marginBottom:4}}>{label?.toUpperCase()}</div>
-        <div style={{fontSize:14,fontWeight:600,color:C.ink,fontFamily:F.body}}>{m.opp.flag} {oppLabel(m.opp)}</div>
-        <div style={{fontSize:11,color:C.muted,marginTop:2,fontFamily:F.body}}>{m.opp.country}</div>
+    <div style={{borderBottom:`1px solid ${C.border}`}}>
+      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"14px 0"}}>
+        <div>
+          <div style={{fontSize:10,color:C.muted,letterSpacing:2,fontWeight:600,fontFamily:F.body,marginBottom:4}}>{label?.toUpperCase()}</div>
+          <div style={{fontSize:14,fontWeight:600,color:C.ink,fontFamily:F.body}}>{m.opp.flag} {oppLabel(m.opp)}</div>
+          <div style={{fontSize:11,color:C.muted,marginTop:2,fontFamily:F.body}}>{m.opp.country}</div>
+        </div>
+        <div style={{textAlign:"right"}}>
+          <div style={{fontFamily:F.display,fontSize:28,color:m.win?C.red:C.ink,letterSpacing:1}}>{m.myG}–{m.oppG}</div>
+          <div style={{fontSize:10,fontWeight:700,color:m.win?C.red:C.muted,fontFamily:F.body,letterSpacing:1}}>{m.win?"VITÓRIA":m.draw?"EMPATE":"DERROTA"}</div>
+        </div>
       </div>
-      <div style={{textAlign:"right"}}>
-        <div style={{fontFamily:F.display,fontSize:28,color:m.win?C.red:C.ink,letterSpacing:1}}>{m.myG}–{m.oppG}</div>
-        <div style={{fontSize:10,fontWeight:700,color:m.win?C.red:C.muted,fontFamily:F.body,letterSpacing:1}}>{m.win?"VITÓRIA":m.draw?"EMPATE":"DERROTA"}</div>
-      </div>
+      {showComment&&m.evs&&(
+        <div style={{paddingBottom:14}}>
+          <div style={{fontSize:9,letterSpacing:2,color:C.muted,fontWeight:700,fontFamily:F.body,marginBottom:4}}>MARKO LOCO E ZÉ BIRA</div>
+          <div style={{fontSize:12,color:C.ink,fontFamily:F.body,lineHeight:1.5,fontStyle:"italic"}}>
+            "{generateMatchCommentary(m,m.myG,m.oppG,m.evs)}"
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -1838,14 +1848,14 @@ function generateCampaignCard(champ,allMatches,team,formation,tournament){
   // ── HEADER ──
   const TY=200;
   ctx.save();
-  ctx.font="bold 140px Arial Black, Arial";
+  ctx.font="bold 140px 'Archivo Black', sans-serif";
   ctx.fillStyle=RED;
   const w7=ctx.measureText("7").width;
   ctx.fillText("7",PAD,TY);
   ctx.fillStyle=BLACK;
   ctx.fillText("RIKAS",PAD+w7,TY);
   ctx.restore();
-  tx("Uma adaptação by Órfãos de Edcarlos",PAD,TY+52,"400 23px Arial",MUTED);
+  tx("Uma adaptação by Órfãos de Edcarlos",PAD,TY+52,"400 23px 'Inter', sans-serif",MUTED);
   fillR(PAD,TY+82,W-PAD*2,2,RED);
 
   // ── RESULTADO ──
@@ -1855,14 +1865,14 @@ function generateCampaignCard(champ,allMatches,team,formation,tournament){
   const elimText=elimPhase==="Fase de Grupos"?"na Fase de Grupos":"nas "+elimPhase;
 
   if(champ){
-    tx("🏆 CAMPEÃO!",W/2,RY,"bold 76px Arial Black, Arial",RED,"center");
-    tx("BUSCO RIVAL!",W/2,RY+78,"bold 40px Arial Black, Arial",BLACK,"center");
+    tx("🏆 CAMPEÃO!",W/2,RY,"bold 76px 'Archivo Black', sans-serif",RED,"center");
+    tx("BUSCO RIVAL!",W/2,RY+78,"bold 40px 'Archivo Black', sans-serif",BLACK,"center");
   }else{
-    tx("😤 ELIMINADO.",W/2,RY,"bold 68px Arial Black, Arial",BLACK,"center");
-    tx("TEM QUE COBRAR!",W/2,RY+72,"bold 38px Arial Black, Arial",RED,"center");
-    tx("Caiu "+elimText,W/2,RY+120,"400 25px Arial",MUTED,"center");
+    tx("😤 ELIMINADO.",W/2,RY,"bold 68px 'Archivo Black', sans-serif",BLACK,"center");
+    tx("TEM QUE COBRAR!",W/2,RY+72,"bold 38px 'Archivo Black', sans-serif",RED,"center");
+    tx("Caiu "+elimText,W/2,RY+120,"400 25px 'Inter', sans-serif",MUTED,"center");
   }
-  tx(formation+"  ·  Média "+avgR(team).toFixed(1),W-PAD,RY+(champ?140:168),"400 22px Arial",MUTED,"right");
+  tx(formation+"  ·  Média "+avgR(team).toFixed(1),W-PAD,RY+(champ?140:168),"400 22px 'Inter', sans-serif",MUTED,"right");
 
   // ── ELENCO (ordenado por posição) ──
   const sortedTeam=sortByPosition(team);
@@ -1871,8 +1881,8 @@ function generateCampaignCard(champ,allMatches,team,formation,tournament){
   const SQH=44+sortedTeam.length*ROW;
 
   fillR(PAD,SQ,W-PAD*2,44,BLACK);
-  tx("ELENCO DOS SONHOS",PAD+20,SQ+28,"bold 16px Arial","rgba(255,255,255,0.45)");
-  tx("RTG",W-PAD-20,SQ+28,"bold 16px Arial","rgba(255,255,255,0.3)","right");
+  tx("ELENCO DOS SONHOS",PAD+20,SQ+28,"700 16px 'Inter', sans-serif","rgba(255,255,255,0.45)");
+  tx("RTG",W-PAD-20,SQ+28,"700 16px 'Inter', sans-serif","rgba(255,255,255,0.3)","right");
 
   const PC={GOL:"#B87A00",ZAG:RED,LD:RED,LE:RED,VOL:"#1A5FAA",MC:"#1A5FAA",MD:"#1A5FAA",ME:"#1A5FAA",CA:"#1A7A38"};
   sortedTeam.forEach((p,i)=>{
@@ -1882,45 +1892,43 @@ function generateCampaignCard(champ,allMatches,team,formation,tournament){
     ctx.beginPath();ctx.moveTo(PAD,ry);ctx.lineTo(W-PAD,ry);ctx.stroke();ctx.restore();
     const pc=PC[p.pos]||"#666";
     fillR(PAD+16,ry+ROW/2-12,46,24,pc);
-    tx(p.pos,PAD+39,ry+ROW/2+7,"bold 14px Arial",WHITE,"center");
-    tx(p.name,PAD+78,ry+ROW/2-5,"bold 30px Arial",INK);
-    tx(String(p._year),PAD+78,ry+ROW/2+20,"400 18px Arial",MUTED);
+    tx(p.pos,PAD+39,ry+ROW/2+7,"700 14px 'Inter', sans-serif",WHITE,"center");
+    tx(p.name,PAD+78,ry+ROW/2-5,"600 30px 'Inter', sans-serif",INK);
+    tx(String(p._year),PAD+78,ry+ROW/2+20,"400 18px 'Inter', sans-serif",MUTED);
     const rc=p.rating>=88?RED:p.rating>=84?"#444":MUTED;
-    tx(String(p.rating),W-PAD-20,ry+ROW/2+12,"bold 40px Arial",rc,"right");
+    tx(String(p.rating),W-PAD-20,ry+ROW/2+12,"bold 40px 'Archivo Black', sans-serif",rc,"right");
   });
   ctx.save();ctx.strokeStyle=BORDER;ctx.lineWidth=1;
   ctx.beginPath();ctx.moveTo(PAD,SQ+SQH);ctx.lineTo(W-PAD,SQ+SQH);ctx.stroke();ctx.restore();
 
   // ── CAMPANHA ──
   let cy=SQ+SQH+48;
-  tx("CAMPANHA",PAD,cy,"bold 15px Arial",MUTED);
+  tx("CAMPANHA",PAD,cy,"700 15px 'Inter', sans-serif",MUTED);
   cy+=10;fillR(PAD,cy,W-PAD*2,1,"#F0F0F0");cy+=32;
 
-  const gMs=tournament?.groupMatches||[];
-  const kMs=allMatches.filter(m=>m.phase==="ko");
-  [...gMs,...kMs].forEach((m,gi)=>{
+  allMatches.forEach((m,gi)=>{
     const lbl=m.phase==="group"?"Grupo "+(gi+1):m.round;
     const col=m.win?RED:m.draw?"#888":"#CCCCCC";
-    tx(lbl,PAD,cy,"400 19px Arial",MUTED);
-    tx(m.opp.flag+" "+oppLabel(m.opp),PAD+130,cy,"400 22px Arial",INK);
-    tx(m.myG+"–"+m.oppG,W-PAD-60,cy,"bold 24px Arial",col,"right");
-    tx(m.win?"V":m.draw?"E":"D",W-PAD-16,cy,"bold 20px Arial",col,"right");
+    tx(lbl,PAD,cy,"400 19px 'Inter', sans-serif",MUTED);
+    tx(m.opp.flag+" "+oppLabel(m.opp),PAD+130,cy,"400 22px 'Inter', sans-serif",INK);
+    tx(m.myG+"–"+m.oppG,W-PAD-60,cy,"bold 24px 'Archivo Black', sans-serif",col,"right");
+    tx(m.win?"V":m.draw?"E":"D",W-PAD-16,cy,"700 20px 'Inter', sans-serif",col,"right");
     cy+=36;
   });
 
   // ── COMENTÁRIO DE MARKO LOCO E ZÉ BIRA ──
   cy+=20;fillR(PAD,cy,W-PAD*2,1,BORDER);cy+=28;
-  tx("COMENTÁRIO DE MARKO LOCO E ZÉ BIRA",PAD,cy,"bold 15px Arial",MUTED);
+  tx("COMENTÁRIO DE MARKO LOCO E ZÉ BIRA",PAD,cy,"700 15px 'Inter', sans-serif",MUTED);
   cy+=28;
   const comment='"'+generateCampaignComment(champ,allMatches,tournament,team)+'"';
-  const lastY=wrapText(comment,PAD,cy,W-PAD*2,"italic 400 23px Arial",INK,34);
+  const lastY=wrapText(comment,PAD,cy,W-PAD*2,"italic 400 23px 'Inter', sans-serif",INK,34);
   cy=lastY+20;
 
   // ── RODAPÉ ──
   const FY=Math.max(cy+40,H-120);
   fillR(PAD,FY,W-PAD*2,1,BORDER);
-  tx("markitomesquita.github.io/7rikas",W/2,FY+46,"400 22px Arial",MUTED,"center");
-  tx("Jogue você também →",W/2,FY+80,"bold 20px Arial",RED,"center");
+  tx("markitomesquita.github.io/7rikas",W/2,FY+46,"400 22px 'Inter', sans-serif",MUTED,"center");
+  tx("Jogue você também →",W/2,FY+80,"700 20px 'Inter', sans-serif",RED,"center");
 
   return canvas;
 }

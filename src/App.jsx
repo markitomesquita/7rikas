@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import markoBiraImg from "./assets/markobira.webp";
 
 /* ─── FONTS & GLOBAL CSS ────────────────────────────────────────────────────── */
 (() => {
@@ -1567,8 +1568,11 @@ function SimScreen({allMatches,matchIdx,livePhase,minute,spG,oppG,events,flash,t
             )}
             {isDone&&!isGroupResult&&!isPenalties&&(
               <div className="fadeUp" style={{padding:"16px 24px",borderTop:`2px solid ${C.border}`,background:"#FAFAFA"}}>
-                <div style={{fontSize:9,letterSpacing:2,color:C.muted,fontWeight:700,marginBottom:6,fontFamily:F.body}}>
-                  COMENTÁRIO DE MARKO LOCO E ZÉ BIRA
+                <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:6}}>
+                  <img src={markoBiraImg} alt="Marko e Bira" style={{width:32,height:32,borderRadius:"50%",objectFit:"cover",flexShrink:0}}/>
+                  <div style={{fontSize:9,letterSpacing:2,color:C.muted,fontWeight:700,fontFamily:F.body}}>
+                    COMENTÁRIO DE MARKO LOCO E ZÉ BIRA
+                  </div>
                 </div>
                 <div style={{fontSize:13,color:C.ink,fontFamily:F.body,lineHeight:1.55,fontStyle:"italic"}}>
                   "{generateMatchCommentary(m,m.myG,m.oppG,m.evs)}"
@@ -1755,7 +1759,7 @@ function ResultScreen({champ,elimPhase,allMatches,team,formation,tournament,onRe
     setCardStatus("generating");
     await document.fonts.ready;
     try{
-      const canvas=generateCampaignCard(champ,allMatches,team,formation,tournament);
+      const canvas=await generateCampaignCard(champ,allMatches,team,formation,tournament);
       if(action==="whatsapp"){
         canvas.toBlob(async(blob)=>{
           const file=new File([blob],"7rikas-campanha.png",{type:"image/png"});
@@ -1922,7 +1926,10 @@ function MatchRow({m,label,showComment=false}){
       </div>
       {showComment&&m.evs&&(
         <div style={{paddingBottom:14}}>
-          <div style={{fontSize:9,letterSpacing:2,color:C.muted,fontWeight:700,fontFamily:F.body,marginBottom:4}}>MARKO LOCO E ZÉ BIRA</div>
+          <div style={{display:"flex",alignItems:"center",gap:7,marginBottom:5}}>
+            <img src={markoBiraImg} alt="Marko e Bira" style={{width:26,height:26,borderRadius:"50%",objectFit:"cover",flexShrink:0}}/>
+            <div style={{fontSize:9,letterSpacing:2,color:C.muted,fontWeight:700,fontFamily:F.body}}>MARKO LOCO E ZÉ BIRA</div>
+          </div>
           <div style={{fontSize:12,color:C.ink,fontFamily:F.body,lineHeight:1.5,fontStyle:"italic"}}>
             "{generateMatchCommentary(m,m.myG,m.oppG,m.evs)}"
           </div>
@@ -1931,7 +1938,7 @@ function MatchRow({m,label,showComment=false}){
     </div>
   );
 }
-function generateCampaignCard(champ,allMatches,team,formation,tournament){
+async function generateCampaignCard(champ,allMatches,team,formation,tournament){
   const W=1080,H=1920;
   const canvas=document.createElement("canvas");
   canvas.width=W;canvas.height=H;
@@ -2034,7 +2041,16 @@ function generateCampaignCard(champ,allMatches,team,formation,tournament){
 
   // ── COMENTÁRIO DE MARKO LOCO E ZÉ BIRA ──
   cy+=20;fillR(PAD,cy,W-PAD*2,1,BORDER);cy+=28;
-  tx("COMENTÁRIO DE MARKO LOCO E ZÉ BIRA",PAD,cy,"700 15px 'Inter', sans-serif",MUTED);
+  // avatar
+  const avatarSize=52,avatarX=PAD,avatarY=cy-avatarSize/2-2;
+  try{
+    const av=await new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=markoBiraImg;});
+    ctx.save();
+    ctx.beginPath();ctx.arc(avatarX+avatarSize/2,avatarY+avatarSize/2,avatarSize/2,0,Math.PI*2);ctx.clip();
+    ctx.drawImage(av,avatarX,avatarY,avatarSize,avatarSize);
+    ctx.restore();
+  }catch(e){}
+  tx("COMENTÁRIO DE MARKO LOCO E ZÉ BIRA",PAD+avatarSize+14,cy,"700 15px 'Inter', sans-serif",MUTED);
   cy+=28;
   const comment='"'+generateCampaignComment(champ,allMatches,tournament,team)+'"';
   const lastY=wrapText(comment,PAD,cy,W-PAD*2,"italic 400 23px 'Inter', sans-serif",INK,34);

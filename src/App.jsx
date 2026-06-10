@@ -123,7 +123,7 @@ const SQUADS=[
     {name:"Waldir Peres",shirt:1,pos:"GOL",rating:80},
     {name:"Getúlio",shirt:2,pos:"LD",rating:75},
     {name:"Oscar",shirt:5,pos:"ZAG",rating:84},
-    {name:"Dario Pereyra",shirt:4,pos:"ZAG",rating:78},
+    {name:"Dario Pereyra",shirt:4,pos:"ZAG",rating:82},
     {name:"Marinho Chagas",shirt:3,pos:"LE",rating:75},
     {name:"Almir",shirt:8,pos:"VOL",rating:76},
     {name:"Renato",shirt:6,pos:"MC",rating:77},
@@ -136,7 +136,7 @@ const SQUADS=[
     {name:"Gilmar",shirt:1,pos:"GOL",rating:80},
     {name:"Zé Teodoro",shirt:2,pos:"LD",rating:76},
     {name:"Wagner Basílio",shirt:4,pos:"ZAG",rating:78},
-    {name:"Dario Pereyra",shirt:5,pos:"ZAG",rating:77},
+    {name:"Dario Pereyra",shirt:5,pos:"ZAG",rating:82},
     {name:"Nelsinho",shirt:3,pos:"LE",rating:76},
     {name:"Bernardo",shirt:8,pos:"VOL",rating:78},
     {name:"Silas",shirt:6,pos:"MC",rating:80},
@@ -158,6 +158,20 @@ const SQUADS=[
     {name:"Lê",shirt:10,pos:"CA",rating:79},
     {name:"Sidney",shirt:11,pos:"ME",rating:77},
   ]},
+  // 1991 — CAMPEÃO Brasileiro 1991
+  {year:1991,ed:"Libertadores 1991",champion:true,players:[
+    {name:"Zetti",shirt:1,pos:"GOL",rating:84},
+    {name:"Cafu",shirt:2,pos:"LD",rating:87},
+    {name:"Antônio Carlos",shirt:4,pos:"ZAG",rating:81},
+    {name:"Ricardo Rocha",shirt:5,pos:"ZAG",rating:80},
+    {name:"Leonardo",shirt:3,pos:"LE",rating:82},
+    {name:"Bernardo",shirt:8,pos:"VOL",rating:78},
+    {name:"Sampaio",shirt:6,pos:"VOL",rating:77},
+    {name:"Raí",shirt:10,pos:"MC",rating:90},
+    {name:"Müller",shirt:7,pos:"MD",rating:83},
+    {name:"Macedo",shirt:9,pos:"CA",rating:78},
+    {name:"Elivélton",shirt:11,pos:"ME",rating:76},
+  ]},
   // 1992 — CAMPEÃO real
   {year:1992,ed:"Libertadores 1992",champion:true,players:[
     {name:"Zetti",shirt:1,pos:"GOL",rating:84},
@@ -167,7 +181,7 @@ const SQUADS=[
     {name:"Ronaldo Luiz",shirt:3,pos:"LE",rating:76},
     {name:"Pintado",shirt:8,pos:"VOL",rating:79},
     {name:"Toninho Cerezo",shirt:6,pos:"VOL",rating:82},
-    {name:"Raí",shirt:10,pos:"MC",rating:91},
+    {name:"Raí",shirt:10,pos:"MC",rating:99,special:true},
     {name:"Cafu",shirt:7,pos:"MD",rating:88},
     {name:"Müller",shirt:9,pos:"CA",rating:84},
     {name:"Elivélton",shirt:11,pos:"ME",rating:77},
@@ -180,8 +194,8 @@ const SQUADS=[
     {name:"Ronaldão",shirt:5,pos:"ZAG",rating:82},
     {name:"André Luiz",shirt:3,pos:"LE",rating:79},
     {name:"Pintado",shirt:8,pos:"VOL",rating:80},
-    {name:"Dinho",shirt:6,pos:"VOL",rating:78},
-    {name:"Toninho Cerezo",shirt:10,pos:"MC",rating:82},
+    {name:"Toninho Cerezo",shirt:6,pos:"VOL",rating:82},
+    {name:"Raí",shirt:10,pos:"MC",rating:93},
     {name:"Palhinha",shirt:7,pos:"MC",rating:80},
     {name:"Müller",shirt:9,pos:"CA",rating:85},
     {name:"Leonardo",shirt:11,pos:"ME",rating:83},
@@ -220,7 +234,7 @@ const SQUADS=[
     {name:"Cláudio",shirt:2,pos:"LD",rating:76},
     {name:"Bordon",shirt:4,pos:"ZAG",rating:81},
     {name:"Rogério Pinheiro",shirt:5,pos:"ZAG",rating:77},
-    {name:"Serginho",shirt:3,pos:"LE",rating:79},
+    {name:"Serginho",shirt:3,pos:"LE",rating:84},
     {name:"Alexandre",shirt:8,pos:"VOL",rating:80},
     {name:"Belletti",shirt:6,pos:"MC",rating:80},
     {name:"Fabiano",shirt:10,pos:"MC",rating:78},
@@ -234,11 +248,11 @@ const SQUADS=[
     {name:"Zé Carlos",shirt:2,pos:"LD",rating:77},
     {name:"Bordon",shirt:4,pos:"ZAG",rating:82},
     {name:"Márcio Santos",shirt:5,pos:"ZAG",rating:80},
-    {name:"Serginho",shirt:3,pos:"LE",rating:79},
+    {name:"Serginho",shirt:3,pos:"LE",rating:84},
     {name:"Alexandre",shirt:8,pos:"VOL",rating:80},
     {name:"Fabiano",shirt:6,pos:"VOL",rating:78},
-    {name:"Carlos Miguel",shirt:10,pos:"MC",rating:77},
-    {name:"França",shirt:9,pos:"CA",rating:82},
+    {name:"Raí",shirt:10,pos:"MC",rating:88},
+    {name:"França",shirt:9,pos:"CA",rating:85},
     {name:"Dodô",shirt:7,pos:"MD",rating:81},
     {name:"Denílson",shirt:11,pos:"ME",rating:81},
   ]},
@@ -248,12 +262,12 @@ const SQUADS=[
     {name:"Édson Podão",shirt:2,pos:"LD",rating:77},
     {name:"Wilson",shirt:4,pos:"ZAG",rating:79},
     {name:"Nem",shirt:5,pos:"ZAG",rating:78},
-    {name:"Serginho",shirt:3,pos:"LE",rating:79},
+    {name:"Serginho",shirt:3,pos:"LE",rating:84},
     {name:"Alexandre",shirt:8,pos:"VOL",rating:80},
     {name:"Vágner",shirt:6,pos:"VOL",rating:78},
-    {name:"Jorginho",shirt:10,pos:"MC",rating:77},
+    {name:"Raí",shirt:10,pos:"MC",rating:87},
     {name:"Marcelinho Paraíba",shirt:7,pos:"MD",rating:83},
-    {name:"França",shirt:9,pos:"CA",rating:82},
+    {name:"França",shirt:9,pos:"CA",rating:85},
     {name:"Dodô",shirt:11,pos:"ME",rating:81},
   ]},
   // 2000
@@ -268,7 +282,7 @@ const SQUADS=[
     {name:"Marcelinho Paraíba",shirt:7,pos:"MD",rating:83},
     {name:"Edu",shirt:10,pos:"MC",rating:79},
     {name:"Sandro Hiroshi",shirt:11,pos:"ME",rating:78},
-    {name:"França",shirt:9,pos:"CA",rating:82},
+    {name:"França",shirt:9,pos:"CA",rating:85},
   ]},
   // 2001 — Kaká estreia profissional
   {year:2001,ed:"Libertadores 2001",champion:false,players:[
@@ -282,7 +296,7 @@ const SQUADS=[
     {name:"Kaká",shirt:10,pos:"MC",rating:85},
     {name:"Leonardo",shirt:7,pos:"MD",rating:78},
     {name:"Luís Fabiano",shirt:9,pos:"CA",rating:85},
-    {name:"França",shirt:11,pos:"ME",rating:80},
+    {name:"França",shirt:11,pos:"ME",rating:85},
   ]},
   // 2004
   {year:2004,ed:"Libertadores 2004",champion:false,players:[
@@ -292,7 +306,7 @@ const SQUADS=[
     {name:"Rodrigo",shirt:5,pos:"ZAG",rating:79},
     {name:"Gustavo Nery",shirt:3,pos:"LE",rating:81},
     {name:"Alexandre",shirt:8,pos:"VOL",rating:81},
-    {name:"Josué",shirt:6,pos:"VOL",rating:82},
+    {name:"Josué",shirt:6,pos:"VOL",rating:86},
     {name:"Danilo",shirt:10,pos:"MC",rating:82},
     {name:"Marquinhos",shirt:7,pos:"MD",rating:80},
     {name:"Grafite",shirt:11,pos:"CA",rating:84},
@@ -300,17 +314,45 @@ const SQUADS=[
   ]},
   // 2005 — CAMPEÃO real
   {year:2005,ed:"Libertadores 2005",champion:true,players:[
-    {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:89},
+    {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:99,special:true},
     {name:"Cicinho",shirt:2,pos:"LD",rating:85},
     {name:"Fabão",shirt:4,pos:"ZAG",rating:81},
     {name:"Diego Lugano",shirt:5,pos:"ZAG",rating:87},
     {name:"Júnior",shirt:3,pos:"LE",rating:81},
-    {name:"Mineiro",shirt:8,pos:"VOL",rating:85},
+    {name:"Mineiro",shirt:8,pos:"VOL",rating:87},
     {name:"Josué",shirt:6,pos:"VOL",rating:83},
     {name:"Danilo",shirt:10,pos:"MC",rating:83},
     {name:"Edcarlos",shirt:7,pos:"MD",rating:79},
     {name:"Amoroso",shirt:11,pos:"ME",rating:84},
     {name:"Aloísio Chulapa",shirt:9,pos:"CA",rating:83},
+  ]},
+  // 2006
+  {year:2006,ed:"Libertadores 2006",champion:false,players:[
+    {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:88},
+    {name:"Ilsinho",shirt:2,pos:"LD",rating:79},
+    {name:"Fabão",shirt:4,pos:"ZAG",rating:80},
+    {name:"Diego Lugano",shirt:5,pos:"ZAG",rating:86},
+    {name:"Júnior",shirt:3,pos:"LE",rating:80},
+    {name:"Mineiro",shirt:8,pos:"VOL",rating:87},
+    {name:"Josué",shirt:6,pos:"VOL",rating:86},
+    {name:"Danilo",shirt:10,pos:"MC",rating:82},
+    {name:"Souza",shirt:7,pos:"MD",rating:80},
+    {name:"Leandro",shirt:11,pos:"ME",rating:78},
+    {name:"Aloísio Chulapa",shirt:9,pos:"CA",rating:82},
+  ]},
+  // 2007
+  {year:2007,ed:"Libertadores 2007",champion:false,players:[
+    {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:87},
+    {name:"Ilsinho",shirt:2,pos:"LD",rating:80},
+    {name:"Breno",shirt:4,pos:"ZAG",rating:78},
+    {name:"Miranda",shirt:5,pos:"ZAG",rating:83},
+    {name:"Júnior",shirt:3,pos:"LE",rating:79},
+    {name:"Alex Silva",shirt:8,pos:"VOL",rating:79},
+    {name:"Hernanes",shirt:10,pos:"MC",rating:85},
+    {name:"Richarlyson",shirt:6,pos:"MC",rating:80},
+    {name:"Jorge Wagner",shirt:7,pos:"MD",rating:81},
+    {name:"Dagoberto",shirt:11,pos:"ME",rating:80},
+    {name:"Borges",shirt:9,pos:"CA",rating:81},
   ]},
   // 2008
   {year:2008,ed:"Libertadores 2008",champion:false,players:[
@@ -340,6 +382,34 @@ const SQUADS=[
     {name:"Dagoberto",shirt:11,pos:"ME",rating:80},
     {name:"Washington",shirt:9,pos:"CA",rating:82},
   ]},
+  // 2010
+  {year:2010,ed:"Libertadores 2010",champion:false,players:[
+    {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:85},
+    {name:"Jean",shirt:2,pos:"LD",rating:79},
+    {name:"Alex Silva",shirt:4,pos:"ZAG",rating:79},
+    {name:"Miranda",shirt:5,pos:"ZAG",rating:84},
+    {name:"Junior Cesar",shirt:3,pos:"LE",rating:78},
+    {name:"Rodrigo Souto",shirt:8,pos:"VOL",rating:78},
+    {name:"Richarlyson",shirt:6,pos:"VOL",rating:79},
+    {name:"Hernanes",shirt:10,pos:"MC",rating:85},
+    {name:"Marlos",shirt:7,pos:"MD",rating:79},
+    {name:"Dagoberto",shirt:11,pos:"ME",rating:79},
+    {name:"Fernandinho",shirt:9,pos:"CA",rating:80},
+  ]},
+  // 2011
+  {year:2011,ed:"Libertadores 2011",champion:false,players:[
+    {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:84},
+    {name:"Piris",shirt:2,pos:"LD",rating:77},
+    {name:"João Filipe",shirt:4,pos:"ZAG",rating:78},
+    {name:"Rhodolfo",shirt:5,pos:"ZAG",rating:80},
+    {name:"Juan",shirt:3,pos:"LE",rating:79},
+    {name:"Wellington",shirt:8,pos:"VOL",rating:79},
+    {name:"Carlinhos Paraíba",shirt:6,pos:"VOL",rating:78},
+    {name:"Lucas Moura",shirt:10,pos:"MC",rating:86},
+    {name:"Cícero",shirt:7,pos:"MD",rating:79},
+    {name:"Dagoberto",shirt:11,pos:"ME",rating:78},
+    {name:"Luis Fabiano",shirt:9,pos:"CA",rating:86},
+  ]},
   // 2012
   {year:2012,ed:"Libertadores 2012",champion:false,players:[
     {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:86},
@@ -368,6 +438,34 @@ const SQUADS=[
     {name:"Osvaldo",shirt:7,pos:"MD",rating:81},
     {name:"Luis Fabiano",shirt:9,pos:"CA",rating:86},
   ]},
+  // 2014
+  {year:2014,ed:"Libertadores 2014",champion:false,players:[
+    {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:82},
+    {name:"Hudson",shirt:2,pos:"LD",rating:79},
+    {name:"Rafael Toloi",shirt:4,pos:"ZAG",rating:81},
+    {name:"Edson Silva",shirt:5,pos:"ZAG",rating:79},
+    {name:"Álvaro Pereira",shirt:3,pos:"LE",rating:78},
+    {name:"Denilson",shirt:8,pos:"VOL",rating:78},
+    {name:"Souza",shirt:6,pos:"VOL",rating:80},
+    {name:"Ganso",shirt:10,pos:"MC",rating:84},
+    {name:"Kaká",shirt:7,pos:"MC",rating:85},
+    {name:"Alan Kardec",shirt:9,pos:"CA",rating:80},
+    {name:"Alexandre Pato",shirt:11,pos:"ME",rating:82},
+  ]},
+  // 2015
+  {year:2015,ed:"Libertadores 2015",champion:false,players:[
+    {name:"Rogério Ceni",shirt:1,pos:"GOL",rating:81},
+    {name:"Bruno",shirt:2,pos:"LD",rating:78},
+    {name:"Rodrigo Caio",shirt:4,pos:"ZAG",rating:82},
+    {name:"Lucão",shirt:5,pos:"ZAG",rating:77},
+    {name:"Carlinhos",shirt:3,pos:"LE",rating:77},
+    {name:"Thiago Mendes",shirt:8,pos:"VOL",rating:80},
+    {name:"Hudson",shirt:6,pos:"VOL",rating:79},
+    {name:"Ganso",shirt:10,pos:"MC",rating:83},
+    {name:"Michel Bastos",shirt:7,pos:"MD",rating:81},
+    {name:"Alexandre Pato",shirt:11,pos:"ME",rating:82},
+    {name:"Luis Fabiano",shirt:9,pos:"CA",rating:84},
+  ]},
   // 2016
   {year:2016,ed:"Libertadores 2016",champion:false,players:[
     {name:"Denis",shirt:1,pos:"GOL",rating:80},
@@ -382,6 +480,34 @@ const SQUADS=[
     {name:"Kelvin",shirt:11,pos:"ME",rating:79},
     {name:"Calleri",shirt:9,pos:"CA",rating:83},
   ]},
+  // 2017
+  {year:2017,ed:"Libertadores 2017",champion:false,players:[
+    {name:"Renan Ribeiro",shirt:1,pos:"GOL",rating:79},
+    {name:"Éder Militão",shirt:2,pos:"LD",rating:82},
+    {name:"Arboleda",shirt:4,pos:"ZAG",rating:81},
+    {name:"Rodrigo Caio",shirt:5,pos:"ZAG",rating:82},
+    {name:"Edimar",shirt:3,pos:"LE",rating:78},
+    {name:"Jucilei",shirt:8,pos:"VOL",rating:80},
+    {name:"Petros",shirt:6,pos:"VOL",rating:79},
+    {name:"Hernanes",shirt:10,pos:"MC",rating:82},
+    {name:"Cueva",shirt:7,pos:"MD",rating:83},
+    {name:"Marcos Guilherme",shirt:11,pos:"ME",rating:79},
+    {name:"Lucas Pratto",shirt:9,pos:"CA",rating:82},
+  ]},
+  // 2018
+  {year:2018,ed:"Libertadores 2018",champion:false,players:[
+    {name:"Sidão",shirt:1,pos:"GOL",rating:79},
+    {name:"Éder Militão",shirt:2,pos:"LD",rating:83},
+    {name:"Arboleda",shirt:4,pos:"ZAG",rating:82},
+    {name:"Bruno Alves",shirt:5,pos:"ZAG",rating:81},
+    {name:"Reinaldo",shirt:3,pos:"LE",rating:80},
+    {name:"Jucilei",shirt:8,pos:"VOL",rating:79},
+    {name:"Hudson",shirt:6,pos:"VOL",rating:78},
+    {name:"Nenê",shirt:10,pos:"MC",rating:82},
+    {name:"Joao Rojas",shirt:7,pos:"MD",rating:79},
+    {name:"Everton",shirt:11,pos:"ME",rating:79},
+    {name:"Diego Souza",shirt:9,pos:"CA",rating:82},
+  ]},
   // 2019
   {year:2019,ed:"Libertadores 2019",champion:false,players:[
     {name:"Tiago Volpi",shirt:1,pos:"GOL",rating:82},
@@ -395,6 +521,20 @@ const SQUADS=[
     {name:"Antony",shirt:11,pos:"ME",rating:83},
     {name:"Vitor Bueno",shirt:7,pos:"ME",rating:79},
     {name:"Pablo",shirt:9,pos:"CA",rating:83},
+  ]},
+  // 2020
+  {year:2020,ed:"Libertadores 2020",champion:false,players:[
+    {name:"Tiago Volpi",shirt:1,pos:"GOL",rating:82},
+    {name:"Juanfran",shirt:2,pos:"LD",rating:80},
+    {name:"Arboleda",shirt:4,pos:"ZAG",rating:83},
+    {name:"Bruno Alves",shirt:5,pos:"ZAG",rating:81},
+    {name:"Reinaldo",shirt:3,pos:"LE",rating:81},
+    {name:"Luan",shirt:8,pos:"VOL",rating:81},
+    {name:"Tchê Tchê",shirt:6,pos:"VOL",rating:80},
+    {name:"Gabriel Sara",shirt:10,pos:"MC",rating:81},
+    {name:"Igor Gomes",shirt:7,pos:"MD",rating:79},
+    {name:"Luciano",shirt:11,pos:"ME",rating:82},
+    {name:"Brenner",shirt:9,pos:"CA",rating:81},
   ]},
   // 2021
   {year:2021,ed:"Libertadores 2021",champion:false,players:[
@@ -620,10 +760,15 @@ function buildTournament(team){
   const groupOpps=opps.slice(0,3);
   const koOpps=opps.slice(3,7);
 
-  const groupMatches=groupOpps.map((opp,i)=>({
-    phase:"group",matchNum:i+1,label:`Grupo — Jogo ${i+1}`,opp,
-    ...buildMatchEvents(team,r,opp.rating,opp),
-  }));
+  const groupMatches=groupOpps.map((opp,i)=>{
+    const ev=randomMatchEvent();
+    const mult=ev?(1+ev.boost):1;
+    return{
+      phase:"group",matchNum:i+1,label:`Grupo — Jogo ${i+1}`,opp,
+      matchEvent:ev,
+      ...buildMatchEvents(team,r*mult,opp.rating,opp),
+    };
+  });
 
   function simPts(a,b){
     const d=(a.rating-b.rating)/15;const r=Math.random();
@@ -656,10 +801,15 @@ function buildTournament(team){
     ...oppStats.map(o=>({name:oppLabel(o),flag:o.flag,pts:o.pts,w:o.w,d:o.d,l:o.l,gf:o.gf,ga:o.ga,gd:o.gf-o.ga,isSP:false})),
   ].sort((a,b)=>b.pts-a.pts||b.gd-a.gd||b.gf-a.gf);
   const qualified=allRows.findIndex(r=>r.isSP)<2;
-  const koMatches=KO_ROUNDS.map((round,i)=>({
-    phase:"ko",round,label:round,opp:koOpps[i],
-    ...buildMatchEvents(team,r,koOpps[i].rating,koOpps[i]),
-  }));
+  const koMatches=KO_ROUNDS.map((round,i)=>{
+    const ev=randomMatchEvent();
+    const mult=ev?(1+ev.boost):1;
+    return{
+      phase:"ko",round,label:round,opp:koOpps[i],
+      matchEvent:ev,
+      ...buildMatchEvents(team,r*mult,koOpps[i].rating,koOpps[i]),
+    };
+  });
   return{groupMatches,pts:spPts,gd:spGD,qualified,koMatches,groupTable:allRows};
 }
 
@@ -898,6 +1048,36 @@ function generateCampaignComment(champ,allMatches,tournament,team){
   }
 }
 
+/* ─── GAME MODES ─────────────────────────────────────────────────────────────── */
+const ODIO_YEARS=[2010,2011,2013,2014,2015,2016,2017,2018,2019,2020,2022,2024,2025];
+const ONIRICO_YEARS=[1986,1991,1992,1993,1998,2005,2006,2007,2008,2023];
+function getSquadsForMode(mode){
+  if(mode==="odio")return SQUADS.filter(s=>ODIO_YEARS.includes(s.year));
+  if(mode==="onirico")return SQUADS.filter(s=>ONIRICO_YEARS.includes(s.year));
+  return SQUADS;
+}
+
+/* ─── RANDOM EVENTS ──────────────────────────────────────────────────────────── */
+const NOSSO_PORRA=[
+  {text:"Baby invadiu o CT e motivou o elenco.",boost:0.10},
+  {text:"O elenco platinou o cabelo.",boost:0.10},
+  {text:"O elenco usou Mounjaro.",boost:0.10},
+  {text:"Morumbira lotado.",boost:0.10},
+];
+const CABO_PA_NOIS=[
+  {text:"O salário do elenco atrasou.",boost:-0.10},
+  {text:"Operação policial no clube.",boost:-0.10},
+  {text:"Compra coletiva de camisa.",boost:-0.15},
+  {text:"O elenco abusou no pudim no CT.",boost:-0.10},
+];
+function randomMatchEvent(){
+  if(Math.random()>0.25)return null;
+  const good=Math.random()<0.5;
+  const list=good?NOSSO_PORRA:CABO_PA_NOIS;
+  const ev=list[0|Math.random()*list.length];
+  return{...ev,type:good?"bom":"ruim"};
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════════ */
 /*  APP                                                                          */
 /* ═══════════════════════════════════════════════════════════════════════════════ */
@@ -924,15 +1104,35 @@ export default function App(){
   const [elimPhaseState,setElimPhaseState]=useState("");
   const [penalties,setPenalties]=useState(null);
   const [history,setHistory]=useState(()=>{try{return JSON.parse(localStorage.getItem("7rikas5")||"[]");}catch{return[];}});
+  const [gameMode,setGameMode]=useState("normal");
+  const [nilmarUnlocked,setNilmarUnlocked]=useState(false);
+  const [nilmarToast,setNilmarToast]=useState(false);
+  const nilmarTapsRef=useRef(0);
+  const nilmarTimerRef=useRef(null);
 
   function saveHist(e){const h=[e,...history].slice(0,15);setHistory(h);try{localStorage.setItem("7rikas5",JSON.stringify(h));}catch{}}
 
-  function newGame(){
+  function newGame(mode="normal"){
+    setGameMode(mode);
     setTeam([]);setUsedYrs([]);setDrawIdx(0);setFormation("4-3-3");setRerolls(3);
     setTournament(null);setMatchIdx(0);setEliminated(false);setChamp(false);setPenalties(null);
     setElimPhaseState("");
     setPhase("formation-pick");
   }
+
+  function handleSecretTap(){
+    nilmarTapsRef.current+=1;
+    clearTimeout(nilmarTimerRef.current);
+    nilmarTimerRef.current=setTimeout(()=>{nilmarTapsRef.current=0;},5000);
+    if(nilmarTapsRef.current>=7){
+      nilmarTapsRef.current=0;
+      setNilmarUnlocked(true);
+    }
+  }
+
+  useEffect(()=>{
+    if(nilmarUnlocked)setNilmarToast(true);
+  },[nilmarUnlocked]);
 
   function confirmFormation(f){
     setFormation(f);
@@ -955,13 +1155,20 @@ export default function App(){
   }
   function afterReroll(){
     setShowReroll(false);
-    const avail=SQUADS.filter(s=>!usedYrs.includes(s.year)&&s.year!==squad?.year);
+    const modeSquads=getSquadsForMode(gameMode);
+    const avail=modeSquads.filter(s=>!usedYrs.includes(s.year)&&s.year!==squad?.year);
     if(!avail.length)return;
     setSquad(avail[0|Math.random()*avail.length]);
   }
 
   function startSim(){
-    const t=buildTournament(team);
+    let finalTeam=team;
+    if(nilmarUnlocked&&!finalTeam.find(p=>p.name==="Nilmar")){
+      const nilmar={name:"Nilmar",shirt:99,pos:"CA",rating:88,special:false,_nilmar:true,
+        _year:"?",_edition:"Bônus Secreto",_champion:false};
+      finalTeam=[...finalTeam,nilmar];
+    }
+    const t=buildTournament(finalTeam);
     setTournament(t);setMatchIdx(0);setLivePhase("idle");setPhase("sim");
   }
 
@@ -1017,12 +1224,33 @@ export default function App(){
 
   return(
     <div style={{minHeight:"100vh",background:C.bg,fontFamily:F.body,maxWidth:480,margin:"0 auto"}}>
-      {phase==="intro"&&<IntroScreen onStart={newGame} history={history}/>}
+      {phase==="intro"&&<IntroScreen onStart={newGame} history={history} onSecretTap={handleSecretTap}/>}
       {phase==="formation-pick"&&<FormationPickScreen onConfirm={confirmFormation}/>}
-      {phase==="draft"&&<DraftScreen showSlot={showSlot} squad={squad} drawIdx={drawIdx} team={team} formation={formation} rerolls={rerolls} showReroll={showReroll} onSlotDone={handleSlotDone} onPick={pickPlayer} onReroll={doReroll} afterReroll={afterReroll} usedYrs={usedYrs}/>}
-      {phase==="lineup"&&<LineupScreen team={team} formation={formation} setFormation={setFormation} onSim={startSim}/>}
+      {phase==="draft"&&<DraftScreen showSlot={showSlot} squad={squad} drawIdx={drawIdx} team={team} formation={formation} rerolls={rerolls} showReroll={showReroll} onSlotDone={handleSlotDone} onPick={pickPlayer} onReroll={doReroll} afterReroll={afterReroll} usedYrs={usedYrs} gameMode={gameMode}/>}
+      {phase==="lineup"&&<LineupScreen team={team} formation={formation} setFormation={setFormation} onSim={startSim} nilmarUnlocked={nilmarUnlocked}/>}
       {phase==="sim"&&tournament&&<SimScreen allMatches={allMatches} matchIdx={matchIdx} livePhase={livePhase} minute={minute} spG={spG} oppG={oppG} events={events} flash={flash} tournament={tournament} penalties={penalties} onKickoff={kickoff} onAdvance={(ph)=>advance(ph)}/>}
       {phase==="result"&&<ResultScreen champ={champ} elimPhase={elimPhaseState} allMatches={allMatches.slice(0,matchIdx+1)} team={team} formation={formation} tournament={tournament} onRestart={newGame} onHome={()=>setPhase("intro")}/>}
+      {nilmarToast&&(
+        <div onClick={()=>setNilmarToast(false)} style={{
+          position:"fixed",inset:0,background:"rgba(0,0,0,0.85)",
+          display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",
+          zIndex:9999,cursor:"pointer",
+        }}>
+          <div style={{fontSize:48,marginBottom:16}}>🔓</div>
+          <div style={{fontFamily:F.display,fontSize:22,color:"#C9A227",letterSpacing:2,textAlign:"center"}}>
+            MODO SÓ FALTA ASSINAR
+          </div>
+          <div style={{fontFamily:F.display,fontSize:16,color:"#C9A227",letterSpacing:1,marginTop:8}}>
+            ATIVADO
+          </div>
+          <div style={{fontFamily:F.body,fontSize:13,color:"rgba(255,255,255,0.7)",marginTop:20,textAlign:"center",maxWidth:280,lineHeight:1.6}}>
+            Nilmar foi adicionado ao seu elenco como bônus secreto.
+          </div>
+          <div style={{fontFamily:F.body,fontSize:11,color:"rgba(255,255,255,0.4)",marginTop:24}}>
+            toque para fechar
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -1045,12 +1273,12 @@ function Header({left=null,right=null,dark=false}){
 }
 
 /* ─── INTRO ──────────────────────────────────────────────────────────────────── */
-function IntroScreen({onStart,history}){
+function IntroScreen({onStart,history,onSecretTap}){
   return(
     <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",background:C.white}}>
       {/* Hero — full red block like the reference */}
       <div style={{background:C.red,padding:"52px 28px 44px",position:"relative",overflow:"hidden"}}>
-        <div style={{fontFamily:F.display,fontSize:72,color:C.white,lineHeight:.9,letterSpacing:-1}}>
+        <div onClick={onSecretTap} style={{fontFamily:F.display,fontSize:72,color:C.white,lineHeight:.9,letterSpacing:-1,cursor:"default",userSelect:"none"}}>
           7RIKAS
         </div>
         <div style={{marginTop:16,fontSize:13,color:"rgba(255,255,255,0.7)",fontFamily:F.body,lineHeight:1.5,maxWidth:280}}>
@@ -1082,18 +1310,28 @@ function IntroScreen({onStart,history}){
           </div>
         ))}
 
-        <button onClick={onStart} style={{
-          marginTop:32,
-          background:C.black,color:C.white,border:"none",
-          padding:"18px 0",width:"100%",cursor:"pointer",
-          fontFamily:F.display,fontSize:16,letterSpacing:2,
-          transition:"background .15s",
-        }}
-          onMouseEnter={e=>e.currentTarget.style.background=C.red}
-          onMouseLeave={e=>e.currentTarget.style.background=C.black}
-        >
-          ROLAR 🎲
-        </button>
+        <div style={{marginTop:32,display:"flex",flexDirection:"column",gap:12}}>
+          {[
+            {id:"normal",label:"MODO NORMAL",sub:"Todos os elencos disponíveis",icon:"⚽"},
+            {id:"odio",label:"MODO ÓDIO",sub:"Só elencos odiáveis (2010–2025)",icon:"😤"},
+            {id:"onirico",label:"MODO ONÍRICO",sub:"Só elencos campeões e lendários",icon:"✨"},
+          ].map(m=>(
+            <button key={m.id} onClick={()=>onStart(m.id)} style={{
+              background:m.id==="onirico"?"#1a1a1a":m.id==="odio"?C.red:C.black,
+              color:C.white,border:"none",
+              padding:"16px 20px",width:"100%",cursor:"pointer",
+              fontFamily:F.display,fontSize:14,letterSpacing:2,
+              display:"flex",alignItems:"center",justifyContent:"space-between",
+              transition:"opacity .15s",
+            }}
+              onMouseEnter={e=>e.currentTarget.style.opacity="0.85"}
+              onMouseLeave={e=>e.currentTarget.style.opacity="1"}
+            >
+              <span>{m.icon} {m.label}</span>
+              <span style={{fontSize:11,opacity:.6,fontFamily:F.body,fontWeight:500,textTransform:"none",letterSpacing:0}}>{m.sub}</span>
+            </button>
+          ))}
+        </div>
 
         {history.length>0&&(
           <div style={{marginTop:36}}>
@@ -1214,8 +1452,9 @@ function FormationPickScreen({onConfirm}){
 }
 
 /* ─── DRAFT ──────────────────────────────────────────────────────────────────── */
-function DraftScreen({showSlot,squad,drawIdx,team,formation,rerolls,showReroll,onSlotDone,onPick,onReroll,afterReroll,usedYrs}){
-  const avail=SQUADS.filter(s=>!usedYrs.includes(s.year)&&s.year!==squad?.year);
+function DraftScreen({showSlot,squad,drawIdx,team,formation,rerolls,showReroll,onSlotDone,onPick,onReroll,afterReroll,usedYrs,gameMode}){
+  const modeSquads=getSquadsForMode(gameMode||"normal");
+  const avail=modeSquads.filter(s=>!usedYrs.includes(s.year)&&s.year!==squad?.year);
   const open=openGroups(formation,team);
 
   const progressDots=(
@@ -1238,7 +1477,7 @@ function DraftScreen({showSlot,squad,drawIdx,team,formation,rerolls,showReroll,o
         right={<span style={{fontFamily:F.display,fontSize:13,color:C.red,letterSpacing:1}}>{drawIdx+1}/11</span>}
       />
       {showSlot?(
-        <SlotMachine squads={avail.length>3?avail:SQUADS} onDone={onSlotDone}/>
+        <SlotMachine squads={avail.length>3?avail:modeSquads} onDone={onSlotDone}/>
       ):squad?(
         <>
           {/* Squad banner */}
@@ -1303,6 +1542,8 @@ function DraftScreen({showSlot,squad,drawIdx,team,formation,rerolls,showReroll,o
 function PlayerRow({player,year,onPick,disabled}){
   const [hov,setHov]=useState(false);
   const col=groupColor(posToGroup(player.pos));
+  const isSpecial=player.special||false;
+  const nameColor=disabled?C.muted:isSpecial?"#C9A227":C.ink;
   return(
     <div
       onMouseEnter={()=>!disabled&&setHov(true)}
@@ -1327,14 +1568,14 @@ function PlayerRow({player,year,onPick,disabled}){
         <span style={{fontSize:9,fontWeight:700,color:"#fff",fontFamily:F.body,letterSpacing:.3}}>{player.pos}</span>
       </div>
       <div style={{flex:1,minWidth:0}}>
-        <div style={{fontSize:15,fontWeight:600,color:disabled?C.muted:C.ink,fontFamily:F.body,lineHeight:1.2}}>
-          {player.name}
+        <div style={{fontSize:15,fontWeight:600,color:nameColor,fontFamily:F.body,lineHeight:1.2}}>
+          {isSpecial&&"★ "}{player.name}
         </div>
         <div style={{fontSize:11,color:C.muted,marginTop:2,fontFamily:F.body}}>
           {year}{disabled?" · posição preenchida":""}
         </div>
       </div>
-      <div style={{fontFamily:F.display,fontSize:26,color:disabled?C.faint:player.rating>=88?C.red:C.ink,flexShrink:0}}>
+      <div style={{fontFamily:F.display,fontSize:26,color:disabled?C.faint:isSpecial?"#C9A227":player.rating>=88?C.red:C.ink,flexShrink:0}}>
         {player.rating}
       </div>
     </div>
@@ -1342,7 +1583,7 @@ function PlayerRow({player,year,onPick,disabled}){
 }
 
 /* ─── LINEUP ─────────────────────────────────────────────────────────────────── */
-function LineupScreen({team,formation,setFormation,onSim}){
+function LineupScreen({team,formation,setFormation,onSim,nilmarUnlocked}){
   const [tab,setTab]=useState("pitch");
   const rating=avgR(team).toFixed(1);
   return(
@@ -1376,23 +1617,36 @@ function LineupScreen({team,formation,setFormation,onSim}){
       <div style={{flex:1,overflowY:"auto",padding:"20px 24px 120px"}}>
         {tab==="pitch"?<Pitch formation={formation} players={team}/>:(
           <div>
-            {team.map((p,i)=>(
-              <div key={i} style={{display:"flex",alignItems:"center",gap:14,padding:"14px 0",borderBottom:`1px solid ${C.border}`}}>
-                <div style={{width:36,height:36,background:groupColor(posToGroup(p.pos)),display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
-                  <span style={{fontSize:9,fontWeight:700,color:"#fff",fontFamily:F.body}}>{p.pos}</span>
-                </div>
-                <div style={{flex:1}}>
-                  <div style={{fontSize:15,fontWeight:600,color:C.ink,fontFamily:F.body}}>
-                    {p.name}
+            {team.map((p,i)=>{
+              const isSpecial=p.special||false;
+              return(
+                <div key={i} style={{display:"flex",alignItems:"center",gap:14,padding:"14px 0",borderBottom:`1px solid ${C.border}`}}>
+                  <div style={{width:36,height:36,background:groupColor(posToGroup(p.pos)),display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
+                    <span style={{fontSize:9,fontWeight:700,color:"#fff",fontFamily:F.body}}>{p.pos}</span>
                   </div>
-                  <div style={{fontSize:11,color:C.muted,marginTop:2,fontFamily:F.body}}>{p._year}{p._champion?" · 🏆":""}</div>
+                  <div style={{flex:1}}>
+                    <div style={{fontSize:15,fontWeight:600,color:isSpecial?"#C9A227":C.ink,fontFamily:F.body}}>
+                      {isSpecial&&"★ "}{p.name}
+                    </div>
+                    <div style={{fontSize:11,color:C.muted,marginTop:2,fontFamily:F.body}}>{p._year}{p._champion?" · 🏆":""}</div>
+                  </div>
+                  <div style={{fontFamily:F.display,fontSize:24,color:isSpecial?"#C9A227":p.rating>=88?C.red:C.ink}}>{p.rating}</div>
                 </div>
-                <div style={{fontFamily:F.display,fontSize:24,color:p.rating>=88?C.red:C.ink}}>{p.rating}</div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>
+      {nilmarUnlocked&&(
+        <div style={{margin:"0 24px 16px",padding:"12px 16px",background:"#1A1A1A",border:"2px solid #C9A227",display:"flex",alignItems:"center",gap:12}}>
+          <span style={{fontSize:24}}>🔓</span>
+          <div>
+            <div style={{fontSize:10,letterSpacing:2,color:"#C9A227",fontFamily:F.body,fontWeight:700}}>BÔNUS SECRETO</div>
+            <div style={{fontFamily:F.display,fontSize:16,color:"#C9A227"}}>NILMAR</div>
+            <div style={{fontSize:11,color:"rgba(255,255,255,0.5)",fontFamily:F.body}}>CA · 88 · Modo Só Falta Assinar</div>
+          </div>
+        </div>
+      )}
       <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,padding:"16px 24px",background:C.white,borderTop:`1px solid ${C.border}`,zIndex:50}}>
         <button onClick={onSim} style={{
           background:C.black,color:C.white,border:"none",
@@ -1505,6 +1759,27 @@ function SimScreen({allMatches,matchIdx,livePhase,minute,spG,oppG,events,flash,t
             <div style={{fontFamily:F.display,fontSize:26,color:C.ink,lineHeight:1.1,marginBottom:8,letterSpacing:-.5}}>
               🇾🇪 São Paulo<br/>×<br/>{m.opp.flag} {oppLabel(m.opp)}
             </div>
+            {m.matchEvent&&(
+              <div style={{
+                margin:"24px 0",
+                padding:"14px 18px",
+                background:m.matchEvent.type==="bom"?"#F0FFF4":"#FFF5F5",
+                border:`2px solid ${m.matchEvent.type==="bom"?"#38A169":"#E53E3E"}`,
+                textAlign:"left",
+              }}>
+                <div style={{
+                  fontSize:10,fontWeight:700,letterSpacing:2,
+                  color:m.matchEvent.type==="bom"?"#276749":"#C53030",
+                  marginBottom:6,fontFamily:F.body,
+                }}>
+                  {m.matchEvent.type==="bom"?"🟢 NOSSO PORRA!":"🔴 CABÔ PÁ NÓIS"}
+                </div>
+                <div style={{fontSize:13,color:"#1A202C",fontFamily:F.body,lineHeight:1.5}}>
+                  {m.matchEvent.text}
+                  <span style={{fontWeight:700}}>{m.matchEvent.boost>0?` +${Math.round(m.matchEvent.boost*100)}% performance`:` ${Math.round(m.matchEvent.boost*100)}% performance`}</span>
+                </div>
+              </div>
+            )}
             <div style={{marginTop:32}}>
               <button onClick={onKickoff} style={{
                 background:C.black,color:C.white,border:"none",
@@ -2016,7 +2291,7 @@ async function generateCampaignCard(champ,allMatches,team,formation,tournament){
     const pc=PC[p.pos]||"#666";
     fillR(PAD+16,ry+ROW/2-12,46,24,pc);
     tx(p.pos,PAD+39,ry+ROW/2+7,"700 14px 'Inter', sans-serif",WHITE,"center");
-    tx(p.name,PAD+78,ry+ROW/2-5,"600 30px 'Inter', sans-serif",INK);
+    tx(p.name,PAD+78,ry+ROW/2-5,"600 30px 'Inter', sans-serif",p.special?"#C9A227":INK);
     tx(String(p._year),PAD+78,ry+ROW/2+20,"400 18px 'Inter', sans-serif",MUTED);
     const rc=p.rating>=88?RED:p.rating>=84?"#444":MUTED;
     tx(String(p.rating),W-PAD-20,ry+ROW/2+12,"bold 40px 'Archivo Black', sans-serif",rc,"right");

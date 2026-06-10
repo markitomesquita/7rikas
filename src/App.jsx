@@ -18,7 +18,7 @@ import markoBiraImg from "./assets/markobira.webp";
     @keyframes rerollSpin{0%{opacity:1;transform:scale(1) rotate(0)}40%{opacity:0;transform:scale(0.7) rotate(180deg)}60%{opacity:0;transform:scale(0.7) rotate(180deg)}100%{opacity:1;transform:scale(1) rotate(360deg)}}
 
     * { box-sizing: border-box; margin:0; padding:0; }
-    body { background: #0A0A0A; }
+    body { background: #F7F4EF; }
     .fadeUp { animation: fadeUp 0.35s ease both; }
     .slideIn { animation: slideIn 0.3s ease both; }
     .popIn   { animation: popIn   .35s cubic-bezier(.34,1.56,.64,1) both; }
@@ -33,23 +33,23 @@ import markoBiraImg from "./assets/markobira.webp";
 
 /* ─── DESIGN TOKENS ─────────────────────────────────────────────────────────── */
 const C = {
-  bg:       "#0A0A0A",
-  surface:  "#141414",
-  surface2: "#1E1E1E",
-  surface3: "#252525",
-  red:      "#E8323A",
-  redDim:   "#2A1012",
-  redMid:   "#3D1518",
+  bg:       "#F7F4EF",   // off-white quente
+  surface:  "#FFFFFF",   // branco puro para cards
+  surface2: "#F0ECE5",   // cinza claro quente
+  surface3: "#E8E3DB",   // cinza médio quente
+  red:      "#E8323A",   // vermelho SPFC
+  redDim:   "#FDF0F0",   // vermelho muito suave (fundo)
+  redMid:   "#FAE0E1",   // vermelho suave (hover/destaque)
   white:    "#FFFFFF",
-  ink:      "#F0F0F0",
-  inkDim:   "#AAAAAA",
-  muted:    "#666666",
-  border:   "#242424",
-  border2:  "#2E2E2E",
-  yellow:   "#F5A623",
-  gold:     "#C9A227",
-  black:    "#000000",
-  faint:    "#1A1A1A",
+  ink:      "#1A1A1A",   // quase preto para texto
+  inkDim:   "#444444",   // cinza escuro
+  muted:    "#888888",   // cinza médio
+  border:   "#E5E0D8",   // borda suave quente
+  border2:  "#D8D2C8",   // borda um pouco mais forte
+  yellow:   "#F5A623",   // âmbar
+  gold:     "#C9A227",   // dourado (jogadores especiais)
+  black:    "#1A1A1A",   // botões / textos fortes
+  faint:    "#F5F1EA",   // fundo muito suave
 };
 
 /* typography shortcuts */
@@ -89,8 +89,8 @@ const SLOT_ACCEPTS={
   GOL:["GOL"],LD:["LD","ZAG"],LE:["LE","ZAG"],ZAG:["ZAG","LD","LE"],
   VOL:["VOL","MC"],MC:["MC","VOL","MD","ME"],MD:["MD","MC","CA","ME"],ME:["ME","MC","CA","MD"],CA:["CA","ME","MD"],
 };
-const POS_COLOR={GOL:"#F5A623",LD:"#4A90D9",ZAG:"#4A90D9",LE:"#4A90D9",VOL:"#7B68EE",MC:"#7B68EE",MD:"#7B68EE",ME:"#7B68EE",CA:"#E8323A"};
-function groupColor(g){if(g==="GOL")return"#F5A623";if(g==="DEF")return"#4A90D9";if(g==="MID")return"#7B68EE";return"#E8323A";}
+const POS_COLOR={GOL:"#C9A227",LD:"#444444",ZAG:"#444444",LE:"#444444",VOL:"#888888",MC:"#888888",MD:"#888888",ME:"#888888",CA:"#E8323A"};
+function groupColor(g){if(g==="GOL")return"#C9A227";if(g==="DEF")return"#444444";if(g==="MID")return"#888888";return"#E8323A";}
 function posToGroup(p){if(p==="GOL")return"GOL";if(p==="ZAG"||p==="LD"||p==="LE")return"DEF";if(p==="VOL"||p==="MC"||p==="MD"||p==="ME")return"MID";return"ATK";}
 function assignToSlots(fm,players){
   const slots=FORMATIONS[fm]||FORMATIONS["4-3-3"];
@@ -819,7 +819,7 @@ function Pitch({formation,players,compact=false}){
   return(
     <div style={{width:"100%",position:"relative"}}>
       <div style={{width:"100%",paddingBottom:compact?"130%":"155%",
-        background:"#0A1F0A",
+        background:"#F0EDE8",
         borderRadius:12,border:`1px solid ${C.border}`,position:"relative",overflow:"hidden"}}>
         <svg style={{position:"absolute",inset:0,width:"100%",height:"100%"}} viewBox="0 0 100 155" preserveAspectRatio="none">
           <rect x="3" y="3" width="94" height="149" fill="none" stroke="rgba(255,255,255,.12)" strokeWidth=".7"/>
@@ -842,7 +842,7 @@ function Pitch({formation,players,compact=false}){
               {p?(
                 <div className="popIn" style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
                   <div style={{width:sz,height:sz,borderRadius:"50%",background:col,border:"2px solid rgba(255,255,255,.85)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:compact?7:8,fontWeight:700,color:"#fff",fontFamily:F.display,boxShadow:"0 2px 10px rgba(0,0,0,.6)"}}>{p.shirt}</div>
-                  <div style={{marginTop:2,background:"rgba(0,0,0,.85)",borderRadius:4,padding:"1px 4px",fontSize:compact?6:7.5,color:"#fff",fontWeight:600,whiteSpace:"nowrap",maxWidth:56,overflow:"hidden",textOverflow:"ellipsis",textAlign:"center",fontFamily:F.body}}>
+                  <div style={{marginTop:2,background:"rgba(255,255,255,.9)",borderRadius:4,padding:"1px 4px",fontSize:compact?6:7.5,color:C.ink,fontWeight:600,whiteSpace:"nowrap",maxWidth:56,overflow:"hidden",textOverflow:"ellipsis",textAlign:"center",fontFamily:F.body}}>
                     {p.name.split(" ").slice(-1)[0]}{p._year?` '${String(p._year).slice(-2)}`:""}
                   </div>
                 </div>
@@ -1430,7 +1430,7 @@ function FormationPickScreen({onConfirm}){
         <div style={{position:"relative",width:"100%"}}>
           <div style={{
             width:"100%",paddingBottom:"125%",
-            background:"#0A1F0A",
+            background:"#F0EDE8",
             borderRadius:12,border:`1px solid ${C.border}`,
             position:"relative",overflow:"hidden",
           }}>
@@ -1797,14 +1797,14 @@ function SimScreen({allMatches,matchIdx,livePhase,minute,spG,oppG,events,flash,t
               <div style={{
                 margin:"20px 0",
                 padding:"14px 16px",
-                background:m.matchEvent.type==="bom"?"#0D2818":C.redDim,
-                border:`1px solid ${m.matchEvent.type==="bom"?"#38A169":C.red}`,
+                background:m.matchEvent.type==="bom"?"#FFF8E7":C.redDim,
+                border:`2px solid ${m.matchEvent.type==="bom"?C.gold:C.red}`,
                 borderRadius:10,
                 textAlign:"left",
               }}>
                 <div style={{
                   fontSize:10,fontWeight:700,letterSpacing:1.5,
-                  color:m.matchEvent.type==="bom"?"#38A169":C.red,
+                  color:m.matchEvent.type==="bom"?C.gold:C.red,
                   marginBottom:6,fontFamily:F.body,textTransform:"uppercase",
                 }}>
                   {m.matchEvent.type==="bom"?"🟢 NOSSO PORRA!":"🔴 CABÔ PÁ NÓIS"}
@@ -2029,7 +2029,7 @@ function PenaltyScreen({penalties,opp,onContinue}){
                 <div style={{width:22,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
                   <span style={{fontSize:9,color:isSudden?C.red:C.muted,fontFamily:F.body,fontWeight:700}}>{isSudden?"⚡":i+1}</span>
                 </div>
-                <div style={{flex:1,background:k.oppConvert?"#1A1A1A":C.surface,border:`1px solid ${k.oppConvert?C.border2:C.border}`,borderRadius:8,padding:"9px 11px",textAlign:"right"}}>
+                <div style={{flex:1,background:k.oppConvert?C.surface3:C.surface,border:`1px solid ${k.oppConvert?C.border2:C.border}`,borderRadius:8,padding:"9px 11px",textAlign:"right"}}>
                   <div style={{fontSize:12,fontWeight:600,color:C.ink,fontFamily:F.body}}>{k.oppName}</div>
                   <div style={{fontSize:10,color:k.oppConvert?C.inkDim:C.muted,marginTop:2,fontFamily:F.body,fontWeight:600}}>
                     {k.oppConvert?"⚽ GOOOOL!":"❌ Defendida"}
@@ -2121,7 +2121,7 @@ function ResultScreen({champ,elimPhase,allMatches,team,formation,tournament,onRe
       {champ&&<Confetti/>}
 
       {/* Hero */}
-      <div style={{background:champ?C.redDim:"#0D0D0D",borderBottom:`1px solid ${champ?C.redMid:C.border}`,padding:"40px 20px 32px",position:"relative",overflow:"hidden",flexShrink:0}}>
+      <div style={{background:champ?C.redDim:C.surface2,borderBottom:`1px solid ${champ?C.redMid:C.border}`,padding:"40px 20px 32px",position:"relative",overflow:"hidden",flexShrink:0}}>
         {champ&&<div style={{position:"absolute",right:-20,top:"50%",transform:"translateY(-50%)",fontSize:160,opacity:.05,pointerEvents:"none"}}>🏆</div>}
         <div style={{position:"relative",zIndex:1}}>
           <div style={{fontSize:10,letterSpacing:1.5,color:champ?C.red:C.muted,fontWeight:700,fontFamily:F.body,marginBottom:12,textTransform:"uppercase"}}>
@@ -2150,7 +2150,7 @@ function ResultScreen({champ,elimPhase,allMatches,team,formation,tournament,onRe
       {/* Share buttons */}
       <div style={{padding:"14px 20px",borderBottom:`1px solid ${C.border}`,display:"flex",gap:10,flexShrink:0}}>
         <button onClick={()=>handleCardAction("download")} disabled={cardStatus==="generating"} style={{
-          flex:1,background:cardStatus==="done"?"#0D2818":C.surface2,color:C.white,border:`1px solid ${C.border}`,
+          flex:1,background:cardStatus==="done"?"#1A3D1F":C.surface2,color:cardStatus==="done"?C.white:C.ink,border:`1px solid ${C.border}`,
           padding:"13px 0",cursor:cardStatus==="generating"?"wait":"pointer",
           fontFamily:F.body,fontSize:12,fontWeight:600,letterSpacing:.5,
           display:"flex",alignItems:"center",justifyContent:"center",gap:6,
@@ -2275,9 +2275,9 @@ async function generateCampaignCard(champ,allMatches,team,formation,tournament){
   canvas.width=W;canvas.height=H;
   const ctx=canvas.getContext("2d");
 
-  const RED="#E8323A",DARK="#0A0A0A",INK="#F0F0F0";
-  const MUTED="#666666",BORDER="#242424",WHITE="#FFFFFF",SURFACE="#141414";
-  const GOLD="#C9A227";
+  const RED="#E8323A",DARK="#F7F4EF",INK="#1A1A1A";
+  const MUTED="#888888",BORDER="#E5E0D8",WHITE="#FFFFFF",SURFACE="#FFFFFF";
+  const SURFACE2="#F0ECE5",GOLD="#C9A227";
   const PAD=72;
 
   function fillR(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(x,y,w,h);}
@@ -2301,18 +2301,18 @@ async function generateCampaignCard(champ,allMatches,team,formation,tournament){
   fillR(0,0,W,H,DARK);
 
   // ── HEADER stripe ──
-  fillR(0,0,W,260,"#1A0608");
+  fillR(0,0,W,260,RED);
   const TY=200;
   ctx.save();
   ctx.font="bold 140px 'Space Grotesk', sans-serif";
-  ctx.fillStyle=RED;
+  ctx.fillStyle=WHITE;
   const w7=ctx.measureText("7").width;
   ctx.fillText("7",PAD,TY);
-  ctx.fillStyle=WHITE;
+  ctx.fillStyle="rgba(255,255,255,0.75)";
   ctx.fillText("RIKAS",PAD+w7,TY);
   ctx.restore();
-  tx("Uma adaptação by Órfãos de Edcarlos",PAD,TY+52,"400 23px 'DM Sans', sans-serif",MUTED);
-  fillR(PAD,TY+82,W-PAD*2,2,RED);
+  tx("Uma adaptação by Órfãos de Edcarlos",PAD,TY+52,"400 23px 'DM Sans', sans-serif","rgba(255,255,255,0.6)");
+  fillR(PAD,TY+82,W-PAD*2,2,"rgba(255,255,255,0.3)");
 
   // ── RESULTADO ──
   const RY=TY+170;
@@ -2322,9 +2322,9 @@ async function generateCampaignCard(champ,allMatches,team,formation,tournament){
 
   if(champ){
     tx("🏆 CAMPEÃO!",W/2,RY,"bold 76px 'Space Grotesk', sans-serif",RED,"center");
-    tx("BUSCO RIVAL!",W/2,RY+78,"bold 40px 'Space Grotesk', sans-serif",WHITE,"center");
+    tx("BUSCO RIVAL!",W/2,RY+78,"bold 40px 'Space Grotesk', sans-serif",INK,"center");
   }else{
-    tx("😤 ELIMINADO.",W/2,RY,"bold 68px 'Space Grotesk', sans-serif",WHITE,"center");
+    tx("😤 ELIMINADO.",W/2,RY,"bold 68px 'Space Grotesk', sans-serif",INK,"center");
     tx("TEM QUE COBRAR!",W/2,RY+72,"bold 38px 'Space Grotesk', sans-serif",RED,"center");
     tx("Caiu "+elimText,W/2,RY+120,"400 25px 'DM Sans', sans-serif",MUTED,"center");
   }
@@ -2336,23 +2336,23 @@ async function generateCampaignCard(champ,allMatches,team,formation,tournament){
   const ROW=70;
   const SQH=44+sortedTeam.length*ROW;
 
-  fillR(PAD,SQ,W-PAD*2,44,SURFACE);
+  fillR(PAD,SQ,W-PAD*2,44,"#1A1A1A");
   fillR(PAD,SQ,4,44,RED);
-  tx("ELENCO DOS SONHOS",PAD+20,SQ+28,"700 16px 'DM Sans', sans-serif","rgba(255,255,255,0.45)");
-  tx("RTG",W-PAD-20,SQ+28,"700 16px 'DM Sans', sans-serif","rgba(255,255,255,0.3)","right");
+  tx("ELENCO DOS SONHOS",PAD+20,SQ+28,"700 16px 'DM Sans', sans-serif","rgba(255,255,255,0.6)");
+  tx("RTG",W-PAD-20,SQ+28,"700 16px 'DM Sans', sans-serif","rgba(255,255,255,0.4)","right");
 
-  const PC={GOL:"#F5A623",ZAG:"#4A90D9",LD:"#4A90D9",LE:"#4A90D9",VOL:"#7B68EE",MC:"#7B68EE",MD:"#7B68EE",ME:"#7B68EE",CA:RED};
+  const PC={GOL:GOLD,LD:"#444444",ZAG:"#444444",LE:"#444444",VOL:"#888888",MC:"#888888",MD:"#888888",ME:"#888888",CA:RED};
   sortedTeam.forEach((p,i)=>{
     const ry=SQ+44+i*ROW;
-    fillR(PAD,ry,W-PAD*2,ROW,i%2===0?"#161616":"#141414");
+    fillR(PAD,ry,W-PAD*2,ROW,i%2===0?SURFACE:SURFACE2);
     ctx.save();ctx.strokeStyle=BORDER;ctx.lineWidth=1;
     ctx.beginPath();ctx.moveTo(PAD,ry);ctx.lineTo(W-PAD,ry);ctx.stroke();ctx.restore();
-    const pc=PC[p.pos]||"#666";
+    const pc=PC[p.pos]||MUTED;
     fillR(PAD+16,ry+ROW/2-12,46,24,pc);
     tx(p.pos,PAD+39,ry+ROW/2+7,"700 14px 'DM Sans', sans-serif",WHITE,"center");
     tx(p.name,PAD+78,ry+ROW/2-5,"600 30px 'DM Sans', sans-serif",p.special?GOLD:INK);
     tx(String(p._year),PAD+78,ry+ROW/2+20,"400 18px 'DM Sans', sans-serif",MUTED);
-    const rc=p.rating>=85?RED:p.rating>=80?"#F5A623":MUTED;
+    const rc=p.rating>=85?RED:p.rating>=80?GOLD:MUTED;
     tx(String(p.rating),W-PAD-20,ry+ROW/2+12,"bold 40px 'Space Grotesk', sans-serif",rc,"right");
   });
   ctx.save();ctx.strokeStyle=BORDER;ctx.lineWidth=1;
@@ -2374,20 +2374,32 @@ async function generateCampaignCard(champ,allMatches,team,formation,tournament){
   });
 
   // ── COMENTÁRIO DE MARKO LOCO E ZÉ BIRA ──
-  cy+=20;fillR(PAD,cy,W-PAD*2,1,BORDER);cy+=28;
-  const avatarSize=52,avatarX=PAD,avatarY=cy-avatarSize/2-2;
+  cy+=32;
+  const commentBlockX=PAD, commentBlockW=W-PAD*2;
+  // fundo do bloco (altura generosa; conteúdo desenhado depois)
+  fillR(commentBlockX,cy,commentBlockW,340,SURFACE2);
+  fillR(commentBlockX,cy,4,340,RED);
+  cy+=28;
+  // avatar grande centralizado
+  const avatarSize=88;
+  const avatarCX=commentBlockX+commentBlockW/2;
+  const avatarCY=cy+avatarSize/2;
   try{
     const av=await new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=markoBiraImg;});
     ctx.save();
-    ctx.beginPath();ctx.arc(avatarX+avatarSize/2,avatarY+avatarSize/2,avatarSize/2,0,Math.PI*2);ctx.clip();
-    ctx.drawImage(av,avatarX,avatarY,avatarSize,avatarSize);
+    ctx.beginPath();ctx.arc(avatarCX,avatarCY,avatarSize/2,0,Math.PI*2);ctx.clip();
+    ctx.drawImage(av,avatarCX-avatarSize/2,avatarCY-avatarSize/2,avatarSize,avatarSize);
     ctx.restore();
+    ctx.save();ctx.strokeStyle=RED;ctx.lineWidth=4;
+    ctx.beginPath();ctx.arc(avatarCX,avatarCY,avatarSize/2+5,0,Math.PI*2);
+    ctx.stroke();ctx.restore();
   }catch(e){}
-  tx("COMENTÁRIO DE MARKO LOCO E ZÉ BIRA",PAD+avatarSize+14,cy,"700 15px 'DM Sans', sans-serif",MUTED);
-  cy+=28;
+  cy+=avatarSize+22;
+  tx("COMENTÁRIO DE MARKO LOCO E ZÉ BIRA",W/2,cy,"700 17px 'DM Sans', sans-serif",MUTED,"center");
+  cy+=34;
   const comment='"'+generateCampaignComment(champ,allMatches,tournament,team)+'"';
-  const lastY=wrapText(comment,PAD,cy,W-PAD*2,"italic 400 23px 'DM Sans', sans-serif",INK,34);
-  cy=lastY+20;
+  const lastY=wrapText(comment,commentBlockX+24,cy,commentBlockW-48,"italic 500 26px 'DM Sans', sans-serif",INK,38);
+  cy=lastY+32;
 
   // ── RODAPÉ ──
   const FY=Math.max(cy+40,H-120);

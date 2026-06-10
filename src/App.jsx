@@ -2129,14 +2129,14 @@ function ResultScreen({champ,elimPhase,allMatches,team,formation,tournament,onRe
           {champ?(
             <>
               <div className="trophy" style={{fontSize:52,marginBottom:12}}>🏆</div>
-              <div style={{fontFamily:F.display,fontSize:34,fontWeight:700,color:C.white,lineHeight:1,letterSpacing:-.5}}>São Paulo<br/>conquista<br/>a América</div>
+              <div style={{fontFamily:F.display,fontSize:34,fontWeight:700,color:C.ink,lineHeight:1,letterSpacing:-.5}}>São Paulo<br/>conquista<br/>a América</div>
             </>
           ):(
             <>
               <div style={{fontSize:44,marginBottom:12}}>😤</div>
-              <div style={{fontFamily:F.display,fontSize:34,fontWeight:700,color:C.white,lineHeight:1,letterSpacing:-.5}}>
+              <div style={{fontFamily:F.display,fontSize:34,fontWeight:700,color:C.ink,lineHeight:1,letterSpacing:-.5}}>
                 {elimPhase==="Fase de Grupos"?"Caiu na":"Caiu nas"}<br/>
-                <span style={{color:C.muted}}>{elimPhase}</span>
+                <span style={{color:C.inkDim}}>{elimPhase}</span>
               </div>
               <div style={{marginTop:14,fontSize:12,color:C.muted,fontFamily:F.body,fontWeight:600,letterSpacing:1.5,textTransform:"uppercase"}}>
                 Tem que cobrar!
@@ -2299,40 +2299,38 @@ async function generateCampaignCard(champ,allMatches,team,formation,tournament){
 
   fillR(0,0,W,H,DARK);
 
-  // ── HEADER stripe ──
-  fillR(0,0,W,260,RED);
-  const TY=200;
+  // ── HEADER stripe (compacto) ──
+  fillR(0,0,W,110,RED);
   ctx.save();
-  ctx.font="bold 140px 'Space Grotesk', sans-serif";
+  ctx.font="bold 58px 'Space Grotesk', sans-serif";
   ctx.fillStyle=WHITE;
   const w7=ctx.measureText("7").width;
-  ctx.fillText("7",PAD,TY);
-  ctx.fillStyle="rgba(255,255,255,0.75)";
-  ctx.fillText("RIKAS",PAD+w7,TY);
+  ctx.fillText("7",PAD,78);
+  ctx.fillStyle="rgba(255,255,255,0.80)";
+  ctx.fillText("RIKAS",PAD+w7,78);
   ctx.restore();
-  tx("Uma adaptação by Órfãos de Edcarlos",PAD,TY+52,"400 23px 'DM Sans', sans-serif","rgba(255,255,255,0.6)");
-  fillR(PAD,TY+82,W-PAD*2,2,"rgba(255,255,255,0.3)");
+  tx("by Órfãos de Edcarlos",W-PAD,78,"400 20px 'DM Sans', sans-serif","rgba(255,255,255,0.55)","right");
 
   // ── RESULTADO ──
-  const RY=TY+170;
+  const RY=140;
   const koPlayed=allMatches.filter(m=>m.phase==="ko");
   const elimPhase=!tournament?.qualified?"Fase de Grupos":(koPlayed.slice(-1)[0]?.round||"");
   const elimText=elimPhase==="Fase de Grupos"?"na Fase de Grupos":"nas "+elimPhase;
 
   if(champ){
-    tx("🏆 CAMPEÃO!",W/2,RY,"bold 76px 'Space Grotesk', sans-serif",RED,"center");
-    tx("BUSCO RIVAL!",W/2,RY+78,"bold 40px 'Space Grotesk', sans-serif",INK,"center");
+    tx("🏆 CAMPEÃO!",W/2,RY,"bold 72px 'Space Grotesk', sans-serif",RED,"center");
+    tx("BUSCO RIVAL!",W/2,RY+70,"bold 36px 'Space Grotesk', sans-serif",INK,"center");
   }else{
-    tx("😤 ELIMINADO.",W/2,RY,"bold 68px 'Space Grotesk', sans-serif",INK,"center");
-    tx("TEM QUE COBRAR!",W/2,RY+72,"bold 38px 'Space Grotesk', sans-serif",RED,"center");
-    tx("Caiu "+elimText,W/2,RY+120,"400 25px 'DM Sans', sans-serif",MUTED,"center");
+    tx("😤 ELIMINADO.",W/2,RY,"bold 64px 'Space Grotesk', sans-serif",INK,"center");
+    tx("TEM QUE COBRAR!",W/2,RY+66,"bold 34px 'Space Grotesk', sans-serif",RED,"center");
+    tx("Caiu "+elimText,W/2,RY+108,"400 23px 'DM Sans', sans-serif",MUTED,"center");
   }
-  tx(formation+"  ·  Média "+avgR(team).toFixed(1),W-PAD,RY+(champ?140:168),"400 22px 'DM Sans', sans-serif",MUTED,"right");
+  tx(formation+"  ·  Média "+avgR(team).toFixed(1),W-PAD,RY+(champ?120:148),"400 20px 'DM Sans', sans-serif",MUTED,"right");
 
   // ── ELENCO (ordenado por posição) ──
   const sortedTeam=sortByPosition(team);
-  const SQ=RY+(champ?200:230);
-  const ROW=70;
+  const SQ=RY+(champ?168:198);
+  const ROW=62;
   const SQH=44+sortedTeam.length*ROW;
 
   fillR(PAD,SQ,W-PAD*2,44,"#1A1A1A");
@@ -2376,8 +2374,8 @@ async function generateCampaignCard(champ,allMatches,team,formation,tournament){
   cy+=32;
   const commentBlockX=PAD, commentBlockW=W-PAD*2;
   // fundo do bloco (altura generosa; conteúdo desenhado depois)
-  fillR(commentBlockX,cy,commentBlockW,340,SURFACE2);
-  fillR(commentBlockX,cy,4,340,RED);
+  fillR(commentBlockX,cy,commentBlockW,400,SURFACE2);
+  fillR(commentBlockX,cy,4,400,RED);
   cy+=28;
   // avatar grande centralizado
   const avatarSize=88;
@@ -2397,7 +2395,7 @@ async function generateCampaignCard(champ,allMatches,team,formation,tournament){
   tx("COMENTÁRIO DE MARKO LOCO E ZÉ BIRA",W/2,cy,"700 17px 'DM Sans', sans-serif",MUTED,"center");
   cy+=34;
   const comment='"'+generateCampaignComment(champ,allMatches,tournament,team)+'"';
-  const lastY=wrapText(comment,commentBlockX+24,cy,commentBlockW-48,"italic 500 26px 'DM Sans', sans-serif",INK,38);
+  const lastY=wrapText(comment,commentBlockX+24,cy,commentBlockW-48,"italic 500 22px 'DM Sans', sans-serif",INK,34);
   cy=lastY+32;
 
   // ── RODAPÉ ──

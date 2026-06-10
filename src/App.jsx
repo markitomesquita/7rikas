@@ -89,8 +89,8 @@ const SLOT_ACCEPTS={
   GOL:["GOL"],LD:["LD","ZAG"],LE:["LE","ZAG"],ZAG:["ZAG","LD","LE"],
   VOL:["VOL","MC"],MC:["MC","VOL","MD","ME"],MD:["MD","MC","CA","ME"],ME:["ME","MC","CA","MD"],CA:["CA","ME","MD"],
 };
-const POS_COLOR={GOL:"#C9A227",LD:"#444444",ZAG:"#444444",LE:"#444444",VOL:"#888888",MC:"#888888",MD:"#888888",ME:"#888888",CA:"#E8323A"};
-function groupColor(g){if(g==="GOL")return"#C9A227";if(g==="DEF")return"#444444";if(g==="MID")return"#888888";return"#E8323A";}
+const POS_COLOR={GOL:"#C0000A",LD:"#D42030",ZAG:"#CC1A28",LE:"#D42030",VOL:"#E8323A",MC:"#E03040",MD:"#E8323A",ME:"#E03040",CA:"#B8000A"};
+function groupColor(g){if(g==="GOL")return"#C0000A";if(g==="DEF")return"#CC1A28";if(g==="MID")return"#E03040";return"#B8000A";}
 function posToGroup(p){if(p==="GOL")return"GOL";if(p==="ZAG"||p==="LD"||p==="LE")return"DEF";if(p==="VOL"||p==="MC"||p==="MD"||p==="ME")return"MID";return"ATK";}
 function assignToSlots(fm,players){
   const slots=FORMATIONS[fm]||FORMATIONS["4-3-3"];
@@ -819,7 +819,7 @@ function Pitch({formation,players,compact=false}){
   return(
     <div style={{width:"100%",position:"relative"}}>
       <div style={{width:"100%",paddingBottom:compact?"130%":"155%",
-        background:"#F0EDE8",
+        background:"#2D6A2D",
         borderRadius:12,border:`1px solid ${C.border}`,position:"relative",overflow:"hidden"}}>
         <svg style={{position:"absolute",inset:0,width:"100%",height:"100%"}} viewBox="0 0 100 155" preserveAspectRatio="none">
           <rect x="3" y="3" width="94" height="149" fill="none" stroke="rgba(255,255,255,.12)" strokeWidth=".7"/>
@@ -1282,18 +1282,18 @@ function IntroScreen({onStart,history,onSecretTap}){
   return(
     <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",background:C.bg}}>
       {/* Hero */}
-      <div style={{background:"linear-gradient(160deg, #1A0608 0%, #0A0A0A 60%)",padding:"52px 28px 44px",position:"relative",overflow:"hidden"}}>
-        <div onClick={onSecretTap} style={{fontFamily:F.display,fontSize:52,fontWeight:700,color:C.white,lineHeight:.9,letterSpacing:-1,cursor:"default",userSelect:"none"}}>
-          7RIKAS
+      <div style={{background:C.bg,padding:"52px 28px 36px",position:"relative",overflow:"hidden",borderBottom:`1px solid ${C.border}`}}>
+        <div onClick={onSecretTap} style={{fontFamily:F.display,fontSize:76,fontWeight:700,lineHeight:.9,letterSpacing:-2,cursor:"default",userSelect:"none"}}>
+          <span style={{color:C.red}}>7</span><span style={{color:C.ink}}>RIKAS</span>
         </div>
-        <div style={{marginTop:16,fontSize:13,color:C.inkDim,fontFamily:F.body,lineHeight:1.6,maxWidth:280}}>
+        <div style={{marginTop:16,fontSize:13,color:C.muted,fontFamily:F.body,lineHeight:1.6,maxWidth:280}}>
           Uma jornada do SPFC rumo à glória eterna<br/>
-          <span style={{color:C.muted}}>ou ódio profundo.</span>
+          <span style={{color:C.inkDim}}>ou ódio profundo.</span>
         </div>
-        <div style={{marginTop:8,fontSize:11,color:C.muted,fontFamily:F.body}}>
+        <div style={{marginTop:6,fontSize:11,color:C.muted,fontFamily:F.body}}>
           Uma adaptação by Órfãos de Edcarlos
         </div>
-        <div style={{position:"absolute",right:-10,bottom:-20,fontSize:120,opacity:.06,pointerEvents:"none",userSelect:"none"}}>🇾🇪</div>
+        <div style={{position:"absolute",right:-10,bottom:-20,fontSize:120,opacity:.04,pointerEvents:"none",userSelect:"none"}}>🇾🇪</div>
       </div>
 
       {/* Content */}
@@ -1326,15 +1326,15 @@ function IntroScreen({onStart,history,onSecretTap}){
         <div style={{display:"flex",flexDirection:"column",gap:10,marginTop:8}}>
           {[
             {id:"normal",label:"MODO NORMAL",sub:"Todos os elencos disponíveis",icon:"⚽",
-              style:{background:C.surface2,border:`1px solid ${C.border}`}},
+              style:{background:C.black,border:"none"},color:C.white},
             {id:"odio",label:"MODO ÓDIO",sub:"Só elencos odiáveis (2010–2025)",icon:"😤",
-              style:{background:C.red,border:"none"}},
+              style:{background:C.red,border:"none"},color:C.white},
             {id:"onirico",label:"MODO ONÍRICO",sub:"Só elencos campeões e lendários",icon:"✨",
-              style:{background:"linear-gradient(135deg, #1A1A2E, #2D1B4E)",border:`1px solid ${C.border}`}},
+              style:{background:"linear-gradient(135deg, #C9A227 0%, #F5A623 50%, #A67C00 100%)",border:"none"},color:C.white},
           ].map(m=>(
             <button key={m.id} onClick={()=>onStart(m.id)} style={{
               ...m.style,
-              color:m.id==="onirico"?C.gold:C.white,
+              color:m.color||C.white,
               borderRadius:12,
               padding:"16px 20px",width:"100%",cursor:"pointer",
               fontFamily:F.display,fontSize:14,fontWeight:600,letterSpacing:1.5,
@@ -1430,7 +1430,7 @@ function FormationPickScreen({onConfirm}){
         <div style={{position:"relative",width:"100%"}}>
           <div style={{
             width:"100%",paddingBottom:"125%",
-            background:"#F0EDE8",
+            background:"#2D6A2D",
             borderRadius:12,border:`1px solid ${C.border}`,
             position:"relative",overflow:"hidden",
           }}>
@@ -1713,7 +1713,7 @@ function SimScreen({allMatches,matchIdx,livePhase,minute,spG,oppG,events,flash,t
     if(m.win)return matchIdx>=6?"VER RESULTADO":"PRÓXIMO JOGO";
     return"VER RESULTADO";
   };
-  const doneBg=m.draw?C.yellow:m.win?C.red:C.surface2;
+  const doneBg=m.draw?C.yellow:m.win?C.red:C.black;
   const doneFg=m.draw?C.black:C.white;
 
   /* progress dots — groups and KO */
@@ -1807,7 +1807,7 @@ function SimScreen({allMatches,matchIdx,livePhase,minute,spG,oppG,events,flash,t
                   color:m.matchEvent.type==="bom"?C.gold:C.red,
                   marginBottom:6,fontFamily:F.body,textTransform:"uppercase",
                 }}>
-                  {m.matchEvent.type==="bom"?"🟢 NOSSO PORRA!":"🔴 CABÔ PÁ NÓIS"}
+                  {m.matchEvent.type==="bom"?"👍 NOSSO PORRA!":"👎 CABÔ PÁ NÓIS"}
                 </div>
                 <div style={{fontSize:13,color:C.ink,fontFamily:F.body,lineHeight:1.5}}>
                   {m.matchEvent.text}
@@ -2085,8 +2085,7 @@ function ResultScreen({champ,elimPhase,allMatches,team,formation,tournament,onRe
       if(action==="whatsapp"){
         canvas.toBlob(async(blob)=>{
           const file=new File([blob],"7rikas-campanha.png",{type:"image/png"});
-          const resultText=champ?"🏆 Fui CAMPEÃO da Libertadores no 7RIKAS!":"❌ Fui eliminado no 7RIKAS... que raiva.";
-          const shareText=`${resultText}\n\nMontei um time histórico do SPFC e disputei a Libertadores.\n\n🎮 Jogue também: https://markitomesquita.github.io/7rikas/\n\n7RIKAS — Uma adaptação by Órfãos de Edcarlos`;
+          const shareText=`https://markitomesquita.github.io/7rikas/`;
           if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
             try{
               await navigator.share({files:[file],text:shareText});
@@ -2341,7 +2340,7 @@ async function generateCampaignCard(champ,allMatches,team,formation,tournament){
   tx("ELENCO DOS SONHOS",PAD+20,SQ+28,"700 16px 'DM Sans', sans-serif","rgba(255,255,255,0.6)");
   tx("RTG",W-PAD-20,SQ+28,"700 16px 'DM Sans', sans-serif","rgba(255,255,255,0.4)","right");
 
-  const PC={GOL:GOLD,LD:"#444444",ZAG:"#444444",LE:"#444444",VOL:"#888888",MC:"#888888",MD:"#888888",ME:"#888888",CA:RED};
+  const PC={GOL:"#C0000A",LD:"#D42030",ZAG:"#CC1A28",LE:"#D42030",VOL:"#E8323A",MC:"#E03040",MD:"#E8323A",ME:"#E03040",CA:"#B8000A"};
   sortedTeam.forEach((p,i)=>{
     const ry=SQ+44+i*ROW;
     fillR(PAD,ry,W-PAD*2,ROW,i%2===0?SURFACE:SURFACE2);

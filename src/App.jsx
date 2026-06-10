@@ -4,60 +4,58 @@ import markoBiraImg from "./assets/markobira.webp";
 /* ─── FONTS & GLOBAL CSS ────────────────────────────────────────────────────── */
 (() => {
   const l = document.createElement("link");
-  l.href = "https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap";
+  l.href = "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap";
   l.rel = "stylesheet"; document.head.appendChild(l);
   const s = document.createElement("style");
   s.textContent = `
-    *{box-sizing:border-box;margin:0;padding:0;}
-    html,body{background:#fff;font-family:'Inter',sans-serif;}
-    ::-webkit-scrollbar{width:2px;}
-    ::-webkit-scrollbar-thumb{background:#CC0000;}
-
-    @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+    @keyframes confettiFall { to { transform: translateY(110vh) rotate(720deg); opacity:0; } }
+    @keyframes slideIn { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
     @keyframes popIn{0%{transform:scale(0.7);opacity:0}65%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
-    @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.35}}
     @keyframes trophy{0%{transform:scale(0) rotate(-15deg);opacity:0}70%{transform:scale(1.1) rotate(3deg)}100%{transform:scale(1) rotate(0);opacity:1}}
-    @keyframes confettiFall{0%{transform:translateY(-20px) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(600deg);opacity:0}}
     @keyframes goalSlide{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
     @keyframes rerollSpin{0%{opacity:1;transform:scale(1) rotate(0)}40%{opacity:0;transform:scale(0.7) rotate(180deg)}60%{opacity:0;transform:scale(0.7) rotate(180deg)}100%{opacity:1;transform:scale(1) rotate(360deg)}}
-    @keyframes liveBar{from{width:0}to{width:100%}}
 
-    .fadeUp  { animation: fadeUp  .3s ease both; }
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body { background: #0A0A0A; }
+    .fadeUp { animation: fadeUp 0.35s ease both; }
+    .slideIn { animation: slideIn 0.3s ease both; }
     .popIn   { animation: popIn   .35s cubic-bezier(.34,1.56,.64,1) both; }
     .trophy  { animation: trophy  .55s cubic-bezier(.34,1.56,.64,1) both; }
     .goalSlide { animation: goalSlide .25s ease both; }
     .rerollSpin { animation: rerollSpin .5s ease both; }
 
-    /* Typography helpers */
-    .t-display { font-family:'Archivo Black',sans-serif; }
-    .t-body    { font-family:'Inter',sans-serif; }
+    ::-webkit-scrollbar { width: 0px; }
   `;
   document.head.appendChild(s);
 })();
 
 /* ─── DESIGN TOKENS ─────────────────────────────────────────────────────────── */
 const C = {
-  white:   "#FFFFFF",
-  bg:      "#FFFFFF",
-  surface: "#F5F5F5",
-  border:  "#E8E8E8",
-  red:     "#CC0000",
-  redHov:  "#AA0000",
-  black:   "#0A0A0A",
-  ink:     "#111111",
-  muted:   "#888888",
-  faint:   "#CCCCCC",
-  yellow:  "#E5A200",
-  gold:    "#F2C000",
-  green:   "#2E6B38",
-  greenDk: "#1E4A26",
-  stripe:  "#356040",
+  bg:       "#0A0A0A",
+  surface:  "#141414",
+  surface2: "#1E1E1E",
+  surface3: "#252525",
+  red:      "#E8323A",
+  redDim:   "#2A1012",
+  redMid:   "#3D1518",
+  white:    "#FFFFFF",
+  ink:      "#F0F0F0",
+  inkDim:   "#AAAAAA",
+  muted:    "#666666",
+  border:   "#242424",
+  border2:  "#2E2E2E",
+  yellow:   "#F5A623",
+  gold:     "#C9A227",
+  black:    "#000000",
+  faint:    "#1A1A1A",
 };
 
 /* typography shortcuts */
 const F = {
-  display: "'Archivo Black', sans-serif",
-  body:    "'Inter', sans-serif",
+  display: "'Space Grotesk', sans-serif",
+  body:    "'DM Sans', sans-serif",
 };
 
 /* ─── FORMATIONS ─────────────────────────────────────────────────────────────── */
@@ -91,7 +89,8 @@ const SLOT_ACCEPTS={
   GOL:["GOL"],LD:["LD","ZAG"],LE:["LE","ZAG"],ZAG:["ZAG","LD","LE"],
   VOL:["VOL","MC"],MC:["MC","VOL","MD","ME"],MD:["MD","MC","CA","ME"],ME:["ME","MC","CA","MD"],CA:["CA","ME","MD"],
 };
-function groupColor(g){if(g==="GOL")return C.yellow;if(g==="DEF")return C.red;if(g==="MID")return"#1A5FAA";return"#158040";}
+const POS_COLOR={GOL:"#F5A623",LD:"#4A90D9",ZAG:"#4A90D9",LE:"#4A90D9",VOL:"#7B68EE",MC:"#7B68EE",MD:"#7B68EE",ME:"#7B68EE",CA:"#E8323A"};
+function groupColor(g){if(g==="GOL")return"#F5A623";if(g==="DEF")return"#4A90D9";if(g==="MID")return"#7B68EE";return"#E8323A";}
 function posToGroup(p){if(p==="GOL")return"GOL";if(p==="ZAG"||p==="LD"||p==="LE")return"DEF";if(p==="VOL"||p==="MC"||p==="MD"||p==="ME")return"MID";return"ATK";}
 function assignToSlots(fm,players){
   const slots=FORMATIONS[fm]||FORMATIONS["4-3-3"];
@@ -820,36 +819,36 @@ function Pitch({formation,players,compact=false}){
   return(
     <div style={{width:"100%",position:"relative"}}>
       <div style={{width:"100%",paddingBottom:compact?"130%":"155%",
-        background:`repeating-linear-gradient(180deg,${C.green} 0,${C.green} 36px,${C.stripe} 36px,${C.stripe} 72px)`,
-        borderRadius:8,border:`1.5px solid ${C.greenDark}`,position:"relative",overflow:"hidden"}}>
+        background:"#0A1F0A",
+        borderRadius:12,border:`1px solid ${C.border}`,position:"relative",overflow:"hidden"}}>
         <svg style={{position:"absolute",inset:0,width:"100%",height:"100%"}} viewBox="0 0 100 155" preserveAspectRatio="none">
-          <rect x="3" y="3" width="94" height="149" fill="none" stroke="rgba(255,255,255,.28)" strokeWidth=".7"/>
-          <line x1="3" y1="77.5" x2="97" y2="77.5" stroke="rgba(255,255,255,.28)" strokeWidth=".7"/>
-          <circle cx="50" cy="77.5" r="13" fill="none" stroke="rgba(255,255,255,.22)" strokeWidth=".7"/>
-          <circle cx="50" cy="77.5" r="1.2" fill="rgba(255,255,255,.5)"/>
-          <rect x="22" y="3" width="56" height="22" fill="none" stroke="rgba(255,255,255,.22)" strokeWidth=".6"/>
-          <rect x="32" y="3" width="36" height="11" fill="none" stroke="rgba(255,255,255,.16)" strokeWidth=".5"/>
-          <rect x="22" y="130" width="56" height="22" fill="none" stroke="rgba(255,255,255,.22)" strokeWidth=".6"/>
-          <rect x="32" y="141" width="36" height="11" fill="none" stroke="rgba(255,255,255,.16)" strokeWidth=".5"/>
-          <path d="M32 25 A13 13 0 0 0 68 25" fill="none" stroke="rgba(255,255,255,.18)" strokeWidth=".5"/>
-          <path d="M32 130 A13 13 0 0 1 68 130" fill="none" stroke="rgba(255,255,255,.18)" strokeWidth=".5"/>
-          <rect x="39" y="0" width="22" height="4" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.25)" strokeWidth=".4"/>
-          <rect x="39" y="151" width="22" height="4" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.25)" strokeWidth=".4"/>
+          <rect x="3" y="3" width="94" height="149" fill="none" stroke="rgba(255,255,255,.12)" strokeWidth=".7"/>
+          <line x1="3" y1="77.5" x2="97" y2="77.5" stroke="rgba(255,255,255,.12)" strokeWidth=".7"/>
+          <circle cx="50" cy="77.5" r="13" fill="none" stroke="rgba(255,255,255,.10)" strokeWidth=".7"/>
+          <circle cx="50" cy="77.5" r="1.2" fill="rgba(255,255,255,.3)"/>
+          <rect x="22" y="3" width="56" height="22" fill="none" stroke="rgba(255,255,255,.10)" strokeWidth=".6"/>
+          <rect x="32" y="3" width="36" height="11" fill="none" stroke="rgba(255,255,255,.07)" strokeWidth=".5"/>
+          <rect x="22" y="130" width="56" height="22" fill="none" stroke="rgba(255,255,255,.10)" strokeWidth=".6"/>
+          <rect x="32" y="141" width="36" height="11" fill="none" stroke="rgba(255,255,255,.07)" strokeWidth=".5"/>
+          <path d="M32 25 A13 13 0 0 0 68 25" fill="none" stroke="rgba(255,255,255,.08)" strokeWidth=".5"/>
+          <path d="M32 130 A13 13 0 0 1 68 130" fill="none" stroke="rgba(255,255,255,.08)" strokeWidth=".5"/>
+          <rect x="39" y="0" width="22" height="4" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.12)" strokeWidth=".4"/>
+          <rect x="39" y="151" width="22" height="4" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.12)" strokeWidth=".4"/>
         </svg>
         {slots.map((slot,i)=>{
-          const p=assigned[i];const col=groupColor(slot.group);const sz=compact?28:34;
+          const p=assigned[i];const col=POS_COLOR[slot.slot]||groupColor(slot.group);const sz=compact?28:34;
           return(
             <div key={i} style={{position:"absolute",left:`${slot.x}%`,top:`${slot.y}%`,transform:"translate(-50%,-50%)",display:"flex",flexDirection:"column",alignItems:"center",zIndex:5}}>
               {p?(
                 <div className="popIn" style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
-                  <div style={{width:sz,height:sz,borderRadius:"50%",background:col,border:"2px solid rgba(255,255,255,.92)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:compact?7:8,fontWeight:900,color:"#fff",fontFamily:F.display,boxShadow:"0 2px 8px rgba(0,0,0,.45)"}}>{p.shirt}</div>
-                  <div style={{marginTop:2,background:"rgba(0,0,0,.78)",borderRadius:3,padding:"1px 4px",fontSize:compact?6:7.5,color:"#fff",fontWeight:700,whiteSpace:"nowrap",maxWidth:56,overflow:"hidden",textOverflow:"ellipsis",textAlign:"center"}}>
+                  <div style={{width:sz,height:sz,borderRadius:"50%",background:col,border:"2px solid rgba(255,255,255,.85)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:compact?7:8,fontWeight:700,color:"#fff",fontFamily:F.display,boxShadow:"0 2px 10px rgba(0,0,0,.6)"}}>{p.shirt}</div>
+                  <div style={{marginTop:2,background:"rgba(0,0,0,.85)",borderRadius:4,padding:"1px 4px",fontSize:compact?6:7.5,color:"#fff",fontWeight:600,whiteSpace:"nowrap",maxWidth:56,overflow:"hidden",textOverflow:"ellipsis",textAlign:"center",fontFamily:F.body}}>
                     {p.name.split(" ").slice(-1)[0]}{p._year?` '${String(p._year).slice(-2)}`:""}
                   </div>
                 </div>
               ):(
-                <div style={{width:compact?26:34,height:compact?26:34,borderRadius:"50%",border:"1.5px dashed rgba(255,255,255,.45)",display:"flex",alignItems:"center",justifyContent:"center",background:"rgba(0,0,0,.14)"}}>
-                  <span style={{fontSize:compact?6:7.5,color:"rgba(255,255,255,.6)",fontWeight:700}}>{slot.slot}</span>
+                <div style={{width:compact?26:34,height:compact?26:34,borderRadius:"50%",border:"1.5px dashed rgba(255,255,255,.3)",display:"flex",alignItems:"center",justifyContent:"center",background:"rgba(255,255,255,.05)"}}>
+                  <span style={{fontSize:compact?6:7.5,color:"rgba(255,255,255,.4)",fontWeight:700,fontFamily:F.body}}>{slot.slot}</span>
                 </div>
               )}
             </div>
@@ -862,7 +861,7 @@ function Pitch({formation,players,compact=false}){
 
 /* ─── CONFETTI ───────────────────────────────────────────────────────────────── */
 function Confetti(){
-  const ps=Array.from({length:32},(_,i)=>({id:i,left:Math.random()*100,delay:Math.random()*2,dur:1.8+Math.random()*1.5,color:[C.red,C.yellow,C.black,C.white,"#FF5555","#FFD700"][i%6],size:5+Math.random()*8}));
+  const ps=Array.from({length:32},(_,i)=>({id:i,left:Math.random()*100,delay:Math.random()*2,dur:1.8+Math.random()*1.5,color:[C.red,C.yellow,C.gold,C.white,"#FF5555","#FFD700"][i%6],size:5+Math.random()*8}));
   return(<div style={{position:"fixed",inset:0,pointerEvents:"none",overflow:"hidden",zIndex:999}}>{ps.map(p=><div key={p.id} style={{position:"absolute",left:`${p.left}%`,top:-20,width:p.size,height:p.size,background:p.color,borderRadius:Math.random()>.5?"50%":"2px",animation:`confettiFall ${p.dur}s ease-in ${p.delay}s both`}}/>)}</div>);
 }
 
@@ -907,30 +906,30 @@ function SlotMachine({squads,onDone}){
   },[]);
 
   return(
-    <div style={{display:"flex",flexDirection:"column",alignItems:"center",padding:"28px 20px",gap:14}}>
-      <div style={{fontSize:10,letterSpacing:3,color:C.muted,fontWeight:700}}>SORTEANDO ELENCO…</div>
-      <div style={{width:"100%",maxWidth:300,height:IH*5,overflow:"hidden",
-        border:`2px solid ${done?C.red:C.border}`,background:C.white,
-        position:"relative",boxShadow:done?`0 0 0 3px ${C.red}18`:"none",transition:"border-color .4s,box-shadow .4s"}}>
-        <div style={{position:"absolute",top:0,left:0,right:0,height:64,background:"linear-gradient(to bottom,rgba(255,255,255,.97),transparent)",zIndex:3,pointerEvents:"none"}}/>
-        <div style={{position:"absolute",bottom:0,left:0,right:0,height:64,background:"linear-gradient(to top,rgba(255,255,255,.97),transparent)",zIndex:3,pointerEvents:"none"}}/>
+    <div style={{display:"flex",flexDirection:"column",alignItems:"center",padding:"28px 20px",gap:16}}>
+      <div style={{fontSize:10,letterSpacing:3,color:C.muted,fontWeight:600,fontFamily:F.body}}>SORTEANDO ELENCO…</div>
+      <div style={{width:"100%",maxWidth:320,height:IH*5,overflow:"hidden",
+        border:`2px solid ${done?C.red:C.border}`,background:C.surface,borderRadius:12,
+        position:"relative",boxShadow:done?`0 0 0 3px ${C.red}22`:"none",transition:"border-color .4s,box-shadow .4s"}}>
+        <div style={{position:"absolute",top:0,left:0,right:0,height:72,background:`linear-gradient(to bottom,${C.surface},transparent)`,zIndex:3,pointerEvents:"none"}}/>
+        <div style={{position:"absolute",bottom:0,left:0,right:0,height:72,background:`linear-gradient(to top,${C.surface},transparent)`,zIndex:3,pointerEvents:"none"}}/>
         <div style={{position:"absolute",top:IH*CENTER,left:0,right:0,height:IH,
-          background:done?"rgba(204,0,0,0.06)":"rgba(0,0,0,0.025)",
+          background:done?C.redDim:"rgba(255,255,255,0.03)",
           borderTop:`1.5px solid ${done?C.red:C.border}`,borderBottom:`1.5px solid ${done?C.red:C.border}`,
           zIndex:2,pointerEvents:"none",transition:"all .4s"}}/>
         <div ref={listRef} style={{willChange:"transform"}}>
           {list.map((sq,i)=>(
-            <div key={i} style={{height:IH,display:"flex",flexDirection:"column",justifyContent:"center",padding:"0 18px",borderBottom:`1px solid ${C.border}`}}>
-              <div style={{fontFamily:F.display,fontSize:24,color:C.ink,letterSpacing:2,lineHeight:1}}>{sq.year}</div>
-              <div style={{fontSize:11,color:C.muted,marginTop:1,fontWeight:500}}>{sq.ed}</div>
+            <div key={i} style={{height:IH,display:"flex",flexDirection:"column",justifyContent:"center",padding:"0 20px",borderBottom:`1px solid ${C.border}`}}>
+              <div style={{fontFamily:F.display,fontSize:28,color:C.ink,fontWeight:700,lineHeight:1}}>{sq.year}</div>
+              <div style={{fontSize:11,color:C.muted,marginTop:3,fontWeight:500,fontFamily:F.body}}>{sq.ed}</div>
             </div>
           ))}
         </div>
       </div>
       {done&&(
         <div className="fadeUp" style={{textAlign:"center"}}>
-          {chosen.champion&&<div style={{fontSize:10,color:C.red,fontWeight:800,letterSpacing:2,marginBottom:3}}>🏆 ANO CAMPEÃO</div>}
-          <div style={{fontFamily:F.display,fontSize:16,fontWeight:900,color:C.ink}}>{chosen.ed}</div>
+          {chosen.champion&&<div style={{fontSize:10,color:C.red,fontWeight:700,letterSpacing:2,marginBottom:4,fontFamily:F.body}}>🏆 ANO CAMPEÃO</div>}
+          <div style={{fontFamily:F.display,fontSize:16,fontWeight:700,color:C.ink}}>{chosen.ed}</div>
         </div>
       )}
     </div>
@@ -941,9 +940,9 @@ function SlotMachine({squads,onDone}){
 function RerollAnim({onDone}){
   useEffect(()=>{const t=setTimeout(onDone,600);return()=>clearTimeout(t);},[]);
   return(
-    <div style={{position:"absolute",inset:0,background:"rgba(240,234,224,0.94)",zIndex:20,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:10,borderRadius:8}}>
+    <div style={{position:"absolute",inset:0,background:"rgba(10,10,10,0.94)",zIndex:20,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:10,borderRadius:8}}>
       <div className="rerollSpin" style={{fontSize:36}}>🎲</div>
-      <div style={{fontSize:10,letterSpacing:3,color:C.muted,fontWeight:700}}>SORTEANDO…</div>
+      <div style={{fontSize:10,letterSpacing:3,color:C.muted,fontWeight:600,fontFamily:F.body}}>SORTEANDO…</div>
     </div>
   );
 }
@@ -1223,7 +1222,7 @@ export default function App(){
   }
 
   return(
-    <div style={{minHeight:"100vh",background:C.bg,fontFamily:F.body,maxWidth:480,margin:"0 auto"}}>
+    <div style={{minHeight:"100vh",background:C.bg,fontFamily:F.body,maxWidth:480,margin:"0 auto",color:C.ink}}>
       {phase==="intro"&&<IntroScreen onStart={newGame} history={history} onSecretTap={handleSecretTap}/>}
       {phase==="formation-pick"&&<FormationPickScreen onConfirm={confirmFormation}/>}
       {phase==="draft"&&<DraftScreen showSlot={showSlot} squad={squad} drawIdx={drawIdx} team={team} formation={formation} rerolls={rerolls} showReroll={showReroll} onSlotDone={handleSlotDone} onPick={pickPlayer} onReroll={doReroll} afterReroll={afterReroll} usedYrs={usedYrs} gameMode={gameMode}/>}
@@ -1256,18 +1255,24 @@ export default function App(){
 }
 
 /* ─── HEADER ─────────────────────────────────────────────────────────────────── */
-function Header({left=null,right=null,dark=false}){
-  const bg=dark?C.black:C.white;
-  const border=dark?"none":`1px solid ${C.border}`;
+function Header({left=null,right=null}){
   return(
-    <div style={{background:bg,borderBottom:border,padding:"14px 20px",display:"flex",alignItems:"center",justifyContent:"space-between",flexShrink:0}}>
-      <div style={{minWidth:56}}>{left}</div>
-      <div style={{textAlign:"center"}}>
-        <span style={{fontFamily:F.display,fontSize:18,color:dark?C.white:C.ink,letterSpacing:1,lineHeight:1}}>
-          <span style={{color:C.red}}>7</span>RIKAS
-        </span>
+    <div style={{
+      display:"flex", alignItems:"center", justifyContent:"space-between",
+      padding:"16px 20px", background:C.bg,
+      borderBottom:`1px solid ${C.border}`, flexShrink:0,
+    }}>
+      <div style={{display:"flex",alignItems:"center",gap:12}}>
+        {left || (
+          <div style={{
+            width:36, height:36, borderRadius:"50%",
+            background:`linear-gradient(135deg, ${C.red}, #8B0000)`,
+            display:"flex", alignItems:"center", justifyContent:"center",
+            fontSize:14, fontWeight:700, color:C.white, fontFamily:F.display,
+          }}>7R</div>
+        )}
       </div>
-      <div style={{minWidth:56,textAlign:"right"}}>{right}</div>
+      <div style={{display:"flex",alignItems:"center",gap:8}}>{right}</div>
     </div>
   );
 }
@@ -1275,52 +1280,64 @@ function Header({left=null,right=null,dark=false}){
 /* ─── INTRO ──────────────────────────────────────────────────────────────────── */
 function IntroScreen({onStart,history,onSecretTap}){
   return(
-    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",background:C.white}}>
-      {/* Hero — full red block like the reference */}
-      <div style={{background:C.red,padding:"52px 28px 44px",position:"relative",overflow:"hidden"}}>
-        <div onClick={onSecretTap} style={{fontFamily:F.display,fontSize:72,color:C.white,lineHeight:.9,letterSpacing:-1,cursor:"default",userSelect:"none"}}>
+    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",background:C.bg}}>
+      {/* Hero */}
+      <div style={{background:"linear-gradient(160deg, #1A0608 0%, #0A0A0A 60%)",padding:"52px 28px 44px",position:"relative",overflow:"hidden"}}>
+        <div onClick={onSecretTap} style={{fontFamily:F.display,fontSize:52,fontWeight:700,color:C.white,lineHeight:.9,letterSpacing:-1,cursor:"default",userSelect:"none"}}>
           7RIKAS
         </div>
-        <div style={{marginTop:16,fontSize:13,color:"rgba(255,255,255,0.7)",fontFamily:F.body,lineHeight:1.5,maxWidth:280}}>
+        <div style={{marginTop:16,fontSize:13,color:C.inkDim,fontFamily:F.body,lineHeight:1.6,maxWidth:280}}>
           Uma jornada do SPFC rumo à glória eterna<br/>
-          <span style={{color:"rgba(255,255,255,0.45)"}}>ou ódio profundo.</span>
+          <span style={{color:C.muted}}>ou ódio profundo.</span>
         </div>
-        <div style={{marginTop:8,fontSize:11,color:"rgba(255,255,255,0.4)",fontFamily:F.body}}>
+        <div style={{marginTop:8,fontSize:11,color:C.muted,fontFamily:F.body}}>
           Uma adaptação by Órfãos de Edcarlos
         </div>
-        {/* big flag watermark */}
-        <div style={{position:"absolute",right:-10,bottom:-20,fontSize:120,opacity:.12,pointerEvents:"none",userSelect:"none"}}>🇾🇪</div>
+        <div style={{position:"absolute",right:-10,bottom:-20,fontSize:120,opacity:.06,pointerEvents:"none",userSelect:"none"}}>🇾🇪</div>
       </div>
 
       {/* Content */}
-      <div style={{flex:1,padding:"32px 24px",display:"flex",flexDirection:"column",gap:0}}>
-        {/* Three taglines — clean list style like reference */}
+      <div style={{flex:1,padding:"28px 20px",display:"flex",flexDirection:"column",gap:0}}>
+        {/* Feature bullets */}
         {[
           ["⚽","Sorteie os elencos do SPFC e monte seu time."],
           ["🏆","Dispute contra times clássicos da Liberta."],
           ["😬","Existe risco de Rafael Tolói."],
         ].map(([icon,text],i,arr)=>(
           <div key={text} style={{
-            display:"flex",gap:16,alignItems:"flex-start",
-            padding:"20px 0",
-            borderBottom:i<arr.length-1?`1px solid ${C.border}`:"none",
+            display:"flex",gap:0,alignItems:"stretch",
+            marginBottom:i<arr.length-1?8:16,
           }}>
-            <span style={{fontSize:20,lineHeight:1,marginTop:1,flexShrink:0}}>{icon}</span>
-            <span style={{fontSize:15,color:C.ink,lineHeight:1.5,fontFamily:F.body,fontWeight:500}}>{text}</span>
+            <div style={{
+              borderLeft:`3px solid ${C.red}`,
+              background:C.surface,
+              borderRadius:10,
+              padding:"14px 16px",
+              display:"flex",gap:12,alignItems:"flex-start",
+              flex:1,
+            }}>
+              <span style={{fontSize:18,lineHeight:1,marginTop:1,flexShrink:0}}>{icon}</span>
+              <span style={{fontSize:14,color:C.inkDim,lineHeight:1.5,fontFamily:F.body,fontWeight:500}}>{text}</span>
+            </div>
           </div>
         ))}
 
-        <div style={{marginTop:32,display:"flex",flexDirection:"column",gap:12}}>
+        {/* Mode buttons */}
+        <div style={{display:"flex",flexDirection:"column",gap:10,marginTop:8}}>
           {[
-            {id:"normal",label:"MODO NORMAL",sub:"Todos os elencos disponíveis",icon:"⚽"},
-            {id:"odio",label:"MODO ÓDIO",sub:"Só elencos odiáveis (2010–2025)",icon:"😤"},
-            {id:"onirico",label:"MODO ONÍRICO",sub:"Só elencos campeões e lendários",icon:"✨"},
+            {id:"normal",label:"MODO NORMAL",sub:"Todos os elencos disponíveis",icon:"⚽",
+              style:{background:C.surface2,border:`1px solid ${C.border}`}},
+            {id:"odio",label:"MODO ÓDIO",sub:"Só elencos odiáveis (2010–2025)",icon:"😤",
+              style:{background:C.red,border:"none"}},
+            {id:"onirico",label:"MODO ONÍRICO",sub:"Só elencos campeões e lendários",icon:"✨",
+              style:{background:"linear-gradient(135deg, #1A1A2E, #2D1B4E)",border:`1px solid ${C.border}`}},
           ].map(m=>(
             <button key={m.id} onClick={()=>onStart(m.id)} style={{
-              background:m.id==="onirico"?"#1a1a1a":m.id==="odio"?C.red:C.black,
-              color:C.white,border:"none",
+              ...m.style,
+              color:m.id==="onirico"?C.gold:C.white,
+              borderRadius:12,
               padding:"16px 20px",width:"100%",cursor:"pointer",
-              fontFamily:F.display,fontSize:14,letterSpacing:2,
+              fontFamily:F.display,fontSize:14,fontWeight:600,letterSpacing:1.5,
               display:"flex",alignItems:"center",justifyContent:"space-between",
               transition:"opacity .15s",
             }}
@@ -1328,22 +1345,27 @@ function IntroScreen({onStart,history,onSecretTap}){
               onMouseLeave={e=>e.currentTarget.style.opacity="1"}
             >
               <span>{m.icon} {m.label}</span>
-              <span style={{fontSize:11,opacity:.6,fontFamily:F.body,fontWeight:500,textTransform:"none",letterSpacing:0}}>{m.sub}</span>
+              <span style={{fontSize:11,opacity:.7,fontFamily:F.body,fontWeight:500,textTransform:"none",letterSpacing:0}}>{m.sub}</span>
             </button>
           ))}
         </div>
 
         {history.length>0&&(
-          <div style={{marginTop:36}}>
-            <div style={{fontSize:10,letterSpacing:3,color:C.muted,fontWeight:600,marginBottom:12,fontFamily:F.body}}>HISTÓRICO</div>
-            {history.slice(0,4).map((h,i)=>(
-              <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 0",borderBottom:`1px solid ${C.border}`}}>
-                <span style={{fontSize:13,fontWeight:600,color:h.champ?C.red:C.ink,fontFamily:F.body}}>
-                  {h.champ?"🏆 Campeão":h.phase?`❌ ${h.phase}`:"❌ Eliminado"}
-                </span>
-                <span style={{fontSize:11,color:C.muted,fontFamily:F.body}}>{h.date} · {h.formation}</span>
-              </div>
-            ))}
+          <div style={{marginTop:28}}>
+            <div style={{fontSize:10,letterSpacing:1.5,color:C.muted,fontWeight:600,marginBottom:12,fontFamily:F.body,textTransform:"uppercase"}}>Histórico</div>
+            <div style={{background:C.surface,borderRadius:12,border:`1px solid ${C.border}`,overflow:"hidden"}}>
+              {history.slice(0,4).map((h,i,arr)=>(
+                <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"12px 16px",borderBottom:i<arr.length-1&&i<3?`1px solid ${C.border}`:"none"}}>
+                  <div style={{display:"flex",alignItems:"center",gap:8}}>
+                    <div style={{width:8,height:8,borderRadius:"50%",background:h.champ?C.red:C.muted,flexShrink:0}}/>
+                    <span style={{fontSize:13,fontWeight:600,color:h.champ?C.red:C.inkDim,fontFamily:F.body}}>
+                      {h.champ?"🏆 Campeão":h.phase?`${h.phase}`:"Eliminado"}
+                    </span>
+                  </div>
+                  <span style={{fontSize:11,color:C.muted,fontFamily:F.body}}>{h.date} · {h.formation}</span>
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>
@@ -1362,10 +1384,10 @@ function FormationPickScreen({onConfirm}){
   };
   const slots=FORMATIONS[selected]||FORMATIONS["4-3-3"];
   return(
-    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",background:C.white}}>
+    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",background:C.bg}}>
       <Header/>
-      <div style={{padding:"28px 24px 0",flexShrink:0}}>
-        <div style={{fontFamily:F.display,fontSize:28,color:C.ink,lineHeight:1,letterSpacing:-0.5}}>
+      <div style={{padding:"24px 20px 0",flexShrink:0}}>
+        <div style={{fontFamily:F.display,fontSize:26,fontWeight:700,color:C.ink,lineHeight:1.1,letterSpacing:-0.5}}>
           Escolha sua<br/><span style={{color:C.red}}>formação</span>
         </div>
         <div style={{fontSize:13,color:C.muted,marginTop:8,fontFamily:F.body}}>
@@ -1373,47 +1395,51 @@ function FormationPickScreen({onConfirm}){
         </div>
       </div>
 
-      <div style={{flex:1,overflowY:"auto",padding:"24px 24px 120px"}}>
-        {/* Formation list — clean rows */}
-        <div style={{display:"flex",flexDirection:"column",gap:0,marginBottom:28}}>
-          {Object.keys(FORMATIONS).map((f,i,arr)=>(
+      <div style={{flex:1,overflowY:"auto",padding:"20px 20px 120px"}}>
+        {/* Formation list */}
+        <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:24}}>
+          {Object.keys(FORMATIONS).map((f)=>(
             <div key={f} onClick={()=>setSelected(f)} style={{
               display:"flex",alignItems:"center",justifyContent:"space-between",
-              padding:"18px 0",
-              borderBottom:`1px solid ${C.border}`,
+              padding:"16px 18px",
+              borderRadius:12,
+              border:`${selected===f?"2px":"1px"} solid ${selected===f?C.red:C.border}`,
+              background:selected===f?C.redDim:C.surface,
               cursor:"pointer",
+              transition:"all .15s",
             }}>
               <div>
-                <div style={{fontFamily:F.display,fontSize:22,color:selected===f?C.red:C.ink,letterSpacing:-.5,lineHeight:1}}>{f}</div>
+                <div style={{fontFamily:F.display,fontSize:22,fontWeight:700,color:selected===f?C.red:C.ink,lineHeight:1}}>{f}</div>
                 <div style={{fontSize:12,color:C.muted,marginTop:4,fontFamily:F.body}}>{descriptions[f]}</div>
               </div>
               <div style={{
-                width:24,height:24,borderRadius:"50%",
-                border:`2px solid ${selected===f?C.red:C.faint}`,
+                width:22,height:22,borderRadius:"50%",
+                border:`2px solid ${selected===f?C.red:C.border}`,
                 background:selected===f?C.red:"transparent",
                 display:"flex",alignItems:"center",justifyContent:"center",
                 flexShrink:0,
               }}>
-                {selected===f&&<div style={{width:8,height:8,borderRadius:"50%",background:C.white}}/>}
+                {selected===f&&<div style={{width:7,height:7,borderRadius:"50%",background:C.white}}/>}
               </div>
             </div>
           ))}
         </div>
 
         {/* Pitch preview */}
-        <div style={{fontSize:10,letterSpacing:3,color:C.muted,fontWeight:600,marginBottom:12,fontFamily:F.body}}>PRÉVIA</div>
+        <div style={{fontSize:10,letterSpacing:1.5,color:C.muted,fontWeight:600,marginBottom:12,fontFamily:F.body,textTransform:"uppercase"}}>Prévia</div>
         <div style={{position:"relative",width:"100%"}}>
           <div style={{
             width:"100%",paddingBottom:"125%",
-            background:`repeating-linear-gradient(180deg,${C.green} 0,${C.green} 36px,${C.stripe} 36px,${C.stripe} 72px)`,
+            background:"#0A1F0A",
+            borderRadius:12,border:`1px solid ${C.border}`,
             position:"relative",overflow:"hidden",
           }}>
             <svg style={{position:"absolute",inset:0,width:"100%",height:"100%"}} viewBox="0 0 100 125" preserveAspectRatio="none">
-              <rect x="2" y="2" width="96" height="121" fill="none" stroke="rgba(255,255,255,.22)" strokeWidth=".7"/>
-              <line x1="2" y1="62.5" x2="98" y2="62.5" stroke="rgba(255,255,255,.22)" strokeWidth=".7"/>
-              <circle cx="50" cy="62.5" r="12" fill="none" stroke="rgba(255,255,255,.18)" strokeWidth=".6"/>
-              <rect x="22" y="2" width="56" height="19" fill="none" stroke="rgba(255,255,255,.18)" strokeWidth=".5"/>
-              <rect x="22" y="104" width="56" height="19" fill="none" stroke="rgba(255,255,255,.18)" strokeWidth=".5"/>
+              <rect x="2" y="2" width="96" height="121" fill="none" stroke="rgba(255,255,255,.10)" strokeWidth=".7"/>
+              <line x1="2" y1="62.5" x2="98" y2="62.5" stroke="rgba(255,255,255,.10)" strokeWidth=".7"/>
+              <circle cx="50" cy="62.5" r="12" fill="none" stroke="rgba(255,255,255,.08)" strokeWidth=".6"/>
+              <rect x="22" y="2" width="56" height="19" fill="none" stroke="rgba(255,255,255,.08)" strokeWidth=".5"/>
+              <rect x="22" y="104" width="56" height="19" fill="none" stroke="rgba(255,255,255,.08)" strokeWidth=".5"/>
             </svg>
             {slots.map((slot,i)=>{
               const y=slot.y*(125/155);
@@ -1421,11 +1447,11 @@ function FormationPickScreen({onConfirm}){
                 <div key={i} style={{position:"absolute",left:`${slot.x}%`,top:`${y}%`,transform:"translate(-50%,-50%)",zIndex:5}}>
                   <div style={{
                     width:30,height:30,borderRadius:"50%",
-                    background:selected===slot.slot?C.red:groupColor(slot.group),
-                    border:"2px solid rgba(255,255,255,.9)",
+                    background:POS_COLOR[slot.slot]||groupColor(slot.group),
+                    border:"2px solid rgba(255,255,255,.75)",
                     display:"flex",alignItems:"center",justifyContent:"center",
-                    fontSize:7,fontWeight:700,color:"#fff",fontFamily:F.body,
-                    boxShadow:"0 1px 6px rgba(0,0,0,.35)",
+                    fontSize:7,fontWeight:600,color:"#fff",fontFamily:F.body,
+                    boxShadow:"0 1px 6px rgba(0,0,0,.5)",
                   }}>{slot.slot}</div>
                 </div>
               );
@@ -1434,15 +1460,16 @@ function FormationPickScreen({onConfirm}){
         </div>
       </div>
 
-      <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,padding:"16px 24px",background:C.white,borderTop:`1px solid ${C.border}`,zIndex:50}}>
+      <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,padding:"16px 20px",background:C.bg,borderTop:`1px solid ${C.border}`,zIndex:50}}>
         <button onClick={()=>onConfirm(selected)} style={{
-          background:C.black,color:C.white,border:"none",
+          background:C.red,color:C.white,border:"none",
           padding:"18px 0",width:"100%",cursor:"pointer",
-          fontFamily:F.display,fontSize:15,letterSpacing:2,
-          transition:"background .15s",
+          fontFamily:F.display,fontSize:15,fontWeight:700,letterSpacing:1.5,
+          borderRadius:12,
+          transition:"opacity .15s",
         }}
-          onMouseEnter={e=>e.currentTarget.style.background=C.red}
-          onMouseLeave={e=>e.currentTarget.style.background=C.black}
+          onMouseEnter={e=>e.currentTarget.style.opacity="0.85"}
+          onMouseLeave={e=>e.currentTarget.style.opacity="1"}
         >
           JOGAR COM {selected}
         </button>
@@ -1458,12 +1485,13 @@ function DraftScreen({showSlot,squad,drawIdx,team,formation,rerolls,showReroll,o
   const open=openGroups(formation,team);
 
   const progressDots=(
-    <div style={{display:"flex",gap:4,alignItems:"center"}}>
+    <div style={{display:"flex",gap:3,alignItems:"center"}}>
       {Array.from({length:11}).map((_,i)=>(
         <div key={i} style={{
-          width:i<drawIdx?20:i===drawIdx?8:6,
-          height:6,
-          background:i<drawIdx?C.red:i===drawIdx?C.ink:C.faint,
+          width:i<drawIdx?16:i===drawIdx?8:5,
+          height:5,
+          borderRadius:3,
+          background:i<drawIdx?C.red:i===drawIdx?C.inkDim:C.border,
           transition:"all .3s",
         }}/>
       ))}
@@ -1471,10 +1499,10 @@ function DraftScreen({showSlot,squad,drawIdx,team,formation,rerolls,showReroll,o
   );
 
   return(
-    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",background:C.white}}>
+    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",background:C.bg}}>
       <Header
         left={progressDots}
-        right={<span style={{fontFamily:F.display,fontSize:13,color:C.red,letterSpacing:1}}>{drawIdx+1}/11</span>}
+        right={<span style={{fontFamily:F.display,fontSize:13,fontWeight:700,color:C.red}}>{drawIdx+1}/11</span>}
       />
       {showSlot?(
         <SlotMachine squads={avail.length>3?avail:modeSquads} onDone={onSlotDone}/>
@@ -1482,30 +1510,31 @@ function DraftScreen({showSlot,squad,drawIdx,team,formation,rerolls,showReroll,o
         <>
           {/* Squad banner */}
           <div style={{
-            background:squad.champion?C.red:C.black,
-            padding:"20px 24px",flexShrink:0,position:"relative",overflow:"hidden",
+            background:squad.champion?C.redDim:C.surface,
+            borderBottom:`1px solid ${squad.champion?C.redMid:C.border}`,
+            padding:"18px 20px",flexShrink:0,position:"relative",overflow:"hidden",
           }}>
-            {squad.champion&&<div style={{position:"absolute",right:20,top:"50%",transform:"translateY(-50%)",fontSize:48,opacity:.15,pointerEvents:"none"}}>🏆</div>}
-            <div style={{fontSize:11,letterSpacing:3,color:"rgba(255,255,255,.5)",fontFamily:F.body,fontWeight:600,marginBottom:4}}>
-              {squad.champion?"ANO CAMPEÃO ·":""} ELENCO {squad.year}
+            {squad.champion&&<div style={{position:"absolute",right:20,top:"50%",transform:"translateY(-50%)",fontSize:48,opacity:.10,pointerEvents:"none"}}>🏆</div>}
+            <div style={{fontSize:10,letterSpacing:1.5,color:squad.champion?C.red:C.muted,fontFamily:F.body,fontWeight:600,marginBottom:4,textTransform:"uppercase"}}>
+              {squad.champion?"Ano Campeão · ":""}Elenco {squad.year}
             </div>
-            <div style={{fontFamily:F.display,fontSize:24,color:C.white,lineHeight:1,letterSpacing:-.5}}>{squad.ed}</div>
-            <div style={{marginTop:12,display:"flex",alignItems:"center",gap:10}}>
+            <div style={{fontFamily:F.display,fontSize:22,fontWeight:700,color:C.ink,lineHeight:1}}>{squad.ed}</div>
+            <div style={{marginTop:12,display:"flex",alignItems:"center",gap:8}}>
               {[0,1,2].map(i=>(
-                <div key={i} style={{width:8,height:8,background:i<rerolls?"rgba(255,255,255,.8)":"rgba(255,255,255,.2)"}}/>
+                <div key={i} style={{width:8,height:8,borderRadius:"50%",background:i<rerolls?C.red:C.border}}/>
               ))}
               <button onClick={onReroll} disabled={rerolls<=0} style={{
-                marginLeft:4,padding:"4px 12px",fontSize:11,fontWeight:600,cursor:rerolls>0?"pointer":"not-allowed",
-                background:"rgba(255,255,255,.12)",border:"1px solid rgba(255,255,255,.2)",
-                color:rerolls>0?"rgba(255,255,255,.8)":"rgba(255,255,255,.25)",fontFamily:F.body,
+                marginLeft:4,padding:"5px 12px",fontSize:11,fontWeight:600,cursor:rerolls>0?"pointer":"not-allowed",
+                background:C.surface3,border:`1px solid ${C.border}`,borderRadius:8,
+                color:rerolls>0?C.inkDim:C.muted,fontFamily:F.body,
               }}>⟳ outro elenco</button>
             </div>
           </div>
 
           {/* Instruction strip */}
-          <div style={{borderBottom:`1px solid ${C.border}`,padding:"10px 24px"}}>
-            <span style={{fontSize:11,letterSpacing:2,color:C.muted,fontWeight:600,fontFamily:F.body}}>
-              ESCOLHA 1 JOGADOR — {drawIdx+1}/11
+          <div style={{borderBottom:`1px solid ${C.border}`,padding:"10px 20px"}}>
+            <span style={{fontSize:10,letterSpacing:1.5,color:C.muted,fontWeight:600,fontFamily:F.body,textTransform:"uppercase"}}>
+              Escolha 1 jogador — {drawIdx+1}/11
             </span>
           </div>
 
@@ -1514,7 +1543,7 @@ function DraftScreen({showSlot,squad,drawIdx,team,formation,rerolls,showReroll,o
             {showReroll&&<RerollAnim onDone={afterReroll}/>}
 
             {/* Player list */}
-            <div style={{padding:"16px 24px 0",flexShrink:0}}>
+            <div style={{padding:"12px 20px 0",flexShrink:0}}>
               {squad.players.map((p,i)=>{
                 const isOpen=open.has(posToGroup(p.pos));
                 return <PlayerRow key={i} player={p} year={squad.year} onPick={()=>onPick(p)} disabled={!isOpen}/>;
@@ -1522,14 +1551,14 @@ function DraftScreen({showSlot,squad,drawIdx,team,formation,rerolls,showReroll,o
             </div>
 
             {/* Divider label */}
-            <div style={{padding:"20px 24px 8px",display:"flex",alignItems:"center",gap:12,flexShrink:0}}>
+            <div style={{padding:"16px 20px 8px",display:"flex",alignItems:"center",gap:12,flexShrink:0}}>
               <div style={{flex:1,height:1,background:C.border}}/>
-              <span style={{fontSize:10,letterSpacing:2,color:C.muted,fontWeight:600,fontFamily:F.body,whiteSpace:"nowrap"}}>TIME EM CONSTRUÇÃO</span>
+              <span style={{fontSize:9,letterSpacing:1.5,color:C.muted,fontWeight:600,fontFamily:F.body,whiteSpace:"nowrap",textTransform:"uppercase"}}>Time em construção</span>
               <div style={{flex:1,height:1,background:C.border}}/>
             </div>
 
             {/* Pitch */}
-            <div style={{padding:"0 24px 24px",flexShrink:0}}>
+            <div style={{padding:"0 20px 24px",flexShrink:0}}>
               <Pitch formation={formation} players={team}/>
             </div>
           </div>
@@ -1541,41 +1570,44 @@ function DraftScreen({showSlot,squad,drawIdx,team,formation,rerolls,showReroll,o
 
 function PlayerRow({player,year,onPick,disabled}){
   const [hov,setHov]=useState(false);
-  const col=groupColor(posToGroup(player.pos));
+  const col=POS_COLOR[player.pos]||groupColor(posToGroup(player.pos));
   const isSpecial=player.special||false;
-  const nameColor=disabled?C.muted:isSpecial?"#C9A227":C.ink;
+  const ratingColor=disabled?C.muted:isSpecial?C.gold:player.rating>=85?C.red:player.rating>=80?C.yellow:C.inkDim;
+  const nameColor=disabled?C.muted:isSpecial?C.gold:C.ink;
   return(
     <div
       onMouseEnter={()=>!disabled&&setHov(true)}
       onMouseLeave={()=>setHov(false)}
       onClick={()=>!disabled&&onPick()}
       style={{
-        display:"flex",alignItems:"center",gap:14,
-        padding:"14px 0",
-        borderBottom:`1px solid ${C.border}`,
+        display:"flex",alignItems:"center",gap:12,
+        padding:"12px 14px",
+        marginBottom:4,
+        borderRadius:10,
+        border:`1px solid ${hov&&!disabled?C.red:C.border}`,
+        background:hov&&!disabled?C.redDim:C.surface2,
         cursor:disabled?"not-allowed":"pointer",
-        opacity:disabled?0.3:1,
-        background:hov&&!disabled?"rgba(204,0,0,.03)":"transparent",
-        transition:"background .1s, opacity .1s",
+        opacity:disabled?0.35:1,
+        transition:"all .12s",
       }}
     >
       {/* Pos badge */}
       <div style={{
-        width:36,height:36,background:disabled?C.faint:col,
+        width:34,height:34,borderRadius:8,background:disabled?C.border:col,
         display:"flex",alignItems:"center",justifyContent:"center",
         flexShrink:0,
       }}>
         <span style={{fontSize:9,fontWeight:700,color:"#fff",fontFamily:F.body,letterSpacing:.3}}>{player.pos}</span>
       </div>
       <div style={{flex:1,minWidth:0}}>
-        <div style={{fontSize:15,fontWeight:600,color:nameColor,fontFamily:F.body,lineHeight:1.2}}>
+        <div style={{fontSize:14,fontWeight:600,color:nameColor,fontFamily:F.body,lineHeight:1.2}}>
           {isSpecial&&"★ "}{player.name}
         </div>
         <div style={{fontSize:11,color:C.muted,marginTop:2,fontFamily:F.body}}>
           {year}{disabled?" · posição preenchida":""}
         </div>
       </div>
-      <div style={{fontFamily:F.display,fontSize:26,color:disabled?C.faint:isSpecial?"#C9A227":player.rating>=88?C.red:C.ink,flexShrink:0}}>
+      <div style={{fontFamily:F.display,fontSize:24,fontWeight:700,color:ratingColor,flexShrink:0}}>
         {player.rating}
       </div>
     </div>
@@ -1587,18 +1619,18 @@ function LineupScreen({team,formation,setFormation,onSim,nilmarUnlocked}){
   const [tab,setTab]=useState("pitch");
   const rating=avgR(team).toFixed(1);
   return(
-    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",background:C.white}}>
+    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",background:C.bg}}>
       <Header
-        right={<span style={{fontFamily:F.display,fontSize:15,color:C.red}}>{rating}</span>}
+        right={<span style={{fontFamily:F.display,fontSize:15,fontWeight:700,color:C.red}}>{rating}</span>}
       />
       {/* Formation picker */}
-      <div style={{padding:"0 24px",borderBottom:`1px solid ${C.border}`,display:"flex",gap:0,flexShrink:0}}>
+      <div style={{padding:"0 20px",borderBottom:`1px solid ${C.border}`,display:"flex",gap:0,flexShrink:0}}>
         {Object.keys(FORMATIONS).map(f=>(
           <button key={f} onClick={()=>setFormation(f)} style={{
-            padding:"12px 14px",fontSize:12,fontWeight:600,
+            padding:"12px 12px",fontSize:12,fontWeight:600,
             background:"transparent",border:"none",cursor:"pointer",fontFamily:F.body,
             color:formation===f?C.ink:C.muted,
-            borderBottom:formation===f?`2px solid ${C.ink}`:"2px solid transparent",
+            borderBottom:formation===f?`2px solid ${C.red}`:"2px solid transparent",
             transition:"color .15s",
           }}>{f}</button>
         ))}
@@ -1608,29 +1640,31 @@ function LineupScreen({team,formation,setFormation,onSim,nilmarUnlocked}){
         {[["pitch","Campo"],["list","Elenco"]].map(([t,l])=>(
           <button key={t} onClick={()=>setTab(t)} style={{
             flex:1,padding:"12px",fontSize:12,fontWeight:600,fontFamily:F.body,
-            background:"transparent",border:"none",cursor:"pointer",
+            background:tab===t?C.redDim:"transparent",border:"none",cursor:"pointer",
             color:tab===t?C.red:C.muted,
             borderBottom:tab===t?`2px solid ${C.red}`:"2px solid transparent",
+            transition:"all .15s",
           }}>{l}</button>
         ))}
       </div>
-      <div style={{flex:1,overflowY:"auto",padding:"20px 24px 120px"}}>
+      <div style={{flex:1,overflowY:"auto",padding:"16px 20px 120px"}}>
         {tab==="pitch"?<Pitch formation={formation} players={team}/>:(
-          <div>
+          <div style={{display:"flex",flexDirection:"column",gap:6}}>
             {team.map((p,i)=>{
               const isSpecial=p.special||false;
+              const ratingColor=isSpecial?C.gold:p.rating>=85?C.red:p.rating>=80?C.yellow:C.inkDim;
               return(
-                <div key={i} style={{display:"flex",alignItems:"center",gap:14,padding:"14px 0",borderBottom:`1px solid ${C.border}`}}>
-                  <div style={{width:36,height:36,background:groupColor(posToGroup(p.pos)),display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
+                <div key={i} style={{display:"flex",alignItems:"center",gap:12,padding:"12px 14px",borderRadius:10,border:`1px solid ${C.border}`,background:C.surface2}}>
+                  <div style={{width:34,height:34,borderRadius:8,background:POS_COLOR[p.pos]||groupColor(posToGroup(p.pos)),display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
                     <span style={{fontSize:9,fontWeight:700,color:"#fff",fontFamily:F.body}}>{p.pos}</span>
                   </div>
                   <div style={{flex:1}}>
-                    <div style={{fontSize:15,fontWeight:600,color:isSpecial?"#C9A227":C.ink,fontFamily:F.body}}>
+                    <div style={{fontSize:14,fontWeight:600,color:isSpecial?C.gold:C.ink,fontFamily:F.body}}>
                       {isSpecial&&"★ "}{p.name}
                     </div>
                     <div style={{fontSize:11,color:C.muted,marginTop:2,fontFamily:F.body}}>{p._year}{p._champion?" · 🏆":""}</div>
                   </div>
-                  <div style={{fontFamily:F.display,fontSize:24,color:isSpecial?"#C9A227":p.rating>=88?C.red:C.ink}}>{p.rating}</div>
+                  <div style={{fontFamily:F.display,fontSize:22,fontWeight:700,color:ratingColor}}>{p.rating}</div>
                 </div>
               );
             })}
@@ -1638,24 +1672,25 @@ function LineupScreen({team,formation,setFormation,onSim,nilmarUnlocked}){
         )}
       </div>
       {nilmarUnlocked&&(
-        <div style={{margin:"0 24px 16px",padding:"12px 16px",background:"#1A1A1A",border:"2px solid #C9A227",display:"flex",alignItems:"center",gap:12}}>
+        <div style={{margin:"0 20px 12px",padding:"12px 16px",background:C.surface,border:`2px solid ${C.gold}`,borderRadius:12,display:"flex",alignItems:"center",gap:12}}>
           <span style={{fontSize:24}}>🔓</span>
           <div>
-            <div style={{fontSize:10,letterSpacing:2,color:"#C9A227",fontFamily:F.body,fontWeight:700}}>BÔNUS SECRETO</div>
-            <div style={{fontFamily:F.display,fontSize:16,color:"#C9A227"}}>NILMAR</div>
-            <div style={{fontSize:11,color:"rgba(255,255,255,0.5)",fontFamily:F.body}}>CA · 88 · Modo Só Falta Assinar</div>
+            <div style={{fontSize:10,letterSpacing:1.5,color:C.gold,fontFamily:F.body,fontWeight:700,textTransform:"uppercase"}}>Bônus Secreto</div>
+            <div style={{fontFamily:F.display,fontSize:16,fontWeight:700,color:C.gold}}>NILMAR</div>
+            <div style={{fontSize:11,color:C.muted,fontFamily:F.body}}>CA · 88 · Modo Só Falta Assinar</div>
           </div>
         </div>
       )}
-      <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,padding:"16px 24px",background:C.white,borderTop:`1px solid ${C.border}`,zIndex:50}}>
+      <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,padding:"16px 20px",background:C.bg,borderTop:`1px solid ${C.border}`,zIndex:50}}>
         <button onClick={onSim} style={{
-          background:C.black,color:C.white,border:"none",
+          background:C.red,color:C.white,border:"none",
           padding:"18px 0",width:"100%",cursor:"pointer",
-          fontFamily:F.display,fontSize:15,letterSpacing:2,
-          transition:"background .15s",
+          fontFamily:F.display,fontSize:15,fontWeight:700,letterSpacing:1.5,
+          borderRadius:12,
+          transition:"opacity .15s",
         }}
-          onMouseEnter={e=>e.currentTarget.style.background=C.red}
-          onMouseLeave={e=>e.currentTarget.style.background=C.black}
+          onMouseEnter={e=>e.currentTarget.style.opacity="0.85"}
+          onMouseLeave={e=>e.currentTarget.style.opacity="1"}
         >
           DISPUTAR LIBERTADORES
         </button>
@@ -1678,8 +1713,7 @@ function SimScreen({allMatches,matchIdx,livePhase,minute,spG,oppG,events,flash,t
     if(m.win)return matchIdx>=6?"VER RESULTADO":"PRÓXIMO JOGO";
     return"VER RESULTADO";
   };
-  const scoreBg=isDone?(m.win?C.red:C.black):C.black;
-  const doneBg=m.draw?C.yellow:m.win?C.red:C.black;
+  const doneBg=m.draw?C.yellow:m.win?C.red:C.surface2;
   const doneFg=m.draw?C.black:C.white;
 
   /* progress dots — groups and KO */
@@ -1696,55 +1730,55 @@ function SimScreen({allMatches,matchIdx,livePhase,minute,spG,oppG,events,flash,t
   );
 
   return(
-    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",background:C.white}}>
+    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",background:C.bg}}>
       <Header right={dots}/>
 
       {/* Previous results strip */}
       {matchIdx>0&&(
-        <div style={{borderBottom:`1px solid ${C.border}`,padding:"8px 24px",display:"flex",gap:12,overflowX:"auto",flexShrink:0}}>
+        <div style={{borderBottom:`1px solid ${C.border}`,padding:"8px 20px",display:"flex",gap:12,overflowX:"auto",flexShrink:0}}>
           {allMatches.slice(0,matchIdx).map((prev,i)=>(
             <div key={i} style={{display:"flex",gap:6,alignItems:"center",flexShrink:0}}>
               <span style={{fontSize:10,color:C.muted,fontWeight:600,fontFamily:F.body}}>{prev.phase==="group"?`G${i+1}`:prev.round?.slice(0,3).toUpperCase()}</span>
-              <span style={{fontFamily:F.display,fontSize:14,color:prev.win?C.red:C.ink}}>{prev.myG}–{prev.oppG}</span>
+              <span style={{fontFamily:F.display,fontSize:13,fontWeight:700,color:prev.win?C.red:C.inkDim}}>{prev.myG}–{prev.oppG}</span>
               <span style={{fontSize:12}}>{prev.opp.flag}</span>
             </div>
           ))}
         </div>
       )}
 
-      {/* Scoreboard — always black bg */}
-      <div style={{background:scoreBg,padding:"24px",transition:"background .5s",flexShrink:0}}>
+      {/* Scoreboard */}
+      <div style={{background:"linear-gradient(180deg, #1A0608 0%, #141414 100%)",borderBottom:`1px solid ${C.border}`,padding:"24px 20px",transition:"background .5s",flexShrink:0}}>
         <div style={{textAlign:"center",marginBottom:12}}>
-          <span style={{fontSize:10,letterSpacing:3,color:"rgba(255,255,255,.35)",fontFamily:F.body,fontWeight:600}}>
-            {m.label?.toUpperCase()}
+          <span style={{fontSize:10,letterSpacing:2,color:"rgba(255,255,255,.3)",fontFamily:F.body,fontWeight:600,textTransform:"uppercase"}}>
+            {m.label}
           </span>
         </div>
         <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
           <div style={{flex:1,textAlign:"center"}}>
             <div style={{fontSize:28,marginBottom:6}}>🇾🇪</div>
-            <div style={{fontSize:10,color:"rgba(255,255,255,.5)",fontWeight:600,fontFamily:F.body,letterSpacing:1}}>SÃO PAULO</div>
+            <div style={{fontSize:10,color:"rgba(255,255,255,.4)",fontWeight:600,fontFamily:F.body,letterSpacing:1}}>SÃO PAULO</div>
           </div>
           <div style={{textAlign:"center",minWidth:120}}>
             {isIdle
-              ? <div style={{fontFamily:F.display,fontSize:44,color:"rgba(255,255,255,.2)",letterSpacing:4}}>–  –</div>
-              : <div style={{fontFamily:F.display,fontSize:56,color:C.white,letterSpacing:6,lineHeight:1}}>{spG}  {oppG}</div>
+              ? <div style={{fontFamily:F.display,fontSize:44,fontWeight:700,color:"rgba(255,255,255,.15)",letterSpacing:4}}>– –</div>
+              : <div style={{fontFamily:F.display,fontSize:56,fontWeight:700,color:C.white,letterSpacing:6,lineHeight:1}}>{spG}  {oppG}</div>
             }
             {isLive&&(
               <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:6,marginTop:6}}>
-                <div style={{width:6,height:6,background:C.red,animation:"pulse 1s infinite"}}/>
-                <span style={{fontFamily:F.body,fontSize:12,color:"rgba(255,255,255,.5)",fontWeight:600,letterSpacing:2}}>{min2}'</span>
+                <div style={{width:6,height:6,borderRadius:"50%",background:C.red,animation:"pulse 1s infinite"}}/>
+                <span style={{fontFamily:F.body,fontSize:12,color:"rgba(255,255,255,.4)",fontWeight:600,letterSpacing:1.5}}>{min2}'</span>
               </div>
             )}
             {isDone&&(
-              <div style={{fontSize:10,color:"rgba(255,255,255,.4)",fontWeight:600,fontFamily:F.body,letterSpacing:2,marginTop:6}}>
-                {m.win?"VITÓRIA":m.draw&&isKO?"EMPATE":m.draw?"EMPATE":"DERROTA"}
+              <div style={{fontSize:10,color:m.win?C.red:C.muted,fontWeight:700,fontFamily:F.body,letterSpacing:1.5,marginTop:6,textTransform:"uppercase"}}>
+                {m.win?"Vitória":m.draw&&isKO?"Empate":m.draw?"Empate":"Derrota"}
               </div>
             )}
           </div>
           <div style={{flex:1,textAlign:"center"}}>
             <div style={{fontSize:28,marginBottom:6}}>{m.opp.flag}</div>
-            <div style={{fontSize:10,color:"rgba(255,255,255,.5)",fontWeight:600,fontFamily:F.body}}>{oppLabel(m.opp)}</div>
-            <div style={{fontSize:9,color:"rgba(255,255,255,.25)",marginTop:2,fontFamily:F.body}}>{m.opp.country}</div>
+            <div style={{fontSize:10,color:"rgba(255,255,255,.4)",fontWeight:600,fontFamily:F.body}}>{oppLabel(m.opp)}</div>
+            <div style={{fontSize:9,color:"rgba(255,255,255,.2)",marginTop:2,fontFamily:F.body}}>{m.opp.country}</div>
           </div>
         </div>
       </div>
@@ -1752,44 +1786,46 @@ function SimScreen({allMatches,matchIdx,livePhase,minute,spG,oppG,events,flash,t
       {/* Body */}
       <div style={{flex:1,overflowY:"auto",padding:"0 0 110px"}}>
         {isIdle&&(
-          <div style={{padding:"48px 24px",textAlign:"center"}}>
-            <div style={{fontSize:10,letterSpacing:3,color:C.muted,fontWeight:600,fontFamily:F.body,marginBottom:20}}>
-              {isGroup?"FASE DE GRUPOS":m.round?.toUpperCase()}
+          <div style={{padding:"36px 20px",textAlign:"center"}}>
+            <div style={{fontSize:10,letterSpacing:1.5,color:C.muted,fontWeight:600,fontFamily:F.body,marginBottom:16,textTransform:"uppercase"}}>
+              {isGroup?"Fase de Grupos":m.round}
             </div>
-            <div style={{fontFamily:F.display,fontSize:26,color:C.ink,lineHeight:1.1,marginBottom:8,letterSpacing:-.5}}>
-              🇾🇪 São Paulo<br/>×<br/>{m.opp.flag} {oppLabel(m.opp)}
+            <div style={{fontFamily:F.display,fontSize:24,fontWeight:700,color:C.ink,lineHeight:1.2,marginBottom:8}}>
+              🇾🇪 São Paulo<br/><span style={{color:C.muted,fontSize:18}}>×</span><br/>{m.opp.flag} {oppLabel(m.opp)}
             </div>
             {m.matchEvent&&(
               <div style={{
-                margin:"24px 0",
-                padding:"14px 18px",
-                background:m.matchEvent.type==="bom"?"#F0FFF4":"#FFF5F5",
-                border:`2px solid ${m.matchEvent.type==="bom"?"#38A169":"#E53E3E"}`,
+                margin:"20px 0",
+                padding:"14px 16px",
+                background:m.matchEvent.type==="bom"?"#0D2818":C.redDim,
+                border:`1px solid ${m.matchEvent.type==="bom"?"#38A169":C.red}`,
+                borderRadius:10,
                 textAlign:"left",
               }}>
                 <div style={{
-                  fontSize:10,fontWeight:700,letterSpacing:2,
-                  color:m.matchEvent.type==="bom"?"#276749":"#C53030",
-                  marginBottom:6,fontFamily:F.body,
+                  fontSize:10,fontWeight:700,letterSpacing:1.5,
+                  color:m.matchEvent.type==="bom"?"#38A169":C.red,
+                  marginBottom:6,fontFamily:F.body,textTransform:"uppercase",
                 }}>
                   {m.matchEvent.type==="bom"?"🟢 NOSSO PORRA!":"🔴 CABÔ PÁ NÓIS"}
                 </div>
-                <div style={{fontSize:13,color:"#1A202C",fontFamily:F.body,lineHeight:1.5}}>
+                <div style={{fontSize:13,color:C.ink,fontFamily:F.body,lineHeight:1.5}}>
                   {m.matchEvent.text}
                   <span style={{fontWeight:700}}>{m.matchEvent.boost>0?` +${Math.round(m.matchEvent.boost*100)}% performance`:` ${Math.round(m.matchEvent.boost*100)}% performance`}</span>
                 </div>
               </div>
             )}
-            <div style={{marginTop:32}}>
+            <div style={{marginTop:28}}>
               <button onClick={onKickoff} style={{
-                background:C.black,color:C.white,border:"none",
-                padding:"18px 56px",cursor:"pointer",
-                fontFamily:F.display,fontSize:15,letterSpacing:2,
-                transition:"background .15s",
+                background:C.red,color:C.white,border:"none",
+                padding:"18px 52px",cursor:"pointer",
+                fontFamily:F.display,fontSize:15,fontWeight:700,letterSpacing:1.5,
+                borderRadius:50,
+                transition:"opacity .15s",
               }}
-                onMouseEnter={e=>e.currentTarget.style.background=C.red}
-                onMouseLeave={e=>e.currentTarget.style.background=C.black}
-              >APITAR ▶</button>
+                onMouseEnter={e=>e.currentTarget.style.opacity="0.85"}
+                onMouseLeave={e=>e.currentTarget.style.opacity="1"}
+              >▶ APITAR</button>
             </div>
           </div>
         )}
@@ -1799,54 +1835,57 @@ function SimScreen({allMatches,matchIdx,livePhase,minute,spG,oppG,events,flash,t
 
         {(isLive||isDone)&&(
           <div>
-            <div style={{padding:"12px 24px",borderBottom:`1px solid ${C.border}`}}>
-              <span style={{fontSize:10,letterSpacing:3,color:C.muted,fontWeight:600,fontFamily:F.body}}>LANCES</span>
+            <div style={{padding:"12px 20px",borderBottom:`1px solid ${C.border}`}}>
+              <span style={{fontSize:10,letterSpacing:1.5,color:C.muted,fontWeight:600,fontFamily:F.body,textTransform:"uppercase"}}>Lances</span>
             </div>
             {events.length===0&&isLive&&(
-              <div style={{padding:"32px 24px",textAlign:"center",color:C.muted,fontSize:13,fontFamily:F.body,animation:"pulse 2s infinite"}}>
+              <div style={{padding:"32px 20px",textAlign:"center",color:C.muted,fontSize:13,fontFamily:F.body,animation:"pulse 2s infinite"}}>
                 Aguardando lance…
               </div>
             )}
-            {events.map((ev,i)=>{
-              const isGoal=ev.type==="goal";
-              const isCard=ev.type==="yellow"||ev.type==="red";
-              const icon=isGoal?"⚽":ev.type==="yellow"?"🟨":"🟥";
-              const nameColor=ev.type==="yellow"?C.yellow:ev.type==="red"?C.red:(ev.team==="sp"?C.red:C.ink);
-              return(
-                <div key={i} className={i===0?"goalSlide":""} style={{
-                  display:"flex",alignItems:"center",gap:isCard?10:14,
-                  padding:isCard?"7px 24px":"13px 24px",
-                  borderBottom:`1px solid ${C.border}`,
-                  background:ev.team==="sp"?(isCard?"rgba(204,0,0,.015)":"rgba(204,0,0,.03)"):C.white,
-                  opacity:isCard?0.85:1,
-                }}>
-                  <span style={{fontFamily:F.body,fontSize:isCard?10:12,color:C.muted,fontWeight:600,minWidth:28}}>{ev.min}'</span>
-                  <span style={{fontSize:isCard?12:16}}>{icon}</span>
-                  <div style={{flex:1}}>
-                    <div style={{fontSize:isCard?11:14,fontWeight:600,color:nameColor,fontFamily:F.body}}>{ev.name}</div>
-                    {!isCard&&<div style={{fontSize:11,color:C.muted,marginTop:2,fontFamily:F.body}}>
-                      {ev.team==="sp"?ev.pos:ev.club}
-                    </div>}
-                    {isCard&&<div style={{fontSize:10,color:C.muted,fontFamily:F.body}}>
-                      {ev.type==="yellow"?"Cartão Amarelo":"Cartão Vermelho"}
-                    </div>}
+            <div style={{padding:"8px 20px 0"}}>
+              {events.map((ev,i)=>{
+                const isGoal=ev.type==="goal";
+                const isCard=ev.type==="yellow"||ev.type==="red";
+                const icon=isGoal?"⚽":ev.type==="yellow"?"🟨":"🟥";
+                const nameColor=ev.type==="yellow"?C.yellow:ev.type==="red"?C.red:(ev.team==="sp"?C.red:C.inkDim);
+                return(
+                  <div key={i} className={i===0?"goalSlide":""} style={{
+                    display:"flex",alignItems:"center",gap:10,
+                    padding:isCard?"8px 12px":"11px 12px",
+                    marginBottom:4,
+                    borderRadius:10,
+                    background:isCard?C.surface2:C.surface,
+                    borderLeft:`3px solid ${isGoal&&ev.team==="sp"?C.red:isCard&&ev.type==="yellow"?C.yellow:isCard&&ev.type==="red"?C.red:C.border}`,
+                  }}>
+                    <span style={{fontFamily:F.body,fontSize:isCard?10:11,color:isGoal&&ev.team==="sp"?C.red:C.muted,fontWeight:700,minWidth:24}}>{ev.min}'</span>
+                    <span style={{fontSize:isCard?12:15}}>{icon}</span>
+                    <div style={{flex:1}}>
+                      <div style={{fontSize:isCard?11:13,fontWeight:600,color:nameColor,fontFamily:F.body}}>{ev.name}</div>
+                      {!isCard&&<div style={{fontSize:10,color:C.muted,marginTop:1,fontFamily:F.body}}>
+                        {ev.team==="sp"?ev.pos:ev.club}
+                      </div>}
+                      {isCard&&<div style={{fontSize:10,color:C.muted,fontFamily:F.body}}>
+                        {ev.type==="yellow"?"Cartão Amarelo":"Cartão Vermelho"}
+                      </div>}
+                    </div>
+                    <span style={{fontSize:isCard?13:16}}>{ev.team==="sp"?"🇾🇪":m.opp.flag}</span>
                   </div>
-                  <span style={{fontSize:isCard?13:18}}>{ev.team==="sp"?"🇾🇪":m.opp.flag}</span>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
             {isLive&&(
-              <div style={{padding:"14px 24px",display:"flex",gap:8,alignItems:"center"}}>
-                <div style={{width:6,height:6,background:C.red,animation:"pulse 1s infinite",flexShrink:0}}/>
+              <div style={{padding:"12px 20px",display:"flex",gap:8,alignItems:"center"}}>
+                <div style={{width:6,height:6,borderRadius:"50%",background:C.red,animation:"pulse 1s infinite",flexShrink:0}}/>
                 <span style={{fontSize:12,color:C.muted,fontWeight:500,fontFamily:F.body}}>{min2}' em andamento</span>
               </div>
             )}
             {isDone&&!isGroupResult&&!isPenalties&&(
-              <div className="fadeUp" style={{padding:"16px 24px",borderTop:`2px solid ${C.border}`,background:"#FAFAFA"}}>
-                <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:6}}>
+              <div className="fadeUp" style={{margin:"12px 20px",padding:"14px 16px",borderRadius:12,background:C.surface2,border:`1px solid ${C.border}`}}>
+                <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:8}}>
                   <img src={markoBiraImg} alt="Marko e Bira" style={{width:32,height:32,borderRadius:"50%",objectFit:"cover",flexShrink:0}}/>
-                  <div style={{fontSize:9,letterSpacing:2,color:C.muted,fontWeight:700,fontFamily:F.body}}>
-                    COMENTÁRIO DE MARKO LOCO E ZÉ BIRA
+                  <div style={{fontSize:9,letterSpacing:1.5,color:C.muted,fontWeight:700,fontFamily:F.body,textTransform:"uppercase"}}>
+                    Comentário de Marko Loco e Zé Bira
                   </div>
                 </div>
                 <div style={{fontSize:13,color:C.ink,fontFamily:F.body,lineHeight:1.55,fontStyle:"italic"}}>
@@ -1859,11 +1898,12 @@ function SimScreen({allMatches,matchIdx,livePhase,minute,spG,oppG,events,flash,t
       </div>
 
       {isDone&&!isGroupResult&&!isPenalties&&(
-        <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,padding:"16px 24px",background:C.white,borderTop:`1px solid ${C.border}`,zIndex:50}}>
+        <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,padding:"16px 20px",background:C.bg,borderTop:`1px solid ${C.border}`,zIndex:50}}>
           <button onClick={()=>onAdvance("done")} style={{
             background:doneBg,color:doneFg,border:"none",
             padding:"18px 0",width:"100%",cursor:"pointer",
-            fontFamily:F.display,fontSize:15,letterSpacing:2,
+            fontFamily:F.display,fontSize:15,fontWeight:700,letterSpacing:1.5,
+            borderRadius:50,
           }}>{doneLabel()}</button>
         </div>
       )}
@@ -1875,57 +1915,59 @@ function SimScreen({allMatches,matchIdx,livePhase,minute,spG,oppG,events,flash,t
 function GroupResultCard({tournament,onContinue}){
   const{groupMatches,pts,gd,qualified,groupTable}=tournament;
   return(
-    <div style={{padding:"24px 24px"}}>
-      <div style={{fontSize:10,letterSpacing:3,color:C.muted,fontWeight:600,fontFamily:F.body,marginBottom:20}}>FASE DE GRUPOS — CLASSIFICAÇÃO</div>
+    <div style={{padding:"20px 20px"}}>
+      <div style={{fontSize:10,letterSpacing:1.5,color:C.muted,fontWeight:600,fontFamily:F.body,marginBottom:16,textTransform:"uppercase"}}>Fase de Grupos — Classificação</div>
 
       {/* Table */}
-      <div style={{border:`1px solid ${C.border}`,overflow:"hidden",marginBottom:24}}>
-        <div style={{background:C.black,padding:"10px 16px",display:"flex",alignItems:"center"}}>
-          <span style={{fontSize:10,color:"rgba(255,255,255,.4)",fontWeight:600,fontFamily:F.body,flex:1}}>TIME</span>
+      <div style={{borderRadius:12,border:`1px solid ${C.border}`,overflow:"hidden",marginBottom:20}}>
+        <div style={{background:C.surface2,padding:"10px 14px",display:"flex",alignItems:"center"}}>
+          <span style={{fontSize:10,color:C.muted,fontWeight:600,fontFamily:F.body,flex:1}}>TIME</span>
           {["J","V","E","D","GP","GC","PTS"].map(h=>(
-            <span key={h} style={{fontSize:10,color:"rgba(255,255,255,.4)",fontWeight:600,fontFamily:F.body,minWidth:28,textAlign:"center"}}>{h}</span>
+            <span key={h} style={{fontSize:10,color:C.muted,fontWeight:600,fontFamily:F.body,minWidth:26,textAlign:"center"}}>{h}</span>
           ))}
         </div>
         {groupTable.map((row,i)=>(
           <div key={i} style={{
-            padding:"12px 16px",display:"flex",alignItems:"center",
-            background:row.isSP?"rgba(204,0,0,.04)":C.white,
+            padding:"11px 14px",display:"flex",alignItems:"center",
+            background:row.isSP?C.redDim:C.surface,
             borderTop:`1px solid ${C.border}`,
           }}>
             <div style={{flex:1,display:"flex",gap:8,alignItems:"center"}}>
-              <span style={{fontSize:12,color:C.muted,fontWeight:600,fontFamily:F.body,minWidth:16}}>{i+1}</span>
-              <span style={{fontSize:16}}>{row.flag}</span>
-              <span style={{fontSize:13,fontWeight:row.isSP?700:500,color:C.ink,fontFamily:F.body}}>{row.name}</span>
+              <span style={{fontSize:11,color:C.muted,fontWeight:600,fontFamily:F.body,minWidth:14}}>{i+1}</span>
+              <span style={{fontSize:15}}>{row.flag}</span>
+              <span style={{fontSize:12,fontWeight:row.isSP?700:500,color:row.isSP?C.ink:C.inkDim,fontFamily:F.body}}>{row.name}</span>
               {i<2&&<span style={{fontSize:9,color:C.red,fontWeight:700,fontFamily:F.body}}>✓</span>}
             </div>
             {[row.w+row.d+row.l,row.w,row.d,row.l,row.gf,row.ga,row.pts].map((v,j)=>(
-              <span key={j} style={{fontSize:13,fontWeight:j===6?700:400,color:j===6?(row.isSP?C.red:C.ink):C.muted,minWidth:28,textAlign:"center",fontFamily:F.body}}>{v}</span>
+              <span key={j} style={{fontSize:12,fontWeight:j===6?700:400,color:j===6?(row.isSP?C.red:C.inkDim):C.muted,minWidth:26,textAlign:"center",fontFamily:j===6?F.display:F.body}}>{v}</span>
             ))}
           </div>
         ))}
       </div>
 
-      <div style={{textAlign:"center",padding:"16px 0 24px"}}>
+      <div style={{textAlign:"center",padding:"12px 0 20px"}}>
         {qualified?(
           <>
-            <div style={{fontFamily:F.display,fontSize:22,color:C.ink,letterSpacing:-.5,marginBottom:6}}>São Paulo classificado!</div>
+            <div style={{fontFamily:F.display,fontSize:22,fontWeight:700,color:C.ink,marginBottom:6}}>São Paulo classificado!</div>
             <div style={{fontSize:13,color:C.muted,fontFamily:F.body}}>{pts} pontos · {groupTable.findIndex(r=>r.isSP)+1}º do grupo</div>
           </>
         ):(
           <>
-            <div style={{fontFamily:F.display,fontSize:22,color:C.ink,letterSpacing:-.5,marginBottom:6}}>São Paulo eliminado</div>
+            <div style={{fontFamily:F.display,fontSize:22,fontWeight:700,color:C.ink,marginBottom:6}}>São Paulo eliminado</div>
             <div style={{fontSize:13,color:C.muted,fontFamily:F.body}}>{pts} ponto{pts!==1?"s":""} · {groupTable.findIndex(r=>r.isSP)+1}º do grupo</div>
           </>
         )}
       </div>
 
       <button onClick={onContinue} style={{
-        background:qualified?C.black:C.red,color:C.white,border:"none",
+        background:C.red,color:C.white,border:"none",
         padding:"18px 0",width:"100%",cursor:"pointer",
-        fontFamily:F.display,fontSize:15,letterSpacing:2,
+        fontFamily:F.display,fontSize:15,fontWeight:700,letterSpacing:1.5,
+        borderRadius:50,
+        transition:"opacity .15s",
       }}
-        onMouseEnter={e=>e.currentTarget.style.background=C.red}
-        onMouseLeave={e=>e.currentTarget.style.background=qualified?C.black:C.red}
+        onMouseEnter={e=>e.currentTarget.style.opacity="0.85"}
+        onMouseLeave={e=>e.currentTarget.style.opacity="1"}
       >
         {qualified?"MATA-MATA":"VER RESULTADO"}
       </button>
@@ -1946,17 +1988,17 @@ function PenaltyScreen({penalties,opp,onContinue}){
   const oppScore=kicks.slice(0,revealed).filter(k=>k.oppConvert).length;
 
   return(
-    <div style={{padding:"24px"}}>
+    <div style={{padding:"20px"}}>
       {/* Scoreboard */}
-      <div style={{textAlign:"center",marginBottom:24}}>
-        <div style={{fontSize:10,letterSpacing:3,color:C.muted,fontWeight:600,fontFamily:F.body,marginBottom:16}}>DISPUTA DE PÊNALTIS</div>
+      <div style={{textAlign:"center",marginBottom:20}}>
+        <div style={{fontSize:10,letterSpacing:1.5,color:C.muted,fontWeight:600,fontFamily:F.body,marginBottom:14,textTransform:"uppercase"}}>Disputa de Pênaltis</div>
         <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:24}}>
           <div style={{textAlign:"center"}}>
             <div style={{fontSize:28,marginBottom:4}}>🇾🇪</div>
             <div style={{fontSize:10,color:C.muted,fontWeight:600,fontFamily:F.body}}>SÃO PAULO</div>
           </div>
-          <div style={{fontFamily:F.display,fontSize:52,color:C.ink,letterSpacing:4,lineHeight:1}}>
-            {spScore}<span style={{fontSize:28,color:C.faint}}> × </span>{oppScore}
+          <div style={{fontFamily:F.display,fontSize:52,fontWeight:700,color:C.ink,letterSpacing:4,lineHeight:1}}>
+            {spScore}<span style={{fontSize:28,color:C.muted}}> × </span>{oppScore}
           </div>
           <div style={{textAlign:"center"}}>
             <div style={{fontSize:28,marginBottom:4}}>{opp.flag}</div>
@@ -1966,7 +2008,7 @@ function PenaltyScreen({penalties,opp,onContinue}){
       </div>
 
       {/* Kicks */}
-      <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:20}}>
+      <div style={{display:"flex",flexDirection:"column",gap:6,marginBottom:16}}>
         {kicks.slice(0,revealed).map((k,i)=>{
           const isSudden=k.round==="sudden";
           const isFirstSudden=isSudden&&(i===0||kicks[i-1]?.round!=="sudden");
@@ -1974,22 +2016,22 @@ function PenaltyScreen({penalties,opp,onContinue}){
             <div key={i}>
               {isFirstSudden&&(
                 <div style={{textAlign:"center",padding:"10px 0 6px"}}>
-                  <span style={{fontSize:9,letterSpacing:3,color:C.red,fontWeight:800,fontFamily:F.body}}>⚡ MORTE SÚBITA</span>
+                  <span style={{fontSize:9,letterSpacing:2,color:C.red,fontWeight:700,fontFamily:F.body}}>⚡ MORTE SÚBITA</span>
                 </div>
               )}
-              <div className="goalSlide" style={{display:"flex",gap:8,alignItems:"stretch"}}>
-                <div style={{flex:1,background:k.spConvert?"rgba(204,0,0,.05)":C.surface,borderLeft:`3px solid ${k.spConvert?C.red:C.faint}`,padding:"10px 12px"}}>
-                  <div style={{fontSize:13,fontWeight:600,color:C.ink,fontFamily:F.body}}>{k.spName}</div>
-                  <div style={{fontSize:11,color:k.spConvert?C.red:C.muted,marginTop:2,fontFamily:F.body,fontWeight:600}}>
+              <div className="goalSlide" style={{display:"flex",gap:6,alignItems:"stretch"}}>
+                <div style={{flex:1,background:k.spConvert?C.redDim:C.surface,border:`1px solid ${k.spConvert?C.red:C.border}`,borderRadius:8,padding:"9px 11px"}}>
+                  <div style={{fontSize:12,fontWeight:600,color:C.ink,fontFamily:F.body}}>{k.spName}</div>
+                  <div style={{fontSize:10,color:k.spConvert?C.red:C.muted,marginTop:2,fontFamily:F.body,fontWeight:600}}>
                     {k.spConvert?"⚽ GOOOOL!":"❌ Defendida"}
                   </div>
                 </div>
-                <div style={{width:24,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
-                  <span style={{fontSize:10,color:isSudden?C.red:C.muted,fontFamily:F.body,fontWeight:600}}>{isSudden?"⚡":i+1}</span>
+                <div style={{width:22,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
+                  <span style={{fontSize:9,color:isSudden?C.red:C.muted,fontFamily:F.body,fontWeight:700}}>{isSudden?"⚡":i+1}</span>
                 </div>
-                <div style={{flex:1,background:k.oppConvert?C.surface:"rgba(0,0,0,.02)",borderRight:`3px solid ${k.oppConvert?C.ink:C.faint}`,padding:"10px 12px",textAlign:"right"}}>
-                  <div style={{fontSize:13,fontWeight:600,color:C.ink,fontFamily:F.body}}>{k.oppName}</div>
-                  <div style={{fontSize:11,color:k.oppConvert?C.ink:C.muted,marginTop:2,fontFamily:F.body,fontWeight:600}}>
+                <div style={{flex:1,background:k.oppConvert?"#1A1A1A":C.surface,border:`1px solid ${k.oppConvert?C.border2:C.border}`,borderRadius:8,padding:"9px 11px",textAlign:"right"}}>
+                  <div style={{fontSize:12,fontWeight:600,color:C.ink,fontFamily:F.body}}>{k.oppName}</div>
+                  <div style={{fontSize:10,color:k.oppConvert?C.inkDim:C.muted,marginTop:2,fontFamily:F.body,fontWeight:600}}>
                     {k.oppConvert?"⚽ GOOOOL!":"❌ Defendida"}
                   </div>
                 </div>
@@ -2006,17 +2048,22 @@ function PenaltyScreen({penalties,opp,onContinue}){
 
       {done&&(
         <>
-          <div style={{textAlign:"center",padding:"16px 0 24px"}}>
-            <div style={{fontFamily:F.display,fontSize:24,color:C.ink,letterSpacing:-.5,marginBottom:4}}>
+          <div style={{textAlign:"center",padding:"14px 0 20px"}}>
+            <div style={{fontFamily:F.display,fontSize:22,fontWeight:700,color:C.ink,marginBottom:4}}>
               {spWin?"São Paulo vence!":oppLabel(opp)+" vence"}
             </div>
             <div style={{fontSize:13,color:C.muted,fontFamily:F.body}}>Disputa de pênaltis</div>
           </div>
           <button onClick={onContinue} style={{
-            background:spWin?C.black:C.red,color:C.white,border:"none",
+            background:C.red,color:C.white,border:"none",
             padding:"18px 0",width:"100%",cursor:"pointer",
-            fontFamily:F.display,fontSize:15,letterSpacing:2,
-          }}>
+            fontFamily:F.display,fontSize:15,fontWeight:700,letterSpacing:1.5,
+            borderRadius:50,
+            transition:"opacity .15s",
+          }}
+            onMouseEnter={e=>e.currentTarget.style.opacity="0.85"}
+            onMouseLeave={e=>e.currentTarget.style.opacity="1"}
+          >
             {spWin?"PRÓXIMO JOGO":"VER RESULTADO"}
           </button>
         </>
@@ -2070,30 +2117,30 @@ function ResultScreen({champ,elimPhase,allMatches,team,formation,tournament,onRe
   // elimPhase comes from parent state, set at the moment of elimination
 
   return(
-    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",background:C.white}}>
+    <div style={{minHeight:"100vh",display:"flex",flexDirection:"column",background:C.bg}}>
       {champ&&<Confetti/>}
 
       {/* Hero */}
-      <div style={{background:champ?C.red:C.black,padding:"48px 24px 36px",position:"relative",overflow:"hidden",flexShrink:0}}>
-        {champ&&<div style={{position:"absolute",right:-20,top:"50%",transform:"translateY(-50%)",fontSize:160,opacity:.08,pointerEvents:"none"}}>🏆</div>}
+      <div style={{background:champ?C.redDim:"#0D0D0D",borderBottom:`1px solid ${champ?C.redMid:C.border}`,padding:"40px 20px 32px",position:"relative",overflow:"hidden",flexShrink:0}}>
+        {champ&&<div style={{position:"absolute",right:-20,top:"50%",transform:"translateY(-50%)",fontSize:160,opacity:.05,pointerEvents:"none"}}>🏆</div>}
         <div style={{position:"relative",zIndex:1}}>
-          <div style={{fontSize:10,letterSpacing:3,color:"rgba(255,255,255,.4)",fontWeight:600,fontFamily:F.body,marginBottom:12}}>
-            {champ?"CAMPEÃO DA LIBERTADORES":"ELIMINADO"}
+          <div style={{fontSize:10,letterSpacing:1.5,color:champ?C.red:C.muted,fontWeight:700,fontFamily:F.body,marginBottom:12,textTransform:"uppercase"}}>
+            {champ?"Campeão da Libertadores":"Eliminado"}
           </div>
           {champ?(
             <>
               <div className="trophy" style={{fontSize:52,marginBottom:12}}>🏆</div>
-              <div style={{fontFamily:F.display,fontSize:36,color:C.white,lineHeight:.95,letterSpacing:-.5}}>São Paulo<br/>conquista<br/>a América</div>
+              <div style={{fontFamily:F.display,fontSize:34,fontWeight:700,color:C.white,lineHeight:1,letterSpacing:-.5}}>São Paulo<br/>conquista<br/>a América</div>
             </>
           ):(
             <>
               <div style={{fontSize:44,marginBottom:12}}>😤</div>
-              <div style={{fontFamily:F.display,fontSize:36,color:C.white,lineHeight:.95,letterSpacing:-.5}}>
+              <div style={{fontFamily:F.display,fontSize:34,fontWeight:700,color:C.white,lineHeight:1,letterSpacing:-.5}}>
                 {elimPhase==="Fase de Grupos"?"Caiu na":"Caiu nas"}<br/>
-                <span style={{color:"rgba(255,255,255,.5)"}}>{elimPhase}</span>
+                <span style={{color:C.muted}}>{elimPhase}</span>
               </div>
-              <div style={{marginTop:14,fontSize:13,color:"rgba(255,255,255,.5)",fontFamily:F.body,fontWeight:600,letterSpacing:2}}>
-                TEM QUE COBRAR!
+              <div style={{marginTop:14,fontSize:12,color:C.muted,fontFamily:F.body,fontWeight:600,letterSpacing:1.5,textTransform:"uppercase"}}>
+                Tem que cobrar!
               </div>
             </>
           )}
@@ -2101,13 +2148,14 @@ function ResultScreen({champ,elimPhase,allMatches,team,formation,tournament,onRe
       </div>
 
       {/* Share buttons */}
-      <div style={{padding:"16px 24px",borderBottom:`1px solid ${C.border}`,display:"flex",gap:10,flexShrink:0}}>
+      <div style={{padding:"14px 20px",borderBottom:`1px solid ${C.border}`,display:"flex",gap:10,flexShrink:0}}>
         <button onClick={()=>handleCardAction("download")} disabled={cardStatus==="generating"} style={{
-          flex:1,background:cardStatus==="done"?"#158040":C.black,color:C.white,border:"none",
+          flex:1,background:cardStatus==="done"?"#0D2818":C.surface2,color:C.white,border:`1px solid ${C.border}`,
           padding:"13px 0",cursor:cardStatus==="generating"?"wait":"pointer",
           fontFamily:F.body,fontSize:12,fontWeight:600,letterSpacing:.5,
           display:"flex",alignItems:"center",justifyContent:"center",gap:6,
-          transition:"background .15s",
+          borderRadius:10,
+          transition:"all .15s",
         }}>
           {cardStatus==="generating"?"⏳":cardStatus==="done"?"✓ Baixado":"⬇ Baixar card"}
         </button>
@@ -2116,6 +2164,7 @@ function ResultScreen({champ,elimPhase,allMatches,team,formation,tournament,onRe
           padding:"13px 0",cursor:cardStatus==="generating"?"wait":"pointer",
           fontFamily:F.body,fontSize:12,fontWeight:600,letterSpacing:.5,
           display:"flex",alignItems:"center",justifyContent:"center",gap:6,
+          borderRadius:10,
         }}>
           💬 Compartilhar
         </button>
@@ -2126,59 +2175,66 @@ function ResultScreen({champ,elimPhase,allMatches,team,formation,tournament,onRe
         {[["matches","Jogos"],["squad","Elenco"],["pitch","Campo"]].map(([t,l])=>(
           <button key={t} onClick={()=>setTab(t)} style={{
             flex:1,padding:"12px",fontSize:12,fontWeight:600,fontFamily:F.body,
-            background:"transparent",border:"none",cursor:"pointer",
+            background:tab===t?C.redDim:"transparent",border:"none",cursor:"pointer",
             color:tab===t?C.red:C.muted,
             borderBottom:tab===t?`2px solid ${C.red}`:"2px solid transparent",
+            transition:"all .15s",
           }}>{l}</button>
         ))}
       </div>
 
-      <div style={{flex:1,overflowY:"auto",padding:"20px 24px 110px"}}>
+      <div style={{flex:1,overflowY:"auto",padding:"16px 20px 110px"}}>
         {tab==="matches"&&tournament&&(
           <div>
-            <div style={{fontSize:10,letterSpacing:3,color:C.muted,fontWeight:600,fontFamily:F.body,marginBottom:16}}>FASE DE GRUPOS</div>
+            <div style={{fontSize:10,letterSpacing:1.5,color:C.muted,fontWeight:600,fontFamily:F.body,marginBottom:12,textTransform:"uppercase"}}>Fase de Grupos</div>
             {tournament.groupMatches.filter(m=>allMatches.includes(m)).map((m,i)=><MatchRow key={i} m={m} label={`Jogo ${i+1}`} showComment/>)}
-            <div style={{display:"flex",justifyContent:"space-between",padding:"12px 0",borderBottom:`1px solid ${C.border}`,marginBottom:20}}>
+            <div style={{display:"flex",justifyContent:"space-between",padding:"12px 14px",borderRadius:8,background:C.surface,border:`1px solid ${C.border}`,marginBottom:20,marginTop:4}}>
               <span style={{fontSize:13,fontWeight:600,color:C.ink,fontFamily:F.body}}>{tournament.pts} pts · SG {tournament.gd>0?"+":""}{tournament.gd}</span>
               <span style={{fontSize:12,fontWeight:700,color:tournament.qualified?C.red:C.muted,fontFamily:F.body}}>{tournament.qualified?"✓ Classificado":"✗ Eliminado"}</span>
             </div>
             {tournament.koMatches.some(m=>allMatches.includes(m))&&(
-              <div style={{fontSize:10,letterSpacing:3,color:C.muted,fontWeight:600,fontFamily:F.body,marginBottom:16}}>MATA-MATA</div>
+              <div style={{fontSize:10,letterSpacing:1.5,color:C.muted,fontWeight:600,fontFamily:F.body,marginBottom:12,textTransform:"uppercase"}}>Mata-Mata</div>
             )}
             {tournament.koMatches.filter(m=>allMatches.includes(m)).map((m,i)=><MatchRow key={i} m={m} label={m.round} showComment/>)}
           </div>
         )}
         {tab==="squad"&&(
-          <div>
-            {team.map((p,i)=>(
-              <div key={i} style={{display:"flex",alignItems:"center",gap:14,padding:"14px 0",borderBottom:`1px solid ${C.border}`}}>
-                <div style={{width:36,height:36,background:groupColor(posToGroup(p.pos)),display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
-                  <span style={{fontSize:9,fontWeight:700,color:"#fff",fontFamily:F.body}}>{p.pos}</span>
+          <div style={{display:"flex",flexDirection:"column",gap:6}}>
+            {team.map((p,i)=>{
+              const isSpecial=p.special||false;
+              const ratingColor=isSpecial?C.gold:p.rating>=85?C.red:p.rating>=80?C.yellow:C.inkDim;
+              return(
+                <div key={i} style={{display:"flex",alignItems:"center",gap:12,padding:"12px 14px",borderRadius:10,border:`1px solid ${C.border}`,background:C.surface2}}>
+                  <div style={{width:34,height:34,borderRadius:8,background:POS_COLOR[p.pos]||groupColor(posToGroup(p.pos)),display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
+                    <span style={{fontSize:9,fontWeight:700,color:"#fff",fontFamily:F.body}}>{p.pos}</span>
+                  </div>
+                  <div style={{flex:1}}>
+                    <div style={{fontSize:14,fontWeight:600,color:isSpecial?C.gold:C.ink,fontFamily:F.body}}>{isSpecial&&"★ "}{p.name}</div>
+                    <div style={{fontSize:11,color:C.muted,marginTop:2,fontFamily:F.body}}>{p._year}{p._champion?" · 🏆":""}</div>
+                  </div>
+                  <div style={{fontFamily:F.display,fontSize:22,fontWeight:700,color:ratingColor}}>{p.rating}</div>
                 </div>
-                <div style={{flex:1}}>
-                  <div style={{fontSize:14,fontWeight:600,color:C.ink,fontFamily:F.body}}>{p.name}</div>
-                  <div style={{fontSize:11,color:C.muted,marginTop:2,fontFamily:F.body}}>{p._year}{p._champion?" · 🏆":""}</div>
-                </div>
-                <div style={{fontFamily:F.display,fontSize:24,color:p.rating>=88?C.red:C.ink}}>{p.rating}</div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
         {tab==="pitch"&&<Pitch formation={formation} players={team}/>}
       </div>
 
-      <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,padding:"16px 24px",background:C.white,borderTop:`1px solid ${C.border}`,display:"flex",gap:10,zIndex:50}}>
+      <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,padding:"14px 20px",background:C.bg,borderTop:`1px solid ${C.border}`,display:"flex",gap:10,zIndex:50}}>
         <button onClick={onRestart} style={{
-          flex:1,background:C.black,color:C.white,border:"none",
-          padding:"16px 0",cursor:"pointer",fontFamily:F.display,fontSize:14,letterSpacing:2,
-          transition:"background .15s",
+          flex:1,background:C.red,color:C.white,border:"none",
+          padding:"16px 0",cursor:"pointer",fontFamily:F.display,fontSize:14,fontWeight:700,letterSpacing:1.5,
+          borderRadius:12,
+          transition:"opacity .15s",
         }}
-          onMouseEnter={e=>e.currentTarget.style.background=C.red}
-          onMouseLeave={e=>e.currentTarget.style.background=C.black}
+          onMouseEnter={e=>e.currentTarget.style.opacity="0.85"}
+          onMouseLeave={e=>e.currentTarget.style.opacity="1"}
         >ROLAR DE NOVO</button>
         <button onClick={onHome} style={{
-          flex:.45,background:"transparent",color:C.muted,border:`1px solid ${C.border}`,
+          flex:.45,background:C.surface2,color:C.inkDim,border:`1px solid ${C.border}`,
           padding:"16px 0",cursor:"pointer",fontFamily:F.body,fontSize:12,fontWeight:600,
+          borderRadius:12,
         }}>Início</button>
       </div>
     </div>
@@ -2187,25 +2243,25 @@ function ResultScreen({champ,elimPhase,allMatches,team,formation,tournament,onRe
 
 function MatchRow({m,label,showComment=false}){
   return(
-    <div style={{borderBottom:`1px solid ${C.border}`}}>
-      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"14px 0"}}>
+    <div style={{marginBottom:8}}>
+      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"12px 14px",borderRadius:10,background:C.surface,border:`1px solid ${C.border}`}}>
         <div>
-          <div style={{fontSize:10,color:C.muted,letterSpacing:2,fontWeight:600,fontFamily:F.body,marginBottom:4}}>{label?.toUpperCase()}</div>
-          <div style={{fontSize:14,fontWeight:600,color:C.ink,fontFamily:F.body}}>{m.opp.flag} {oppLabel(m.opp)}</div>
+          <div style={{fontSize:9,color:C.muted,letterSpacing:1.5,fontWeight:600,fontFamily:F.body,marginBottom:4,textTransform:"uppercase"}}>{label}</div>
+          <div style={{fontSize:13,fontWeight:600,color:C.ink,fontFamily:F.body}}>{m.opp.flag} {oppLabel(m.opp)}</div>
           <div style={{fontSize:11,color:C.muted,marginTop:2,fontFamily:F.body}}>{m.opp.country}</div>
         </div>
         <div style={{textAlign:"right"}}>
-          <div style={{fontFamily:F.display,fontSize:28,color:m.win?C.red:C.ink,letterSpacing:1}}>{m.myG}–{m.oppG}</div>
-          <div style={{fontSize:10,fontWeight:700,color:m.win?C.red:C.muted,fontFamily:F.body,letterSpacing:1}}>{m.win?"VITÓRIA":m.draw?"EMPATE":"DERROTA"}</div>
+          <div style={{fontFamily:F.display,fontSize:26,fontWeight:700,color:m.win?C.red:m.draw?C.yellow:C.inkDim,letterSpacing:1}}>{m.myG}–{m.oppG}</div>
+          <div style={{fontSize:10,fontWeight:700,color:m.win?C.red:m.draw?C.yellow:C.muted,fontFamily:F.body,letterSpacing:1,textTransform:"uppercase"}}>{m.win?"Vitória":m.draw?"Empate":"Derrota"}</div>
         </div>
       </div>
       {showComment&&m.evs&&(
-        <div style={{paddingBottom:14}}>
+        <div style={{padding:"10px 14px 4px"}}>
           <div style={{display:"flex",alignItems:"center",gap:7,marginBottom:5}}>
-            <img src={markoBiraImg} alt="Marko e Bira" style={{width:26,height:26,borderRadius:"50%",objectFit:"cover",flexShrink:0}}/>
-            <div style={{fontSize:9,letterSpacing:2,color:C.muted,fontWeight:700,fontFamily:F.body}}>MARKO LOCO E ZÉ BIRA</div>
+            <img src={markoBiraImg} alt="Marko e Bira" style={{width:24,height:24,borderRadius:"50%",objectFit:"cover",flexShrink:0}}/>
+            <div style={{fontSize:9,letterSpacing:1.5,color:C.muted,fontWeight:700,fontFamily:F.body,textTransform:"uppercase"}}>Marko Loco e Zé Bira</div>
           </div>
-          <div style={{fontSize:12,color:C.ink,fontFamily:F.body,lineHeight:1.5,fontStyle:"italic"}}>
+          <div style={{fontSize:12,color:C.inkDim,fontFamily:F.body,lineHeight:1.5,fontStyle:"italic"}}>
             "{generateMatchCommentary(m,m.myG,m.oppG,m.evs)}"
           </div>
         </div>
@@ -2219,8 +2275,9 @@ async function generateCampaignCard(champ,allMatches,team,formation,tournament){
   canvas.width=W;canvas.height=H;
   const ctx=canvas.getContext("2d");
 
-  const RED="#CC0000",BLACK="#0A0A0A",INK="#111111";
-  const MUTED="#999999",BORDER="#E8E8E8",WHITE="#FFFFFF",SURFACE="#F7F7F7";
+  const RED="#E8323A",DARK="#0A0A0A",INK="#F0F0F0";
+  const MUTED="#666666",BORDER="#242424",WHITE="#FFFFFF",SURFACE="#141414";
+  const GOLD="#C9A227";
   const PAD=72;
 
   function fillR(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(x,y,w,h);}
@@ -2241,19 +2298,20 @@ async function generateCampaignCard(champ,allMatches,team,formation,tournament){
     return cy;
   }
 
-  fillR(0,0,W,H,WHITE);
+  fillR(0,0,W,H,DARK);
 
-  // ── HEADER ──
+  // ── HEADER stripe ──
+  fillR(0,0,W,260,"#1A0608");
   const TY=200;
   ctx.save();
-  ctx.font="bold 140px 'Archivo Black', sans-serif";
+  ctx.font="bold 140px 'Space Grotesk', sans-serif";
   ctx.fillStyle=RED;
   const w7=ctx.measureText("7").width;
   ctx.fillText("7",PAD,TY);
-  ctx.fillStyle=BLACK;
+  ctx.fillStyle=WHITE;
   ctx.fillText("RIKAS",PAD+w7,TY);
   ctx.restore();
-  tx("Uma adaptação by Órfãos de Edcarlos",PAD,TY+52,"400 23px 'Inter', sans-serif",MUTED);
+  tx("Uma adaptação by Órfãos de Edcarlos",PAD,TY+52,"400 23px 'DM Sans', sans-serif",MUTED);
   fillR(PAD,TY+82,W-PAD*2,2,RED);
 
   // ── RESULTADO ──
@@ -2263,14 +2321,14 @@ async function generateCampaignCard(champ,allMatches,team,formation,tournament){
   const elimText=elimPhase==="Fase de Grupos"?"na Fase de Grupos":"nas "+elimPhase;
 
   if(champ){
-    tx("🏆 CAMPEÃO!",W/2,RY,"bold 76px 'Archivo Black', sans-serif",RED,"center");
-    tx("BUSCO RIVAL!",W/2,RY+78,"bold 40px 'Archivo Black', sans-serif",BLACK,"center");
+    tx("🏆 CAMPEÃO!",W/2,RY,"bold 76px 'Space Grotesk', sans-serif",RED,"center");
+    tx("BUSCO RIVAL!",W/2,RY+78,"bold 40px 'Space Grotesk', sans-serif",WHITE,"center");
   }else{
-    tx("😤 ELIMINADO.",W/2,RY,"bold 68px 'Archivo Black', sans-serif",BLACK,"center");
-    tx("TEM QUE COBRAR!",W/2,RY+72,"bold 38px 'Archivo Black', sans-serif",RED,"center");
-    tx("Caiu "+elimText,W/2,RY+120,"400 25px 'Inter', sans-serif",MUTED,"center");
+    tx("😤 ELIMINADO.",W/2,RY,"bold 68px 'Space Grotesk', sans-serif",WHITE,"center");
+    tx("TEM QUE COBRAR!",W/2,RY+72,"bold 38px 'Space Grotesk', sans-serif",RED,"center");
+    tx("Caiu "+elimText,W/2,RY+120,"400 25px 'DM Sans', sans-serif",MUTED,"center");
   }
-  tx(formation+"  ·  Média "+avgR(team).toFixed(1),W-PAD,RY+(champ?140:168),"400 22px 'Inter', sans-serif",MUTED,"right");
+  tx(formation+"  ·  Média "+avgR(team).toFixed(1),W-PAD,RY+(champ?140:168),"400 22px 'DM Sans', sans-serif",MUTED,"right");
 
   // ── ELENCO (ordenado por posição) ──
   const sortedTeam=sortByPosition(team);
@@ -2278,45 +2336,45 @@ async function generateCampaignCard(champ,allMatches,team,formation,tournament){
   const ROW=70;
   const SQH=44+sortedTeam.length*ROW;
 
-  fillR(PAD,SQ,W-PAD*2,44,BLACK);
-  tx("ELENCO DOS SONHOS",PAD+20,SQ+28,"700 16px 'Inter', sans-serif","rgba(255,255,255,0.45)");
-  tx("RTG",W-PAD-20,SQ+28,"700 16px 'Inter', sans-serif","rgba(255,255,255,0.3)","right");
+  fillR(PAD,SQ,W-PAD*2,44,SURFACE);
+  fillR(PAD,SQ,4,44,RED);
+  tx("ELENCO DOS SONHOS",PAD+20,SQ+28,"700 16px 'DM Sans', sans-serif","rgba(255,255,255,0.45)");
+  tx("RTG",W-PAD-20,SQ+28,"700 16px 'DM Sans', sans-serif","rgba(255,255,255,0.3)","right");
 
-  const PC={GOL:"#B87A00",ZAG:RED,LD:RED,LE:RED,VOL:"#1A5FAA",MC:"#1A5FAA",MD:"#1A5FAA",ME:"#1A5FAA",CA:"#1A7A38"};
+  const PC={GOL:"#F5A623",ZAG:"#4A90D9",LD:"#4A90D9",LE:"#4A90D9",VOL:"#7B68EE",MC:"#7B68EE",MD:"#7B68EE",ME:"#7B68EE",CA:RED};
   sortedTeam.forEach((p,i)=>{
     const ry=SQ+44+i*ROW;
-    if(i%2===0)fillR(PAD,ry,W-PAD*2,ROW,SURFACE);
+    fillR(PAD,ry,W-PAD*2,ROW,i%2===0?"#161616":"#141414");
     ctx.save();ctx.strokeStyle=BORDER;ctx.lineWidth=1;
     ctx.beginPath();ctx.moveTo(PAD,ry);ctx.lineTo(W-PAD,ry);ctx.stroke();ctx.restore();
     const pc=PC[p.pos]||"#666";
     fillR(PAD+16,ry+ROW/2-12,46,24,pc);
-    tx(p.pos,PAD+39,ry+ROW/2+7,"700 14px 'Inter', sans-serif",WHITE,"center");
-    tx(p.name,PAD+78,ry+ROW/2-5,"600 30px 'Inter', sans-serif",p.special?"#C9A227":INK);
-    tx(String(p._year),PAD+78,ry+ROW/2+20,"400 18px 'Inter', sans-serif",MUTED);
-    const rc=p.rating>=88?RED:p.rating>=84?"#444":MUTED;
-    tx(String(p.rating),W-PAD-20,ry+ROW/2+12,"bold 40px 'Archivo Black', sans-serif",rc,"right");
+    tx(p.pos,PAD+39,ry+ROW/2+7,"700 14px 'DM Sans', sans-serif",WHITE,"center");
+    tx(p.name,PAD+78,ry+ROW/2-5,"600 30px 'DM Sans', sans-serif",p.special?GOLD:INK);
+    tx(String(p._year),PAD+78,ry+ROW/2+20,"400 18px 'DM Sans', sans-serif",MUTED);
+    const rc=p.rating>=85?RED:p.rating>=80?"#F5A623":MUTED;
+    tx(String(p.rating),W-PAD-20,ry+ROW/2+12,"bold 40px 'Space Grotesk', sans-serif",rc,"right");
   });
   ctx.save();ctx.strokeStyle=BORDER;ctx.lineWidth=1;
   ctx.beginPath();ctx.moveTo(PAD,SQ+SQH);ctx.lineTo(W-PAD,SQ+SQH);ctx.stroke();ctx.restore();
 
   // ── CAMPANHA ──
   let cy=SQ+SQH+48;
-  tx("CAMPANHA",PAD,cy,"700 15px 'Inter', sans-serif",MUTED);
-  cy+=10;fillR(PAD,cy,W-PAD*2,1,"#F0F0F0");cy+=32;
+  tx("CAMPANHA",PAD,cy,"700 15px 'DM Sans', sans-serif",MUTED);
+  cy+=10;fillR(PAD,cy,W-PAD*2,1,BORDER);cy+=32;
 
   allMatches.forEach((m,gi)=>{
     const lbl=m.phase==="group"?"Grupo "+(gi+1):m.round;
-    const col=m.win?RED:m.draw?"#888":"#CCCCCC";
-    tx(lbl,PAD,cy,"400 19px 'Inter', sans-serif",MUTED);
-    tx(m.opp.flag+" "+oppLabel(m.opp),PAD+130,cy,"400 22px 'Inter', sans-serif",INK);
-    tx(m.myG+"–"+m.oppG,W-PAD-60,cy,"bold 24px 'Archivo Black', sans-serif",col,"right");
-    tx(m.win?"V":m.draw?"E":"D",W-PAD-16,cy,"700 20px 'Inter', sans-serif",col,"right");
+    const col=m.win?RED:m.draw?"#F5A623":MUTED;
+    tx(lbl,PAD,cy,"400 19px 'DM Sans', sans-serif",MUTED);
+    tx(m.opp.flag+" "+oppLabel(m.opp),PAD+130,cy,"400 22px 'DM Sans', sans-serif",INK);
+    tx(m.myG+"–"+m.oppG,W-PAD-60,cy,"bold 24px 'Space Grotesk', sans-serif",col,"right");
+    tx(m.win?"V":m.draw?"E":"D",W-PAD-16,cy,"700 20px 'DM Sans', sans-serif",col,"right");
     cy+=36;
   });
 
   // ── COMENTÁRIO DE MARKO LOCO E ZÉ BIRA ──
   cy+=20;fillR(PAD,cy,W-PAD*2,1,BORDER);cy+=28;
-  // avatar
   const avatarSize=52,avatarX=PAD,avatarY=cy-avatarSize/2-2;
   try{
     const av=await new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=markoBiraImg;});
@@ -2325,17 +2383,17 @@ async function generateCampaignCard(champ,allMatches,team,formation,tournament){
     ctx.drawImage(av,avatarX,avatarY,avatarSize,avatarSize);
     ctx.restore();
   }catch(e){}
-  tx("COMENTÁRIO DE MARKO LOCO E ZÉ BIRA",PAD+avatarSize+14,cy,"700 15px 'Inter', sans-serif",MUTED);
+  tx("COMENTÁRIO DE MARKO LOCO E ZÉ BIRA",PAD+avatarSize+14,cy,"700 15px 'DM Sans', sans-serif",MUTED);
   cy+=28;
   const comment='"'+generateCampaignComment(champ,allMatches,tournament,team)+'"';
-  const lastY=wrapText(comment,PAD,cy,W-PAD*2,"italic 400 23px 'Inter', sans-serif",INK,34);
+  const lastY=wrapText(comment,PAD,cy,W-PAD*2,"italic 400 23px 'DM Sans', sans-serif",INK,34);
   cy=lastY+20;
 
   // ── RODAPÉ ──
   const FY=Math.max(cy+40,H-120);
   fillR(PAD,FY,W-PAD*2,1,BORDER);
-  tx("markitomesquita.github.io/7rikas",W/2,FY+46,"400 22px 'Inter', sans-serif",MUTED,"center");
-  tx("Jogue você também →",W/2,FY+80,"700 20px 'Inter', sans-serif",RED,"center");
+  tx("markitomesquita.github.io/7rikas",W/2,FY+46,"400 22px 'DM Sans', sans-serif",MUTED,"center");
+  tx("Jogue você também →",W/2,FY+80,"700 20px 'DM Sans', sans-serif",RED,"center");
 
   return canvas;
 }
